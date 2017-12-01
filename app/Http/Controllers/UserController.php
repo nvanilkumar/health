@@ -29,12 +29,11 @@ class UserController extends Controller
     
     public function show()
     {
-        //echo 222;exit;
+       
         return view('login.login', []);
     }
     public function charts()
     {
-        //echo 222;exit;
         return view('users.chart', []);
     }
 
@@ -46,6 +45,11 @@ class UserController extends Controller
             //"details" => $details[0]
             ]);
     }
+    
+    public function reportsView()
+    {
+        return view('users.reports', ["title" => "Reports"]);
+    }
 
     public function loginCheck()
     {
@@ -56,6 +60,8 @@ class UserController extends Controller
     public function logout()
     {
         $this->request->session()->forget('user_id');
+        $this->request->session()->forget('user_name');
+        $this->request->session()->forget('user_role');
 
         $this->request->session()->flush();
         return redirect('/staff/login');
