@@ -28,9 +28,14 @@
                     </div>
                     <div class="box-body">
                         <div class="chart">
-                            <canvas id="areaChart" style="height:250px"></canvas>
+                            <canvas id="barChart2" style="height:230px"></canvas>
                         </div>
                     </div>
+<!--                    <div class="box-body">
+                        <div class="chart">
+                            <canvas id="areaChart" style="height:250px"></canvas>
+                        </div>
+                    </div>-->
                     <!-- /.box-body -->
                 </div>
                 <!-- /.box -->
@@ -116,10 +121,10 @@ $(function () {
     //--------------
 
     // Get context with jQuery - using jQuery's .get() method.
-    var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
+  /*  var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
     // This will get the first returned node in the jQuery collection.
     var areaChart = new Chart(areaChartCanvas)
-
+*/
     var areaChartData = {
         labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
         datasets: [
@@ -184,9 +189,9 @@ $(function () {
         //Boolean - whether to make the chart responsive to window resizing
         responsive: true
     }
-
+/*
     //Create the line chart
-    areaChart.Line(areaChartData, areaChartOptions)
+    areaChart.Line(areaChartData, areaChartOptions)*/
 
     //-------------
     //- LINE CHART -
@@ -272,6 +277,9 @@ $(function () {
     //-------------
     //- BAR CHART -
     //-------------
+     var barChartCanvas2 = $('#barChart2').get(0).getContext('2d');
+    var barChart = new Chart(barChartCanvas2);
+    
     var barChartCanvas = $('#barChart').get(0).getContext('2d')
     var barChart = new Chart(barChartCanvas)
     var barChartData = areaChartData

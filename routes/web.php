@@ -24,6 +24,7 @@ Route::post('staff/login', 'UserController@loginCheck');
 Route::get('staff/logout', 'UserController@logout');
 Route::post('users/usernamecheck', 'UserController@userNameCheck');
 Route::get('admin/reports', 'UserController@reportsView');
+Route::get('admin/household', 'UserController@householdView');
 
 Route::group(['middleware' => 'customauth'], function () {
     Route::get('dashboard', 'UserController@dashboard');

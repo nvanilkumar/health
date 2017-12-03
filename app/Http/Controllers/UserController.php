@@ -50,6 +50,10 @@ class UserController extends Controller
     {
         return view('users.reports', ["title" => "Reports"]);
     }
+    public function householdView()
+    {
+        return view('users.household', ["title" => "Household"]);
+    }
 
     public function loginCheck()
     {

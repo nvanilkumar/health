@@ -9,10 +9,13 @@
         <!-- Bootstrap 3.3.7 -->
         <link rel="stylesheet" href="{{ asset('/css/bootstrap.min.css') }}"  <!-- Font Awesome -->
               <link rel="stylesheet" href="{{ asset('/css/font-awesome.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('/css/plugincss/select2.min.css') }}">
+
         <link rel="stylesheet" href="{{ asset('/css/AdminLTE.min.css') }}">
 
         <link rel="stylesheet" href="{{ asset('/css/_all-skins.min.css') }}">
           <link rel="stylesheet" href="{{ asset('/css/dataTables.bootstrap.css') }}">
+          <link rel="stylesheet" href="{{ asset('/css/jquery.datetimepicker.css') }}">
 
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -96,19 +99,22 @@
                 <section class="sidebar">
                     <ul class="sidebar-menu" data-widget="tree">
                         <li class="header">MAIN NAVIGATION</li>
+                        <li><a href="{{ action('UserController@charts') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+                        <li><a href="{{ action('UserController@householdView') }}"><i class="fa fa-window-maximize"></i> <span>House Hold</span></a></li>
                         <li class="treeview">
                             <a href="#">
-                                <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                                <i class="fa fa-area-chart"></i> <span>Analytics</span>
                                 <span class="pull-right-container">
                                     <i class="fa fa-angle-left pull-right"></i>
                                 </span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="{{ action('UserController@charts') }}"><i class="fa fa-circle-o"></i> Dashboard v1</a></li>
-                                <li><a href="{{ action('UserController@charts') }}"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
+                                <li><a href="{{ action('UserController@charts') }}"><i class="fa fa-circle-o"></i> c1 v1</a></li>
+                                <li><a href="{{ action('UserController@charts') }}"><i class="fa fa-circle-o"></i> c2 v2</a></li>
                             </ul>
                         </li>
-                        <li><a href="{{ action('UserController@reportsView') }}"><i class="fa fa-book"></i> <span>Documentation</span></a></li>
+                        <li><a href="{{ action('UserController@reportsView') }}"><i class="fa fa-user-o"></i> <span>Patients</span></a></li>
+                        <li><a href="{{ action('UserController@reportsView') }}"><i class="fa fa-book"></i> <span>Reports</span></a></li>
                     </ul>
                 </section>
                 <!-- /.sidebar -->
