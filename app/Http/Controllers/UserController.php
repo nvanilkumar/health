@@ -6,6 +6,7 @@ use App\Services\UserService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Session;
+use Excel;
 
 class UserController extends Controller
 {
@@ -26,12 +27,13 @@ class UserController extends Controller
     {
         return view('login.login', []);
     }
-    
+
     public function show()
     {
-       
+
         return view('login.login', []);
     }
+
     public function charts()
     {
         return view('users.chart', []);
@@ -42,17 +44,34 @@ class UserController extends Controller
         //echo 333;exit;
         //$details = $this->userService->dashboardDetails();
         return view('users.chart', ["title" => "Dashboard",
-            //"details" => $details[0]
-            ]);
+                //"details" => $details[0]
+        ]);
     }
-    
+
     public function reportsView()
     {
         return view('users.reports', ["title" => "Reports"]);
     }
+
     public function householdView()
     {
         return view('users.household', ["title" => "Household"]);
+    }
+
+    public function downloadExcel()
+    {
+        $data = $this->userService->getHousehold();
+
+//        $data = array("check"=> "test1",
+//            "check2"=> "test2",
+//            
+//            );
+        $type = "xlsx";
+        return Excel::create('itsolutionstuff_example', function($excel) use ($data) {
+                    $excel->sheet('Households', function($sheet) use ($data) {
+                        $sheet->fromArray($data);
+                    });
+                })->download($type);
     }
 
     public function loginCheck()
@@ -102,30 +121,30 @@ class UserController extends Controller
     public function updateUser()
     {
         $this->userService->updateUser();
-        return redirect('users/update/'. $this->request->input("user_id"))
-                ->with('status', 'User updated successfully');;
+        return redirect('users/update/' . $this->request->input("user_id"))
+                        ->with('status', 'User updated successfully');
+        ;
     }
-    
+
     public function changePassword()
     {
-         return view('users.changePassword', ["title" => "Mtc Change Password", "pageHeading" => "Change Password"]);
+        return view('users.changePassword', ["title" => "Mtc Change Password", "pageHeading" => "Change Password"]);
     }
-    
+
     public function userUpdatePassword()
     {
-        $status=$this->userService->changePassword();
-        $errors=[];
-        if ($status['status'] == false ) {
-          $errors=$status['message'];           
+        $status = $this->userService->changePassword();
+        $errors = [];
+        if ($status['status'] == false) {
+            $errors = $status['message'];
         }
-        if(is_bool($status) === true)   {
-            
+        if (is_bool($status) === true) {
+
             Session::flash('status', 'Password Updated successfully.');
-        }  
+        }
         return view('users.changePassword', ["title" => "Mtc Change Password", "pageHeading" => "Change Password",
-                    "errors" => $errors
-                ]);
-          
+            "errors" => $errors
+        ]);
     }
 
     public function userNameCheck()
@@ -152,11 +171,11 @@ class UserController extends Controller
         }
         $roleName = $user[0]->role_name;
 
-        $status=$this->userService->deleteUser();
-        if($status){
+        $status = $this->userService->deleteUser();
+        if ($status) {
             Session::flash('status', 'Success! Record is deleted successfully.');
         }
-        
+
         return redirect('/users/list/' . $roleName);
     }
 
@@ -218,7 +237,6 @@ class UserController extends Controller
         return view('users.chat', ["title" => "Mtc Chat",
             "pageHeading" => "Mtc Chat",
             "usersList" => $usersList
-            
         ]);
     }
 

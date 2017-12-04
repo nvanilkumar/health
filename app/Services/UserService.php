@@ -122,6 +122,26 @@ class UserService
 
         return $responseMessage;
     }
+    
+    /**
+     * To get the user details depends upon the where condition
+     * @return type
+     */
+    public function getHousehold()
+    {
+        $where = [];
+        $this->usersModel->setTableName("household");
+         
+
+
+       // $this->usersModel->setWhere($where);
+        $households = $this->usersModel->getData();
+        $households = json_decode(json_encode($households), true);
+// 
+//        echo "<pre>";
+//        print_r($households);exit;
+        return $households;
+    }
 
     /**
      * To change the user password

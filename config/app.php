@@ -181,6 +181,8 @@ return [
         
         //MTC Providers
         App\Providers\UserServiceProvider::class,
+        //excel
+        'Maatwebsite\Excel\ExcelServiceProvider',
 
     ],
 
@@ -233,6 +235,7 @@ return [
         //FORM COLLECTION
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+        'Excel' => 'Maatwebsite\Excel\Facades\Excel',
 
     ],
 
