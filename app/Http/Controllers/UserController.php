@@ -55,7 +55,22 @@ class UserController extends Controller
 
     public function householdView()
     {
-        return view('users.household', ["title" => "Household"]);
+        
+//        echo 222;exit;
+        $details = $this->userService->getHousehold();
+        $houseHoldPhc= $this->userService->getHouseholdPHC();
+        return view('users.household', ["title" => "Household",
+            "details" => $details,
+            "householdphc" => $houseHoldPhc
+            
+            ]);
+    }
+    
+    public function householdVillage()
+    {
+        
+       $status= $this->userService->getHouseholdPHCVillage();
+        return response()->json($status, 200);
     }
     public function createHousehold()
     {

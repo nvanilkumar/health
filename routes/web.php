@@ -25,7 +25,10 @@ Route::get('staff/logout', 'UserController@logout');
 Route::post('users/usernamecheck', 'UserController@userNameCheck');
 Route::get('admin/reports', 'UserController@reportsView');
 Route::get('admin/household', 'UserController@householdView');
+Route::post('admin/household', 'UserController@householdView');
 Route::get('downloadExcel', 'UserController@downloadExcel');
+
+Route::post('ajax/householdVillage', 'UserController@householdVillage');
 
 Route::post('household/create', 'UserController@createHousehold');
 Route::get('household/list', 'UserController@getHousehold');

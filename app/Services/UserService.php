@@ -131,10 +131,6 @@ class UserService
     {
         $where = [];
         $this->usersModel->setTableName("household");
-         
-
-
-       // $this->usersModel->setWhere($where);
         $households = $this->usersModel->getData();
         $households = json_decode(json_encode($households), true);
 // 
@@ -142,6 +138,27 @@ class UserService
 //        print_r($households);exit;
         return $households;
     }
+    
+    public function getHouseholdPHC()
+    {
+        $householdphc =$this->usersModel->getHouseholdPHC();
+        
+        return $householdphc;
+    }        
+    public function getHouseholdPHCVillage()
+    {
+        $phcname = $this->request->input("phcname");
+        if(strlen($phcname)==0){
+            echo "invalid data";
+            return "";
+        }
+        $where=array($phcname);
+        $this->usersModel->setWhere($where);    
+        $householdphc =$this->usersModel->getHouseholdPHCVillage();
+        $householdphc = json_decode(json_encode($householdphc), true);
+//        print_r($householdphc);exit;
+        return $householdphc;
+    }        
 
     /**
      * To change the user password
