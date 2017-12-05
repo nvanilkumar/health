@@ -57,7 +57,19 @@ class UserController extends Controller
     {
         return view('users.household', ["title" => "Household"]);
     }
+    public function createHousehold()
+    {
+//        echo 88;exit;
+        $this->userService->createHousehold();
+    }
+    public function getHousehold()
+    {
+//        echo 88;exit;
+        $data=$this->userService->getHousehold();
+        return response()->json(['data' => $data], 200);
+    }
 
+    
     public function downloadExcel()
     {
         $data = $this->userService->getHousehold();

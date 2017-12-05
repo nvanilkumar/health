@@ -514,5 +514,57 @@ class UserService
        
         return $details;
     }
+    
+    public function createHousehold()
+    {
+        $this->usersModel->setTableName("household");
+        $hh_id=($this->request->input("hh_id")!="")?$this->request->input("hh_id"):"";
+        $door_no=($this->request->input("door_no")!="")?$this->request->input("door_no"):"";
+        $locality_id=($this->request->input("locality_id")!="")?$this->request->input("locality_id"):0;
+        $village_name=($this->request->input("village_name")!="")?$this->request->input("village_name"):"";
+        $phc_name=($this->request->input("phc_name")!="")?$this->request->input("phc_name"):"";
+        $total_hh_size=($this->request->input("total_hh_size")!="")?$this->request->input("total_hh_size"):0;
+        $total_hh_eligible=($this->request->input("total_hh_eligible")!="")?$this->request->input("total_hh_eligible"):0;
+        $hh_head_fname=($this->request->input("hh_head_fname")!="")?$this->request->input("hh_head_fname"):"";
+        $hh_head_lname=($this->request->input("hh_head_lname")!="")?$this->request->input("hh_head_lname"):"";
+        
+        $type_of_house=($this->request->input("type_of_house")!="")?$this->request->input("type_of_house"):"";
+        $status_of_toilets=($this->request->input("status_of_toilets")!="")?$this->request->input("status_of_toilets"):"";
+        $drng_water_arrg=($this->request->input("drng_water_arrg")!="")?$this->request->input("drng_water_arrg"):"";
+        $eleciricity_arrg=($this->request->input("eleciricity_arrg")!="")?$this->request->input("eleciricity_arrg"):"";
+        $motor_vehcile=($this->request->input("motor_vehcile")!="")?$this->request->input("motor_vehcile"):"";
+        $type_of_fuel_cook_food=($this->request->input("type_of_fuel_cook_food")!="")?$this->request->input("type_of_fuel_cook_food"):"";
+        $contact_info=($this->request->input("contact_info")!="")?$this->request->input("contact_info"):"";
+        $patient_id_counter=($this->request->input("patient_id_counter")!="")?$this->request->input("patient_id_counter"):0;
+        
+        $insertArray = [
+            "hh_id" => $hh_id,
+            "door_no" => $door_no,
+            "locality_id" =>$locality_id,
+            "village_name" =>$village_name,
+            "phc_name" => $phc_name,
+            "total_hh_size" => $total_hh_size,
+            "total_hh_eligible" => $total_hh_eligible,
+            "hh_head_fname" => $hh_head_fname,
+            "hh_head_lname" => $hh_head_lname,
+            "date" => DateHelper::todayDateTime(),
+            "type_of_house" =>$type_of_house,
+            "status_of_toilets" =>$status_of_toilets,
+            "drng_water_arrg" =>$drng_water_arrg,
+            "eleciricity_arrg" => $eleciricity_arrg,
+            "motor_vehcile" => $motor_vehcile,
+            "type_of_fuel_cook_food" =>$type_of_fuel_cook_food,
+            "contact_info" =>$contact_info,
+            "patient_id_counter" => $patient_id_counter,
+        ];
+
+        $this->usersModel->setInsertUpdateData($insertArray);
+        $userId = $this->usersModel->insertData();
+        
+        var_dump($userId);exit;
+        
+    } 
+    
+  
 
 }

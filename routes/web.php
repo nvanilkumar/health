@@ -12,7 +12,7 @@
  */
 
  
-Auth::routes();
+//Auth::routes();
  
 Route::get('/', function () {
     return redirect('/staff/login');
@@ -26,6 +26,9 @@ Route::post('users/usernamecheck', 'UserController@userNameCheck');
 Route::get('admin/reports', 'UserController@reportsView');
 Route::get('admin/household', 'UserController@householdView');
 Route::get('downloadExcel', 'UserController@downloadExcel');
+
+Route::post('household/create', 'UserController@createHousehold');
+Route::get('household/list', 'UserController@getHousehold');
 
 Route::group(['middleware' => 'customauth'], function () {
     Route::get('dashboard', 'UserController@dashboard');
