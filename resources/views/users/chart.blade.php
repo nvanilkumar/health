@@ -18,7 +18,7 @@
                 <!-- AREA CHART -->
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Area Chart</h3>
+                        <h3 class="box-title">Asha Screening Count</h3>
 
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -31,19 +31,13 @@
                             <canvas id="barChart2" style="height:230px"></canvas>
                         </div>
                     </div>
-<!--                    <div class="box-body">
-                        <div class="chart">
-                            <canvas id="areaChart" style="height:250px"></canvas>
-                        </div>
-                    </div>-->
-                    <!-- /.box-body -->
                 </div>
                 <!-- /.box -->
 
                 <!-- DONUT CHART -->
                 <div class="box box-danger">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Donut Chart</h3>
+                        <h3 class="box-title">Gender Chart</h3>
 
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -61,30 +55,10 @@
             </div>
             <!-- /.col (LEFT) -->
             <div class="col-md-6">
-                <!-- LINE CHART -->
-                <div class="box box-info">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Line Chart</h3>
-
-                        <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                            </button>
-                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                        </div>
-                    </div>
-                    <div class="box-body">
-                        <div class="chart">
-                            <canvas id="lineChart" style="height:250px"></canvas>
-                        </div>
-                    </div>
-                    <!-- /.box-body -->
-                </div>
-                <!-- /.box -->
-
                 <!-- BAR CHART -->
                 <div class="box box-success">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Bar Chart</h3>
+                        <h3 class="box-title">PHC Chart</h3>
 
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -100,6 +74,26 @@
                     <!-- /.box-body -->
                 </div>
                 <!-- /.box -->
+                
+                <!-- LINE CHART -->
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Line Chart</h3>
+
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <canvas id="pieChart2" style="height:250px"></canvas>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+
+                
 
             </div>
             <!-- /.col (RIGHT) -->
@@ -137,16 +131,6 @@ $(function () {
                 pointHighlightFill: '#fff',
                 pointHighlightStroke: 'rgba(220,220,220,1)',
                 data: [65, 59, 80, 81, 56, 55, 40]
-            },
-            {
-                label: 'Digital Goods',
-                fillColor: 'rgba(60,141,188,0.9)',
-                strokeColor: 'rgba(60,141,188,0.8)',
-                pointColor: '#3b8bba',
-                pointStrokeColor: 'rgba(60,141,188,1)',
-                pointHighlightFill: '#fff',
-                pointHighlightStroke: 'rgba(60,141,188,1)',
-                data: [28, 48, 40, 19, 86, 27, 90]
             }
         ]
     }
@@ -192,15 +176,7 @@ $(function () {
 /*
     //Create the line chart
     areaChart.Line(areaChartData, areaChartOptions)*/
-
-    //-------------
-    //- LINE CHART -
-    //--------------
-    var lineChartCanvas = $('#lineChart').get(0).getContext('2d')
-    var lineChart = new Chart(lineChartCanvas)
-    var lineChartOptions = areaChartOptions
-    lineChartOptions.datasetFill = false
-    lineChart.Line(areaChartData, lineChartOptions)
+ 
 
     //-------------
     //- PIE CHART -
@@ -210,41 +186,52 @@ $(function () {
     var pieChart = new Chart(pieChartCanvas)
     var PieData = [
         {
-            value: 700,
+            value: '<?php echo $details['piechart'][0]->hbp;?>',
             color: '#f56954',
             highlight: '#f56954',
-            label: 'Chrome'
+            label: 'hbp'
         },
         {
-            value: 500,
+            value: '<?php echo $details['piechart'][0]->diag;?>',
             color: '#00a65a',
             highlight: '#00a65a',
-            label: 'IE'
+            label: 'diag'
         },
         {
-            value: 400,
+            value: '<?php echo $details['piechart'][0]->cancer;?>',
             color: '#f39c12',
             highlight: '#f39c12',
-            label: 'FireFox'
+            label: 'cancer'
         },
         {
-            value: 600,
+            value: '<?php echo $details['piechart'][0]->COPD;?>',
             color: '#00c0ef',
             highlight: '#00c0ef',
-            label: 'Safari'
+            label: 'COPD'
         },
         {
-            value: 300,
+            value:'<?php echo $details['piechart'][0]->cvd;?>',
             color: '#3c8dbc',
             highlight: '#3c8dbc',
-            label: 'Opera'
+            label: 'cvd'
+        }
+    ]
+    
+    
+    var genderData = [
+        {
+            value: '<?php echo $details['malecount'];?>',
+            color: '#f56954',
+            highlight: '#f56954',
+            label: 'MALE'
         },
         {
-            value: 100,
-            color: '#d2d6de',
-            highlight: '#d2d6de',
-            label: 'Navigator'
-        }
+            value: '<?php echo $details['femalecount'];?>',
+            color: '#00a65a',
+            highlight: '#00a65a',
+            label: 'FEMALE'
+        },
+        
     ]
     var pieOptions = {
         //Boolean - Whether we should show a stroke on each segment
@@ -272,20 +259,24 @@ $(function () {
     }
     //Create pie or douhnut chart
     // You can switch between pie and douhnut using the method below.
-    pieChart.Doughnut(PieData, pieOptions)
+    pieChart.Doughnut(genderData, pieOptions);
+    
+    var pieChartCanvas2 = $('#pieChart2').get(0).getContext('2d')
+    var pieChart2 = new Chart(pieChartCanvas2)
+     pieChart2.Doughnut(PieData, pieOptions);
 
     //-------------
     //- BAR CHART -
     //-------------
      var barChartCanvas2 = $('#barChart2').get(0).getContext('2d');
-    var barChart = new Chart(barChartCanvas2);
+    var barChart2 = new Chart(barChartCanvas2);
     
     var barChartCanvas = $('#barChart').get(0).getContext('2d')
     var barChart = new Chart(barChartCanvas)
     var barChartData = areaChartData
-    barChartData.datasets[1].fillColor = '#00a65a'
-    barChartData.datasets[1].strokeColor = '#00a65a'
-    barChartData.datasets[1].pointColor = '#00a65a'
+//    barChartData.datasets[1].fillColor = '#00a65a'
+//    barChartData.datasets[1].strokeColor = '#00a65a'
+//    barChartData.datasets[1].pointColor = '#00a65a'
     var barChartOptions = {
         //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
         scaleBeginAtZero: true,
@@ -302,7 +293,7 @@ $(function () {
         //Boolean - If there is a stroke on each bar
         barShowStroke: true,
         //Number - Pixel width of the bar stroke
-        barStrokeWidth: 2,
+        barStrokeWidth: 1,
         //Number - Spacing between each of the X value sets
         barValueSpacing: 5,
         //Number - Spacing between data sets within X values
@@ -315,7 +306,41 @@ $(function () {
     }
 
     barChartOptions.datasetFill = false
-    barChart.Bar(barChartData, barChartOptions)
+    
+    var phcdata = {
+        labels: [<?php echo '"'.implode('","', $details['phclabel']).'"' ?>],
+        datasets: [
+            {
+                label: 'Electronics',
+                fillColor: 'rgba(210, 214, 222, 1)',
+                strokeColor: 'rgba(210, 214, 222, 1)',
+                pointColor: 'rgba(210, 214, 222, 1)',
+                pointStrokeColor: '#c1c7d1',
+                pointHighlightFill: '#fff',
+                pointHighlightStroke: 'rgba(220,220,220,1)',
+                data: [<?php echo '"'.implode('","', $details['phcdata']).'"' ?>]
+            }
+        ]
+    }
+    barChart.Bar(phcdata, barChartOptions)
+    
+    
+       var ashaphcdata = {
+        labels: [<?php echo '"'.implode('","', $details['ashaphclabel']).'"' ?>],
+        datasets: [
+            {
+                label: 'Electronics',
+                fillColor: 'rgba(210, 214, 222, 1)',
+                strokeColor: 'rgba(210, 214, 222, 1)',
+                pointColor: 'rgba(210, 214, 222, 1)',
+                pointStrokeColor: '#c1c7d1',
+                pointHighlightFill: '#fff',
+                pointHighlightStroke: 'rgba(220,220,220,1)',
+                data: [<?php echo '"'.implode('","', $details['ashaphcdata']).'"' ?>]
+            }
+        ]
+    }
+    barChart2.Bar(ashaphcdata, barChartOptions)
 })
         </script>
 @endsection

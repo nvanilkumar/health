@@ -478,13 +478,40 @@ class UserService
      */
     public function dashboardDetails()
     {
-        $whereArray = [
-            'eventStartDate' => DateHelper::todayDate(),
-            'surveyStartDate' => DateHelper::todayDate(),
-        ];
-
-        $this->usersModel->setWhere($whereArray);
         $details = $this->usersModel->dashboardDetails();
+        
+        $label=array();  $data=array();
+        
+        $phcdetails=$details["barchart2"];
+        foreach($phcdetails as $list)
+        {
+            $label[]=$list->phc_name;
+            $data[]=$list->ashacount;
+        }
+        $details["phclabel"]=$label;
+        $details["phcdata"]=$data;
+        
+        $label=array();  $data=array();
+        $ashaphcdetails=$details["barchart1"];
+        foreach($ashaphcdetails as $list)
+        {
+            $label[]=$list->phc_name;
+            $data[]=$list->ashacount;
+        }
+        $details["ashaphclabel"]=$label;
+        $details["ashaphcdata"]=$data;
+        
+        //gender details
+        $genderDetails=$details['gender'];
+        foreach($genderDetails as $glist){
+            if($glist->gender == "F"){
+                $details["femalecount"]=$glist->gender_count ;
+            }else{
+                $details["malecount"]=$glist->gender_count ;
+            }
+            
+        }
+       
         return $details;
     }
 

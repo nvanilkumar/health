@@ -6,6 +6,7 @@ use DB;
 
 class UsersModel extends CommonModel
 {
+
     public function loginCheck()
     {
         $users = DB::table('users')
@@ -17,7 +18,7 @@ class UsersModel extends CommonModel
             return NULL;
         }
         return $users;
-    }        
+    }
 
     public function getUsers($columnName = NULL)
     {
@@ -77,7 +78,7 @@ class UsersModel extends CommonModel
         return $roleDetails[0]->role_id;
     }
 
-    public function dashboardDetails()
+    public function dashboardDetails2()
     {
 
         $select = "select (select count(user_id)  from users) as usercount,
@@ -89,13 +90,50 @@ class UsersModel extends CommonModel
                     (select count(comment_id)  from comments where status='active' group by status) as activecomments,
 		    (select count(comment_id) from comments where status='review' group by status) as reviewcomments
                  ";
-        $details = DB::select(DB::raw($select), $this->where);
+    }
 
-        if (count($details) == 0) {
+    public function dashboardDetails()
+    {
+        $dashboard=array();
+        $select = "select phc_name, count(_id) as ashacount 
+                   from cvd_riskasses 
+                   where enc_type='SH_CVD_ASHA_SCREENING_1'
+                   group by phc_name";
+        $barchartdetails = DB::select(DB::raw($select), $this->where);
+       
+        $dashboard["barchart1"]=$barchartdetails;
+        
+        //Asha Screening
+        $select = "select phc_name, count(_id) as ashacount 
+                   from cvd_riskasses 
+                   group by phc_name";
+        $barchartdetails = DB::select(DB::raw($select), $this->where);
+       
+        $dashboard["barchart2"]=$barchartdetails;
+        
+        $select2 = "select count(_id) gender_count,gender
+                    from cvd_riskasses 
+                    where enc_type='SH_CVD_ASHA_SCREENING_1'
+                    group by gender";
+        $gendertdetails = DB::select(DB::raw($select2), $this->where);
+        $dashboard["gender"]=$gendertdetails;
+        
+        $select3 = "select *
+                    from
+                    (select count(_id) as hbp from cvd_riskasses where hbp =1 ) as hbp,
+                    (select count(_id) as diag from cvd_riskasses where diag =1 ) as diag,
+                    (select count(_id) as cancer from cvd_riskasses where mth_cn =1 or brts_cn=1 or cvr_cn = 1) as cancer,
+                    (select count(_id) as COPD from cvd_riskasses where  copd_dis = 1) as COPD,
+                    (select count(_id) as cvd from cvd_riskasses where  high_risk_calc = 2) as cvd";
+        $piedetails = DB::select(DB::raw($select3), $this->where);
+        $dashboard["piechart"]=$piedetails;
+        
+//        echo "<pre>"; print_r($dashboard);exit;
+        if (count($dashboard) == 0) {
             return NULL;
         }
 
-        return $details;
+        return $dashboard;
     }
 
 }

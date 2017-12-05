@@ -42,9 +42,9 @@ class UserController extends Controller
     public function dashboard()
     {
         //echo 333;exit;
-        //$details = $this->userService->dashboardDetails();
+        $details = $this->userService->dashboardDetails();
         return view('users.chart', ["title" => "Dashboard",
-                //"details" => $details[0]
+                "details" => $details
         ]);
     }
 
