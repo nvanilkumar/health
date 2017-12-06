@@ -26,8 +26,7 @@
         <![endif]-->
 
         <!-- Google Font -->
-        <link rel="stylesheet"
-              href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+        <!--<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">-->
                 <script type="text/javascript" src="{{ asset('/js/jquery-2.1.1.min.js') }}"></script>
         <script src="{{ asset('/js/bootstrap.min.js') }}"></script>
         <script src="{{ asset('/js/pluginjs/Chart.js') }}"></script>
@@ -102,18 +101,22 @@
                         <li><a href="{{ action('UserController@charts') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
                         <li><a href="{{ action('UserController@householdView') }}"><i class="fa fa-window-maximize"></i> <span>House Hold</span></a></li>
                         <li class="treeview">
-                            <a href="#">
+                            <a href="">
                                 <i class="fa fa-area-chart"></i> <span>Analytics</span>
                                 <span class="pull-right-container">
                                     <i class="fa fa-angle-left pull-right"></i>
                                 </span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="{{ action('UserController@charts') }}"><i class="fa fa-circle-o"></i> c1 v1</a></li>
-                                <li><a href="{{ action('UserController@charts') }}"><i class="fa fa-circle-o"></i> c2 v2</a></li>
+                                <li><a href="{{ action('UserController@analyticsView')."/default" }}"><i class="fa fa-circle-o"></i> ALL Details</a></li>
+                                <li><a href="{{ action('UserController@analyticsView')."/hbp" }}"><i class="fa fa-circle-o"></i> hbp</a></li>
+                                <li><a href="{{ action('UserController@analyticsView')."/diag" }}"><i class="fa fa-circle-o"></i> diag</a></li>
+                                <li><a href="{{ action('UserController@analyticsView')."/cancer" }}"><i class="fa fa-circle-o"></i> cancer</a></li>
+                                <li><a href="{{ action('UserController@analyticsView')."/copd" }}"><i class="fa fa-circle-o"></i> copd</a></li>
+                                <li><a href="{{ action('UserController@analyticsView')."/cvd" }}"><i class="fa fa-circle-o"></i> cvd</a></li>
                             </ul>
                         </li>
-                        <li><a href="{{ action('UserController@reportsView') }}"><i class="fa fa-user-o"></i> <span>Patients</span></a></li>
+                        <li><a href="{{ action('UserController@getPatientsView') }}"><i class="fa fa-user-o"></i> <span>Patients</span></a></li>
                         <li><a href="{{ action('UserController@reportsView') }}"><i class="fa fa-book"></i> <span>Reports</span></a></li>
                     </ul>
                 </section>

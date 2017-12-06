@@ -122,43 +122,164 @@ class UserService
 
         return $responseMessage;
     }
-    
+
     /**
      * To get the user details depends upon the where condition
      * @return type
      */
     public function getHousehold()
     {
-        $where = [];
+        $setWhere = FALSE;
+        $phcselect = $this->request->input("phcselect");
+        if ($phcselect && ($phcselect != "select option")) {
+            $where = [];
+            $where[] = ["phc_name", "=", $phcselect];
+            $setWhere = TRUE;
+        }
+
+        $villageselect = $this->request->input("villageselect");
+        if ($villageselect && ($villageselect != "select option")) {
+
+            $where[] = ["village_name", "=", $villageselect];
+        }
+
+        $startdate = $this->request->input("startdate");
+        if ($startdate) {
+            $startdate = date("Y-m-d H:i:s", strtotime($startdate));
+            $where[] = ["date", ">=", $startdate];
+        }
+
+        $enddate = $this->request->input("enddate");
+        if ($enddate) {
+            $enddate = date("Y-m-d H:i:s", strtotime($enddate));
+            $where[] = ["date", "<=", $enddate];
+        }
+
         $this->usersModel->setTableName("household");
+
+        if ($setWhere) {
+            $this->usersModel->setWhere($where);
+        }
+//  \DB::enableQueryLog();
         $households = $this->usersModel->getData();
+
         $households = json_decode(json_encode($households), true);
-// 
-//        echo "<pre>";
-//        print_r($households);exit;
+
+//                $query = \DB::getQueryLog();
+// $query = end($query);
+// var_dump($query);exit;
+//         echo "<pre>";
+//         print_r($households);exit;
         return $households;
     }
-    
+
     public function getHouseholdPHC()
     {
-        $householdphc =$this->usersModel->getHouseholdPHC();
-        
+        $this->usersModel->resetVariable();
+        $householdphc = $this->usersModel->getHouseholdPHC();
+
         return $householdphc;
-    }        
+    }
+
     public function getHouseholdPHCVillage()
     {
         $phcname = $this->request->input("phcname");
-        if(strlen($phcname)==0){
+        if (strlen($phcname) == 0) {
             echo "invalid data";
             return "";
         }
-        $where=array($phcname);
-        $this->usersModel->setWhere($where);    
-        $householdphc =$this->usersModel->getHouseholdPHCVillage();
+        $where = array($phcname);
+        $this->usersModel->setWhere($where);
+        $householdphc = $this->usersModel->getHouseholdPHCVillage();
         $householdphc = json_decode(json_encode($householdphc), true);
 //        print_r($householdphc);exit;
         return $householdphc;
-    }        
+    }
+
+    public function getPatients()
+    {
+        $setWhere = FALSE;
+        $phcselect = $this->request->input("phcselect");
+        if ($phcselect && ($phcselect != "select option")) {
+            $where = [];
+            $where[] = ["phc_name", "=", $phcselect];
+            $setWhere = TRUE;
+        }
+
+        $villageselect = $this->request->input("villageselect");
+        if ($villageselect && ($villageselect != "select option")) {
+
+            $where[] = ["village_name", "=", $villageselect];
+        }
+
+        $startdate = $this->request->input("startdate");
+        if ($startdate) {
+            $startdate = date("Y-m-d H:i:s", strtotime($startdate));
+            $where[] = ["date", ">=", $startdate];
+        }
+
+        $enddate = $this->request->input("enddate");
+        if ($enddate) {
+            $enddate = date("Y-m-d H:i:s", strtotime($enddate));
+            $where[] = ["date", "<=", $enddate];
+        }
+
+        $this->usersModel->setTableName("cvd_riskasses");
+
+        if ($setWhere) {
+            $this->usersModel->setWhere($where);
+        }
+//  \DB::enableQueryLog();
+        $paitents = $this->usersModel->getData();
+
+        $paitents = json_decode(json_encode($paitents), true);
+
+//                $query = \DB::getQueryLog();
+// $query = end($query);
+// var_dump($query);exit;
+//         echo "<pre>";
+//         print_r($households);exit;
+        return $paitents;
+    }
+
+    public function getAnalytics($type)
+    {
+        $filters = array();
+        $phcselect = $this->request->input("phcselect");
+        if ($phcselect && ($phcselect != "select option")) {
+            $filters[] = ["phc_name", $phcselect];
+        }
+        $asha_assigned = $this->request->input("asha_assigned");
+        if ($asha_assigned && ($asha_assigned != "select option")) {
+            $filters[] = ["asha_assigned", $asha_assigned];
+        }
+
+        $villageselect = $this->request->input("villageselect");
+        if ($villageselect && ($villageselect != "select option")) {
+            $filters[] = ["village", $villageselect];
+        }
+
+        $startdate = $this->request->input("startdate");
+        if ($startdate) {
+            $startdate = date("Y-m-d H:i:s", strtotime($startdate));
+            $filters[] = ["startdate", $startdate];
+        }
+
+        $enddate = $this->request->input("enddate");
+        if ($enddate) {
+            $enddate = date("Y-m-d H:i:s", strtotime($enddate));
+            $filters[] = ["enddate", $enddate];
+        }
+        $analytics = $this->usersModel->analyticQuery($type, $filters);
+        return $analytics;
+    }
+
+    public function getAnalyticsPHC()
+    {
+        $this->usersModel->resetVariable();
+        $householdphc = $this->usersModel->getAnalyticsPHC();
+        return $householdphc;
+    }
 
     /**
      * To change the user password
@@ -496,92 +617,89 @@ class UserService
     public function dashboardDetails()
     {
         $details = $this->usersModel->dashboardDetails();
-        
-        $label=array();  $data=array();
-        
-        $phcdetails=$details["barchart2"];
-        foreach($phcdetails as $list)
-        {
-            $label[]=$list->phc_name;
-            $data[]=$list->ashacount;
+
+        $label = array();
+        $data = array();
+
+        $phcdetails = $details["barchart2"];
+        foreach ($phcdetails as $list) {
+            $label[] = $list->phc_name;
+            $data[] = $list->ashacount;
         }
-        $details["phclabel"]=$label;
-        $details["phcdata"]=$data;
-        
-        $label=array();  $data=array();
-        $ashaphcdetails=$details["barchart1"];
-        foreach($ashaphcdetails as $list)
-        {
-            $label[]=$list->phc_name;
-            $data[]=$list->ashacount;
+        $details["phclabel"] = $label;
+        $details["phcdata"] = $data;
+
+        $label = array();
+        $data = array();
+        $ashaphcdetails = $details["barchart1"];
+        foreach ($ashaphcdetails as $list) {
+            $label[] = $list->phc_name;
+            $data[] = $list->ashacount;
         }
-        $details["ashaphclabel"]=$label;
-        $details["ashaphcdata"]=$data;
-        
+        $details["ashaphclabel"] = $label;
+        $details["ashaphcdata"] = $data;
+
         //gender details
-        $genderDetails=$details['gender'];
-        foreach($genderDetails as $glist){
-            if($glist->gender == "F"){
-                $details["femalecount"]=$glist->gender_count ;
-            }else{
-                $details["malecount"]=$glist->gender_count ;
+        $genderDetails = $details['gender'];
+        foreach ($genderDetails as $glist) {
+            if ($glist->gender == "F") {
+                $details["femalecount"] = $glist->gender_count;
+            } else {
+                $details["malecount"] = $glist->gender_count;
             }
-            
         }
-       
+
         return $details;
     }
-    
+
     public function createHousehold()
     {
         $this->usersModel->setTableName("household");
-        $hh_id=($this->request->input("hh_id")!="")?$this->request->input("hh_id"):"";
-        $door_no=($this->request->input("door_no")!="")?$this->request->input("door_no"):"";
-        $locality_id=($this->request->input("locality_id")!="")?$this->request->input("locality_id"):0;
-        $village_name=($this->request->input("village_name")!="")?$this->request->input("village_name"):"";
-        $phc_name=($this->request->input("phc_name")!="")?$this->request->input("phc_name"):"";
-        $total_hh_size=($this->request->input("total_hh_size")!="")?$this->request->input("total_hh_size"):0;
-        $total_hh_eligible=($this->request->input("total_hh_eligible")!="")?$this->request->input("total_hh_eligible"):0;
-        $hh_head_fname=($this->request->input("hh_head_fname")!="")?$this->request->input("hh_head_fname"):"";
-        $hh_head_lname=($this->request->input("hh_head_lname")!="")?$this->request->input("hh_head_lname"):"";
-        
-        $type_of_house=($this->request->input("type_of_house")!="")?$this->request->input("type_of_house"):"";
-        $status_of_toilets=($this->request->input("status_of_toilets")!="")?$this->request->input("status_of_toilets"):"";
-        $drng_water_arrg=($this->request->input("drng_water_arrg")!="")?$this->request->input("drng_water_arrg"):"";
-        $eleciricity_arrg=($this->request->input("eleciricity_arrg")!="")?$this->request->input("eleciricity_arrg"):"";
-        $motor_vehcile=($this->request->input("motor_vehcile")!="")?$this->request->input("motor_vehcile"):"";
-        $type_of_fuel_cook_food=($this->request->input("type_of_fuel_cook_food")!="")?$this->request->input("type_of_fuel_cook_food"):"";
-        $contact_info=($this->request->input("contact_info")!="")?$this->request->input("contact_info"):"";
-        $patient_id_counter=($this->request->input("patient_id_counter")!="")?$this->request->input("patient_id_counter"):0;
-        
+        $hh_id = ($this->request->input("hh_id") != "") ? $this->request->input("hh_id") : "";
+        $door_no = ($this->request->input("door_no") != "") ? $this->request->input("door_no") : "";
+        $locality_id = ($this->request->input("locality_id") != "") ? $this->request->input("locality_id") : 0;
+        $village_name = ($this->request->input("village_name") != "") ? $this->request->input("village_name") : "";
+        $phc_name = ($this->request->input("phc_name") != "") ? $this->request->input("phc_name") : "";
+        $total_hh_size = ($this->request->input("total_hh_size") != "") ? $this->request->input("total_hh_size") : 0;
+        $total_hh_eligible = ($this->request->input("total_hh_eligible") != "") ? $this->request->input("total_hh_eligible") : 0;
+        $hh_head_fname = ($this->request->input("hh_head_fname") != "") ? $this->request->input("hh_head_fname") : "";
+        $hh_head_lname = ($this->request->input("hh_head_lname") != "") ? $this->request->input("hh_head_lname") : "";
+
+        $type_of_house = ($this->request->input("type_of_house") != "") ? $this->request->input("type_of_house") : "";
+        $status_of_toilets = ($this->request->input("status_of_toilets") != "") ? $this->request->input("status_of_toilets") : "";
+        $drng_water_arrg = ($this->request->input("drng_water_arrg") != "") ? $this->request->input("drng_water_arrg") : "";
+        $eleciricity_arrg = ($this->request->input("eleciricity_arrg") != "") ? $this->request->input("eleciricity_arrg") : "";
+        $motor_vehcile = ($this->request->input("motor_vehcile") != "") ? $this->request->input("motor_vehcile") : "";
+        $type_of_fuel_cook_food = ($this->request->input("type_of_fuel_cook_food") != "") ? $this->request->input("type_of_fuel_cook_food") : "";
+        $contact_info = ($this->request->input("contact_info") != "") ? $this->request->input("contact_info") : "";
+        $patient_id_counter = ($this->request->input("patient_id_counter") != "") ? $this->request->input("patient_id_counter") : 0;
+
         $insertArray = [
             "hh_id" => $hh_id,
             "door_no" => $door_no,
-            "locality_id" =>$locality_id,
-            "village_name" =>$village_name,
+            "locality_id" => $locality_id,
+            "village_name" => $village_name,
             "phc_name" => $phc_name,
             "total_hh_size" => $total_hh_size,
             "total_hh_eligible" => $total_hh_eligible,
             "hh_head_fname" => $hh_head_fname,
             "hh_head_lname" => $hh_head_lname,
             "date" => DateHelper::todayDateTime(),
-            "type_of_house" =>$type_of_house,
-            "status_of_toilets" =>$status_of_toilets,
-            "drng_water_arrg" =>$drng_water_arrg,
+            "type_of_house" => $type_of_house,
+            "status_of_toilets" => $status_of_toilets,
+            "drng_water_arrg" => $drng_water_arrg,
             "eleciricity_arrg" => $eleciricity_arrg,
             "motor_vehcile" => $motor_vehcile,
-            "type_of_fuel_cook_food" =>$type_of_fuel_cook_food,
-            "contact_info" =>$contact_info,
+            "type_of_fuel_cook_food" => $type_of_fuel_cook_food,
+            "contact_info" => $contact_info,
             "patient_id_counter" => $patient_id_counter,
         ];
 
         $this->usersModel->setInsertUpdateData($insertArray);
         $userId = $this->usersModel->insertData();
-        
-        var_dump($userId);exit;
-        
-    } 
-    
-  
+
+        var_dump($userId);
+        exit;
+    }
 
 }

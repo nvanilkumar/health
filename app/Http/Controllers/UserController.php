@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Session;
 use Excel;
+use Illuminate\Support\Facades\Input;
 
 class UserController extends Controller
 {
@@ -44,7 +45,7 @@ class UserController extends Controller
         //echo 333;exit;
         $details = $this->userService->dashboardDetails();
         return view('users.chart', ["title" => "Dashboard",
-                "details" => $details
+            "details" => $details
         ]);
     }
 
@@ -55,36 +56,65 @@ class UserController extends Controller
 
     public function householdView()
     {
-        
-//        echo 222;exit;
+
         $details = $this->userService->getHousehold();
-        $houseHoldPhc= $this->userService->getHouseholdPHC();
+        $houseHoldPhc = $this->userService->getHouseholdPHC();
         return view('users.household', ["title" => "Household",
             "details" => $details,
-            "householdphc" => $houseHoldPhc
-            
-            ]);
+            "householdphc" => $houseHoldPhc,
+             'postData' => Input::all()
+        ]);
     }
     
-    public function householdVillage()
+    public function getPatientsView()
     {
-        
-       $status= $this->userService->getHouseholdPHCVillage();
+
+        $details = $this->userService->getPatients();
+        $houseHoldPhc = $this->userService->getHouseholdPHC();
+        return view('users.patients', ["title" => "Household",
+            "details" => $details,
+            "householdphc" => $houseHoldPhc,
+             'postData' => Input::all()
+        ]);
+    }
+    
+    public function analyticsView($type)
+    {
+        echo $type;exit;
+        $details = $this->userService->getAnalytics($type);
+        $analyticsphc = $this->userService->getAnalyticsPHC();
+        return view('users.analytics', ["title" => "Analytics",
+            "details" => $details,
+            "analyticsphc" => $analyticsphc,
+             'postData' => Input::all()
+        ]);
+    }
+    
+    public function analyticsVillage()
+    {
+        $status = $this->userService->getAnalyticsVillage();
         return response()->json($status, 200);
     }
+
+    public function householdVillage()
+    {
+        $status = $this->userService->getHouseholdPHCVillage();
+        return response()->json($status, 200);
+    }
+
     public function createHousehold()
     {
 //        echo 88;exit;
         $this->userService->createHousehold();
     }
+
     public function getHousehold()
     {
 //        echo 88;exit;
-        $data=$this->userService->getHousehold();
+        $data = $this->userService->getHousehold();
         return response()->json(['data' => $data], 200);
     }
 
-    
     public function downloadExcel()
     {
         $data = $this->userService->getHousehold();

@@ -110,6 +110,86 @@ class UsersModel extends CommonModel
         }
 
         return $householdphc;
+    } 
+    
+    public function analyticQuery($type,$filters)
+    {
+        $where="";
+        if($type =="hbp")
+        {
+            $where ="where hbp =1 ";
+        }
+        if($type =="diag")
+        {
+            $where ="where diag =1 ";
+        }
+        if($type =="cancer")
+        {
+            $where ="where mth_cn =1 or brts_cn=1 or cvr_cn = 1 ";
+        }
+        if($type =="copd")
+        {
+            $where ="where copd_dis = 1 ";
+        }
+        if($type =="cvd")
+        {
+            $where ="where high_risk_calc = 2 ";
+        }
+        
+        //Applying the filters
+        if(count($filters) > 0)
+        {
+            foreach($filters as $key => $value)
+            {
+                if($key!= "startdate" && $key!= "enddate")
+                {
+                    $where .= " and ".$key."='".$value."'";
+                }else if($key== "startdate"){
+                    $where .= "and ".$key.">='".$value."'";
+                }else if($key== "enddate"){
+                    $where .= " and ".$key."<='".$value."'";
+                }
+            }    
+            
+        }    
+        
+        $select = "select created_date,count(_id)
+                    from cvd_riskasses ".$where." 
+                    group by created_date
+                    order by created_date";
+        $analyticData = DB::select(DB::raw($select), $this->where);
+        
+        if (count($analyticData) == 0) {
+            return NULL;
+        }
+        return $analyticData;
+       
+         
+    }  
+    
+    public function getAnalyticsPHC()
+    {
+        $select = "select distinct phc_name
+                   from cvd_riskasses";
+        $analyticsphc = DB::select(DB::raw($select), $this->where);
+        
+        if (count($analyticsphc) == 0) {
+            return NULL;
+        }
+        return $analyticsphc;
+    }
+    
+    public function getAshaList()
+    {
+        $select = "select distinct asha_assigned
+                   from cvd_riskasses
+                   where asha_assigned<>'null' order by asha_assigned ASC ";
+        $analyticsphc = DB::select(DB::raw($select), $this->where);
+        
+        if (count($analyticsphc) == 0) {
+            return NULL;
+        }
+        return $analyticsphc;
     }        
 
 }

@@ -12,7 +12,7 @@
 
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">House Hold</h3>
+                        <h3 class="box-title">Patients Details</h3>
 
 
                         <!-- /.box-header -->
@@ -97,24 +97,32 @@
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-
-                                    <th>HH Id</th>
-                                    <th>PHC name</th>
-                                    <th>Village name</th>
-                                    <th>Family Head Name </th>
-
-
+                                    <th>Village</th>
+                                    <th>Locality </th>
+                                    <th> Identifier</th>
+                                    <th> Name </th>
+                                    <th> Gender</th>
+                                    <th> Age</th>
+                                    <th> Encounter Type </th>						
+                                    <th> Encounter Date </th>												
+                                    <th>ASHA Assigned</th>
                                 </tr>
+
                             </thead>
                             <tbody>
 
                                 @if(count($details) > 0)
                                 @foreach ($details as $detail)
                                 <tr>
-                                    <td>{{$detail['hh_id']}} </td>
-                                    <td>{{$detail['phc_name']}} </td>
-                                    <td>{{$detail['village_name']}} </td>
-                                    <td> {{$detail['hh_head_fname'] ." ".$detail['hh_head_lname']}}</td>
+                                    <td>{{$detail['vill_name']}} </td>
+                                    <td>{{$detail['locality']}} </td>
+                                    <td>{{$detail['patient_id']}} </td>
+                                    <td> {{$detail['first_name'] ." ".$detail['sur_name']}}</td>
+                                    <td>{{$detail['gender']}} </td>
+                                    <td>{{$detail['age']}} </td>
+                                    <td>{{$detail['enc_type']}} </td>
+                                    <td>{{$detail['enc_date']}} </td>
+                                    <td>{{$detail['asha_assigned']}} </td>
                                 </tr>
 
                                 @endforeach
@@ -169,8 +177,8 @@ $(function () {
         getPHCVillages(phcselectvalue, villageselectvalue);
     }
     if (startdateValue.length > 0) {
-         $('#datepicker').datepicker('setDate', new Date(startdateValue));
-            
+        $('#datepicker').datepicker('setDate', new Date(startdateValue));
+
     }
     if (enddateValue.length > 0) {
         $('#datepicker2').datepicker('setDate', new Date(enddateValue));
@@ -181,10 +189,10 @@ $(function () {
     $('#phcselect').on('change', function () {
         getPHCVillages($(this).val());
     });
-    
+
 });
 
-function getPHCVillages(phcValue,villageSelectValue)
+function getPHCVillages(phcValue, villageSelectValue)
 {
     $.ajax({
         type: "POST",
@@ -192,7 +200,7 @@ function getPHCVillages(phcValue,villageSelectValue)
         data: {phcname: phcValue},
         dataType: 'json',
         success: function (response) {
-            villageSelectBox(response,villageSelectValue);
+            villageSelectBox(response, villageSelectValue);
         },
         error: function (error) {
             console.log("server error");
@@ -200,7 +208,7 @@ function getPHCVillages(phcValue,villageSelectValue)
     });
 }
 
-function villageSelectBox(response, selectOption )
+function villageSelectBox(response, selectOption)
 {
     $('#villageselect').val(null).trigger('change');
     $('#villageselect option').each(function () {

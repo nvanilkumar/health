@@ -12,22 +12,22 @@
 
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">House Hold</h3>
+                        <h3 class="box-title">Analytic Details</h3>
 
 
                         <!-- /.box-header -->
                         <div class="box-body" style="">
                             <div class="row">
-                                {{ Form::open(array('action' => 'UserController@householdView')) }}
+                                {{ Form::open(array('action' => 'UserController@analyticsView')) }}
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>PHC</label>
                                         <select class="form-control select2 select2-hidden-accessible" 
                                                 name="phcselect"  id="phcselect" style="width: 100%;" tabindex="-1" aria-hidden="true">
                                             <option selected="selected">select option</option>
-                                            @if(count($householdphc) > 0)
-                                            @foreach ($householdphc as $phc)
-                                            <option value="{{$phc->phc_name}}" > {{$phc->phc_name}}</option>
+                                            @if(count($analyticsphc) > 0)
+                                            @foreach ($analyticsphc as $phc)
+                                                <option value="{{$phc->phc_name}}" > {{$phc->phc_name}}</option>
 
                                             @endforeach
                                             @endif
@@ -94,35 +94,7 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-                        <table id="example1" class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-
-                                    <th>HH Id</th>
-                                    <th>PHC name</th>
-                                    <th>Village name</th>
-                                    <th>Family Head Name </th>
-
-
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                                @if(count($details) > 0)
-                                @foreach ($details as $detail)
-                                <tr>
-                                    <td>{{$detail['hh_id']}} </td>
-                                    <td>{{$detail['phc_name']}} </td>
-                                    <td>{{$detail['village_name']}} </td>
-                                    <td> {{$detail['hh_head_fname'] ." ".$detail['hh_head_lname']}}</td>
-                                </tr>
-
-                                @endforeach
-                                @endif
-
-                            </tbody>
-
-                        </table>
+                      testoooooooooooo
                     </div>
                     <!-- /.box-body -->
                 </div>
@@ -136,8 +108,6 @@
 </div>
 <!-- /.content-wrapper -->		
 <script type="text/javascript" src="{{ asset('/js/jquery.validate.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('/js/jquery.dataTables.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('/js/pluginjs/dataTables.bootstrap.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('/js/pluginjs/select2.full.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('/js/pluginjs/bootstrap-datepicker.min.js') }}"></script>
 <script>
@@ -152,14 +122,6 @@ $(function () {
         autoclose: true
     })
 
-    $('#example1').DataTable({
-        'paging': true,
-        'lengthChange': false,
-        'searching': true,
-        'ordering': true,
-        'info': true,
-        'autoWidth': false
-    })
 
     //filter values set
     if (phcselectvalue.length > 0) {
@@ -169,8 +131,8 @@ $(function () {
         getPHCVillages(phcselectvalue, villageselectvalue);
     }
     if (startdateValue.length > 0) {
-         $('#datepicker').datepicker('setDate', new Date(startdateValue));
-            
+        $('#datepicker').datepicker('setDate', new Date(startdateValue));
+
     }
     if (enddateValue.length > 0) {
         $('#datepicker2').datepicker('setDate', new Date(enddateValue));
@@ -181,18 +143,18 @@ $(function () {
     $('#phcselect').on('change', function () {
         getPHCVillages($(this).val());
     });
-    
+
 });
 
-function getPHCVillages(phcValue,villageSelectValue)
+function getPHCVillages(phcValue, villageSelectValue)
 {
     $.ajax({
         type: "POST",
-        url: "{{ action('UserController@householdVillage') }}",
+        url: "{{ action('UserController@analyticsVillage') }}",
         data: {phcname: phcValue},
         dataType: 'json',
         success: function (response) {
-            villageSelectBox(response,villageSelectValue);
+            villageSelectBox(response, villageSelectValue);
         },
         error: function (error) {
             console.log("server error");
@@ -200,7 +162,7 @@ function getPHCVillages(phcValue,villageSelectValue)
     });
 }
 
-function villageSelectBox(response, selectOption )
+function villageSelectBox(response, selectOption)
 {
     $('#villageselect').val(null).trigger('change');
     $('#villageselect option').each(function () {
