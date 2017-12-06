@@ -18,7 +18,8 @@
                         <!-- /.box-header -->
                         <div class="box-body" style="">
                             <div class="row">
-                                {{ Form::open(array('action' => 'UserController@analyticsView')) }}
+                                
+                                {{ Form::open(array('url' => url('/')."/analytics/".request()->route('type'))) }}
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>PHC</label>

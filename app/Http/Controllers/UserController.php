@@ -42,7 +42,7 @@ class UserController extends Controller
 
     public function dashboard()
     {
-        //echo 333;exit;
+//        echo 333;exit;
         $details = $this->userService->dashboardDetails();
         return view('users.chart', ["title" => "Dashboard",
             "details" => $details
@@ -78,9 +78,9 @@ class UserController extends Controller
         ]);
     }
     
-    public function analyticsView($type)
+    public function analyticsView($type=NULL)
     {
-        echo $type;exit;
+        $this->request->request->add(['type' => $type]);
         $details = $this->userService->getAnalytics($type);
         $analyticsphc = $this->userService->getAnalyticsPHC();
         return view('users.analytics', ["title" => "Analytics",

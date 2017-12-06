@@ -108,12 +108,12 @@
                                 </span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="{{ action('UserController@analyticsView')."/default" }}"><i class="fa fa-circle-o"></i> ALL Details</a></li>
-                                <li><a href="{{ action('UserController@analyticsView')."/hbp" }}"><i class="fa fa-circle-o"></i> hbp</a></li>
-                                <li><a href="{{ action('UserController@analyticsView')."/diag" }}"><i class="fa fa-circle-o"></i> diag</a></li>
-                                <li><a href="{{ action('UserController@analyticsView')."/cancer" }}"><i class="fa fa-circle-o"></i> cancer</a></li>
-                                <li><a href="{{ action('UserController@analyticsView')."/copd" }}"><i class="fa fa-circle-o"></i> copd</a></li>
-                                <li><a href="{{ action('UserController@analyticsView')."/cvd" }}"><i class="fa fa-circle-o"></i> cvd</a></li>
+                                <li><a href="{{ action('UserController@analyticsView',['default']) }}"><i class="fa fa-circle-o"></i> ALL Details</a></li>
+                                <li><a href="{{ action('UserController@analyticsView',['hbp'])  }}"><i class="fa fa-circle-o"></i> hbp</a></li>
+                                <li><a href="{{ action('UserController@analyticsView',['diag'])  }}"><i class="fa fa-circle-o"></i> diag</a></li>
+                                <li><a href="{{ action('UserController@analyticsView',['cancer'])  }}"><i class="fa fa-circle-o"></i> cancer</a></li>
+                                <li><a href="{{ action('UserController@analyticsView',['copd'])  }}"><i class="fa fa-circle-o"></i> copd</a></li>
+                                <li><a href="{{ action('UserController@analyticsView',['cvd'])  }}"><i class="fa fa-circle-o"></i> cvd</a></li>
                             </ul>
                         </li>
                         <li><a href="{{ action('UserController@getPatientsView') }}"><i class="fa fa-user-o"></i> <span>Patients</span></a></li>

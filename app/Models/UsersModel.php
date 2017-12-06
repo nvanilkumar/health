@@ -139,24 +139,26 @@ class UsersModel extends CommonModel
         //Applying the filters
         if(count($filters) > 0)
         {
+//            echo "<pre>";
+//            print_r($filters);exit;
             foreach($filters as $key => $value)
             {
                 if($key!= "startdate" && $key!= "enddate")
                 {
                     $where .= " and ".$key."='".$value."'";
-                }else if($key== "startdate"){
+                }else if($key == "startdate"){
                     $where .= "and ".$key.">='".$value."'";
-                }else if($key== "enddate"){
+                }else if($key == "enddate"){
                     $where .= " and ".$key."<='".$value."'";
                 }
             }    
             
         }    
         
-        $select = "select created_date,count(_id)
+       echo $select = "select created_date,count(_id)
                     from cvd_riskasses ".$where." 
                     group by created_date
-                    order by created_date";
+                    order by created_date";exit;
         $analyticData = DB::select(DB::raw($select), $this->where);
         
         if (count($analyticData) == 0) {

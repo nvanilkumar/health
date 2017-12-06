@@ -247,28 +247,28 @@ class UserService
         $filters = array();
         $phcselect = $this->request->input("phcselect");
         if ($phcselect && ($phcselect != "select option")) {
-            $filters[] = ["phc_name", $phcselect];
+            $filters[] = ["phc_name"=> $phcselect];
         }
         $asha_assigned = $this->request->input("asha_assigned");
         if ($asha_assigned && ($asha_assigned != "select option")) {
-            $filters[] = ["asha_assigned", $asha_assigned];
+            $filters[] = ["asha_assigned"=> $asha_assigned];
         }
 
         $villageselect = $this->request->input("villageselect");
         if ($villageselect && ($villageselect != "select option")) {
-            $filters[] = ["village", $villageselect];
+            $filters[] = ["village"=>$villageselect];
         }
 
         $startdate = $this->request->input("startdate");
         if ($startdate) {
             $startdate = date("Y-m-d H:i:s", strtotime($startdate));
-            $filters[] = ["startdate", $startdate];
+            $filters[] = ["startdate"=> $startdate];
         }
 
         $enddate = $this->request->input("enddate");
         if ($enddate) {
             $enddate = date("Y-m-d H:i:s", strtotime($enddate));
-            $filters[] = ["enddate", $enddate];
+            $filters[] = ["enddate"=> $enddate];
         }
         $analytics = $this->usersModel->analyticQuery($type, $filters);
         return $analytics;
