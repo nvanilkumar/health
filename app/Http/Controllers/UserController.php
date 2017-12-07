@@ -35,10 +35,6 @@ class UserController extends Controller
         return view('login.login', []);
     }
 
-    public function charts()
-    {
-        return view('users.chart', []);
-    }
 
     public function dashboard()
     {
@@ -51,7 +47,13 @@ class UserController extends Controller
 
     public function reportsView()
     {
-        return view('users.reports', ["title" => "Reports"]);
+        $details = $this->userService->getreportsList();
+        $analyticsphc = $this->userService->getAnalyticsPHC();
+        return view('users.reports', ["title" => "Reports",
+            "details" => $details,
+            "householdphc" => $analyticsphc,
+            'postData' => Input::all()
+        ]);
     }
 
     public function householdView()
@@ -62,10 +64,10 @@ class UserController extends Controller
         return view('users.household', ["title" => "Household",
             "details" => $details,
             "householdphc" => $houseHoldPhc,
-             'postData' => Input::all()
+            'postData' => Input::all()
         ]);
     }
-    
+
     public function getPatientsView()
     {
 
@@ -74,25 +76,27 @@ class UserController extends Controller
         return view('users.patients', ["title" => "Household",
             "details" => $details,
             "householdphc" => $houseHoldPhc,
-             'postData' => Input::all()
+            'postData' => Input::all()
         ]);
     }
-    
-    public function analyticsView($type=NULL)
+
+    public function analyticsView($type = NULL)
     {
         $this->request->request->add(['type' => $type]);
         $details = $this->userService->getAnalytics($type);
+//        echo "<pre>";
+//        print_r($details);exit;
         $analyticsphc = $this->userService->getAnalyticsPHC();
         return view('users.analytics', ["title" => "Analytics",
             "details" => $details,
             "analyticsphc" => $analyticsphc,
-             'postData' => Input::all()
+            'postData' => Input::all()
         ]);
     }
-    
+
     public function analyticsVillage()
     {
-        $status = $this->userService->getAnalyticsVillage();
+        $status = $this->userService->getAnalyticsPHCVillage();
         return response()->json($status, 200);
     }
 

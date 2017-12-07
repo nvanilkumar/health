@@ -14,6 +14,7 @@ class VerifyCsrfToken extends BaseVerifier
     protected $except = [
          "staff/login",
          "household/create",
-        "ajax/householdVillage"
+        "ajax/householdVillage",
+        "ajax/analyticsVillage"
     ];
 }

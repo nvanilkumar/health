@@ -20,7 +20,7 @@
                             <div class="row">
                                 
                                 {{ Form::open(array('url' => url('/')."/analytics/".request()->route('type'))) }}
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label>PHC</label>
                                         <select class="form-control select2 select2-hidden-accessible" 
@@ -37,7 +37,7 @@
                                     <!-- /.form-group -->
 
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label>Village</label>
                                         <select class="form-control select2 select2-hidden-accessible" disabled 
@@ -50,7 +50,7 @@
 
                                 </div>
 
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label>Date:</label>
 
@@ -65,7 +65,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label>Date:</label>
 
@@ -95,7 +95,10 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-                      testoooooooooooo
+                        <div class="row">
+                         
+                            <div id="chartdiv"></div>
+                        </div>
                     </div>
                     <!-- /.box-body -->
                 </div>
@@ -111,6 +114,101 @@
 <script type="text/javascript" src="{{ asset('/js/jquery.validate.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('/js/pluginjs/select2.full.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('/js/pluginjs/bootstrap-datepicker.min.js') }}"></script>
+<script src="{{ asset('/js/pluginjs/amcharts/amcharts.js') }}" type="text/javascript"></script>
+<script src="{{ asset('/js/pluginjs/amcharts/serial.js') }}" type="text/javascript"></script>
+
+<script>
+    
+    var data= '<?php echo json_encode($details); ?>';
+    var chartData=JSON.parse(data);
+var chart = AmCharts.makeChart("chartdiv", {
+    "type": "serial",
+    "theme": "none",
+    "pathToImages": "{{ asset('/js/pluginjs/amcharts/images') }}/",
+    "marginRight": 40,
+    "marginLeft": 40,
+    "autoMarginOffset": 20,
+    "mouseWheelZoomEnabled":true,
+    "dataDateFormat": "YYYY-MM-DD",
+    "valueAxes": [{
+        "id": "v1",
+        "axisAlpha": 0,
+        "position": "left",
+        "ignoreAxisWidth":true
+    }],
+    "balloon": {
+        "borderThickness": 1,
+        "shadowAlpha": 0
+    },
+    "graphs": [{
+        "id": "g1",
+        "balloon":{
+          "drop":true,
+          "adjustBorderColor":false,
+          "color":"#ffffff"
+        },
+        "bullet": "round",
+        "bulletBorderAlpha": 1,
+        "bulletColor": "#FFFFFF",
+        "bulletSize": 5,
+        "hideBulletsCount": 50,
+        "lineThickness": 2,
+        "title": "red line",
+        "useLineColorForBulletBorder": true,
+        "valueField": "value",
+        "balloonText": "<span style='font-size:18px;'>[[value]]</span>"
+    }],
+    "chartScrollbar": {
+        "graph": "g1",
+        "oppositeAxis":false,
+        "offset":30,
+        "scrollbarHeight": 80,
+        "backgroundAlpha": 0,
+        "selectedBackgroundAlpha": 0.1,
+        "selectedBackgroundColor": "#888888",
+        "graphFillAlpha": 0,
+        "graphLineAlpha": 0.5,
+        "selectedGraphFillAlpha": 0,
+        "selectedGraphLineAlpha": 1,
+        "autoGridCount":true,
+        "color":"#AAAAAA"
+    },
+    "chartCursor": {
+        "pan": true,
+        "valueLineEnabled": true,
+        "valueLineBalloonEnabled": true,
+        "cursorAlpha":1,
+        "cursorColor":"#258cbb",
+        "limitToGraph":"g1",
+        "valueLineAlpha":0.2,
+        "valueZoomable":true
+    },
+    "valueScrollbar":{
+      "oppositeAxis":false,
+      "offset":50,
+      "scrollbarHeight":10
+    },
+    "categoryField": "date",
+    "categoryAxis": {
+        "parseDates": true,
+        "dashLength": 1,
+        "minorGridEnabled": true
+    },
+    "export": {
+        "enabled": true
+    },
+    "dataProvider": chartData  
+});
+
+chart.addListener("rendered", zoomChart);
+
+zoomChart();
+
+function zoomChart() {
+    chart.zoomToIndexes(chart.dataProvider.length - 40, chart.dataProvider.length - 1);
+}
+</script>
+    
 <script>
 $(function () {
     var phcselectvalue = "<?php echo @$postData["phcselect"] ?>";

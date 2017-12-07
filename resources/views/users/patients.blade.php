@@ -19,7 +19,7 @@
                         <div class="box-body" style="">
                             <div class="row">
                                 {{ Form::open(array('action' => 'UserController@householdView')) }}
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label>PHC</label>
                                         <select class="form-control select2 select2-hidden-accessible" 
@@ -36,7 +36,7 @@
                                     <!-- /.form-group -->
 
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label>Village</label>
                                         <select class="form-control select2 select2-hidden-accessible" disabled 
@@ -49,7 +49,7 @@
 
                                 </div>
 
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label>Date:</label>
 
@@ -64,7 +64,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label>Date:</label>
 
@@ -86,6 +86,7 @@
                                 </div>
                                 {{ Form::close() }}
                             </div>
+                            <button type="button" id="export" class="btn btn-info pull-right">Export</button>
                             <!-- /.row -->
                         </div>
                         <!-- /.box-body -->
@@ -113,8 +114,8 @@
 
                                 @if(count($details) > 0)
                                 @foreach ($details as $detail)
-                                <tr>
-                                    <td>{{$detail['vill_name']}} </td>
+                                <tr data-id="{{json_encode($detail)}}">
+                                    <td >{{$detail['vill_name']}} </td>
                                     <td>{{$detail['locality']}} </td>
                                     <td>{{$detail['patient_id']}} </td>
                                     <td> {{$detail['first_name'] ." ".$detail['sur_name']}}</td>
@@ -132,6 +133,29 @@
 
                         </table>
                     </div>
+                    <div id="dialog-form" title="Attributes">
+                        <div class="col-xs-12">
+                            <div class="box">
+
+                                <!-- /.box-header -->
+                                <div class="box-body table-responsive no-padding">
+                                    <table class="table table-hover" id="patientdata">
+                                        <thead>
+                                            <tr> 
+                                                <td>Name </td>
+                                                <td>Value </td>
+                                            </tr>    
+                                        </thead>
+                                        <tbody>
+                                            
+
+                                        </tbody></table>
+                                </div>
+                                <!-- /.box-body -->
+                            </div>
+                            <!-- /.box -->
+                        </div>
+                    </div>
                     <!-- /.box-body -->
                 </div>
                 <!-- /.box -->
@@ -148,8 +172,40 @@
 <script type="text/javascript" src="{{ asset('/js/pluginjs/dataTables.bootstrap.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('/js/pluginjs/select2.full.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('/js/pluginjs/bootstrap-datepicker.min.js') }}"></script>
+<script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
+<style>
+    .ui-dialog{
+        z-index: 2000;
+    }
+    .ui-widget-header{
+    border: 1px solid #3c8dbc;
+    background: none;
+    background-color: #3c8dbc;
+    color: #fff;
+    }
+    #patientdata thead{
+        background-color: #222d32;
+        color: #eeeeee;
+        font-size: 13px;
+    }
+</style>
 <script>
 $(function () {
+
+    $("#example1 tr").click(function () {
+console.log($(this).data("id"));
+var data=$(this).data("id");
+prepareData(data);
+        var dialog;
+        dialog = $("#dialog-form").dialog({
+            autoOpen: false,
+            height: 600,
+            width: 600,
+            modal: true
+        });
+        dialog.dialog("open");
+    });
     var phcselectvalue = "<?php echo @$postData["phcselect"] ?>";
     var villageselectvalue = "<?php echo @$postData["villageselect"] ?>";
     var startdateValue = "<?php echo @$postData["startdate"] ?>";
@@ -163,7 +219,7 @@ $(function () {
     $('#example1').DataTable({
         'paging': true,
         'lengthChange': false,
-        'searching': true,
+        'searching': false,
         'ordering': true,
         'info': true,
         'autoWidth': false
@@ -236,6 +292,15 @@ function villageSelectBox(response, selectOption)
     if (enableslect) {
         $('#villageselect').select2('enable');
     }
+}
+
+function prepareData(data){
+    $("#patientdata > tbody").empty();
+        $.each(data, function (i, item) {
+            $('#patientdata > tbody').append('<tr><td>'+i+'</td> <td>'+item+' </td></tr>');
+
+
+    });
 }
 </script>
 @endsection

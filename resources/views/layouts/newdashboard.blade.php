@@ -33,6 +33,13 @@
         <script src="{{ asset('/js/pluginjs/fastclick.js') }}"></script>
         <script src="{{ asset('/js/pluginjs/adminlte.js') }}"></script>
         <script src="{{ asset('/js/pluginjs/demo.js') }}"></script>
+        <style>
+#chartdiv {
+	width	: 100%;
+	height	: 500px;
+}
+										
+</style>
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
@@ -98,7 +105,7 @@
                 <section class="sidebar">
                     <ul class="sidebar-menu" data-widget="tree">
                         <li class="header">MAIN NAVIGATION</li>
-                        <li><a href="{{ action('UserController@charts') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+                        <li><a href="{{ action('UserController@dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
                         <li><a href="{{ action('UserController@householdView') }}"><i class="fa fa-window-maximize"></i> <span>House Hold</span></a></li>
                         <li class="treeview">
                             <a href="">
