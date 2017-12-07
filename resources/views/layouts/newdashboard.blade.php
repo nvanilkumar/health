@@ -14,8 +14,8 @@
         <link rel="stylesheet" href="{{ asset('/css/AdminLTE.min.css') }}">
 
         <link rel="stylesheet" href="{{ asset('/css/_all-skins.min.css') }}">
-          <link rel="stylesheet" href="{{ asset('/css/dataTables.bootstrap.css') }}">
-          <link rel="stylesheet" href="{{ asset('/css/jquery.datetimepicker.css') }}">
+        <link rel="stylesheet" href="{{ asset('/css/dataTables.bootstrap.css') }}">
+        <link rel="stylesheet" href="{{ asset('/css/jquery.datetimepicker.css') }}">
 
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -27,19 +27,19 @@
 
         <!-- Google Font -->
         <!--<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">-->
-                <script type="text/javascript" src="{{ asset('/js/jquery-2.1.1.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('/js/jquery-2.1.1.min.js') }}"></script>
         <script src="{{ asset('/js/bootstrap.min.js') }}"></script>
         <script src="{{ asset('/js/pluginjs/Chart.js') }}"></script>
         <script src="{{ asset('/js/pluginjs/fastclick.js') }}"></script>
         <script src="{{ asset('/js/pluginjs/adminlte.js') }}"></script>
         <script src="{{ asset('/js/pluginjs/demo.js') }}"></script>
         <style>
-#chartdiv {
-	width	: 100%;
-	height	: 500px;
-}
-										
-</style>
+            #chartdiv {
+                width	: 100%;
+                height	: 500px;
+            }
+
+        </style>
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
@@ -79,7 +79,7 @@
 
                                         <p>
                                             Bhanu B 
-                                           
+
                                         </p>
                                     </li>
                                     <!-- Menu Body -->
@@ -142,13 +142,31 @@
             </footer>
 
 
-        
+
             <div class="control-sidebar-bg"></div>
         </div>
         <!-- ./wrapper -->
 
 
 
-        
+        <script>
+            $(function () {
+                var current = location.pathname;
+                console.log(current);
+                $('li a').each(function () {
+                    var $this = $(this);
+                    // if the current path is like this link, make it active
+                    if ($this.attr('href').indexOf(current) !== -1) {
+                         console.log($this.attr('href'));
+                        $this.parent().addClass('active');
+                    }
+                    if ($this.attr('href').indexOf("analytics") !== -1) {
+                         console.log($this.attr('href'));
+                        $this.parent().parent().parent().addClass('active');
+                    }
+                })
+            })
+        </script>    
+
     </body>
 </html>

@@ -300,11 +300,16 @@ class UserService
     public function getreportsList()
     {
          $reportsList = $this->usersModel->reportsList("");
-       
          $reportsList = json_decode(json_encode($reportsList), true);
-
         return $reportsList;
     }
+    
+    public function downloadData()
+    {
+        $type=$this->request->input("type");
+       $details = $this->getPatients();      
+       return $details;
+    }        
 
     /**
      * To change the user password

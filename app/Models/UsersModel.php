@@ -208,7 +208,8 @@ class UsersModel extends CommonModel
                     count(case when hbp = 1 then hbp end) as hbp,
                     count(case when diag = 1 then diag end) as diag,
                     count(case when mth_cn =1 or brts_cn=1 or cvr_cn = 1 then mth_cn end) as cancer,
-                    count(case when copd_dis = 1 then copd_dis end) as COPD
+                    count(case when copd_dis = 1 then copd_dis end) as COPD,
+                    count(case when high_risk_calc = 2 then high_risk_calc end) as high_risk_calc
                     from cvd_riskasses " . $where . " 
                     group by phc_name ,asha_assigned
                     order by asha_assigned ASC";

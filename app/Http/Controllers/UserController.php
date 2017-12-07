@@ -121,15 +121,11 @@ class UserController extends Controller
 
     public function downloadExcel()
     {
-        $data = $this->userService->getHousehold();
+        $data = $this->userService->downloadData();
 
-//        $data = array("check"=> "test1",
-//            "check2"=> "test2",
-//            
-//            );
         $type = "xlsx";
-        return Excel::create('itsolutionstuff_example', function($excel) use ($data) {
-                    $excel->sheet('Households', function($sheet) use ($data) {
+        return Excel::create('Regports', function($excel) use ($data) {
+                    $excel->sheet('Patients', function($sheet) use ($data) {
                         $sheet->fromArray($data);
                     });
                 })->download($type);

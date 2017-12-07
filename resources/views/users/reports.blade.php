@@ -105,6 +105,7 @@
                                     <th> Diag </th>
                                     <th> Cancer</th>
                                     <th> COPD</th>
+                                    <th> High Risk Calc</th>
                                      
                                 </tr>
 
@@ -121,6 +122,7 @@
                                     <td>{{$detail['diag']}} </td>
                                     <td>{{$detail['cancer']}} </td>
                                     <td>{{$detail['COPD']}} </td>
+                                    <td>{{$detail['high_risk_calc']}} </td>
                                 </tr>
 
                                 @endforeach

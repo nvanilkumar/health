@@ -86,7 +86,7 @@
                                 </div>
                                 {{ Form::close() }}
                             </div>
-                            <button type="button" id="export" class="btn btn-info pull-right">Export</button>
+                            <button type="button" id="exportButton" class="btn btn-info pull-right">Export</button>
                             <!-- /.row -->
                         </div>
                         <!-- /.box-body -->
@@ -192,7 +192,13 @@
 </style>
 <script>
 $(function () {
-
+    //export button changes
+//    window.location.href
+    $("#exportButton").click(function(){
+        path='{{url('/')."/downloadExcel"}}'+'?type=test';
+        window.location.href=path;
+    });
+    $("#dialog-form").hide();
     $("#example1 tr").click(function () {
 console.log($(this).data("id"));
 var data=$(this).data("id");
