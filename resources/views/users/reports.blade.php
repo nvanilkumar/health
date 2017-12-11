@@ -18,7 +18,7 @@
                         <!-- /.box-header -->
                         <div class="box-body" style="">
                             <div class="row">
-                                {{ Form::open(array('action' => 'UserController@householdView')) }}
+                                {{ Form::open(array('action' => 'UserController@reportsView')) }}
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label>PHC</label>
@@ -149,7 +149,10 @@
 <script type="text/javascript" src="{{ asset('/js/pluginjs/dataTables.bootstrap.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('/js/pluginjs/select2.full.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('/js/pluginjs/bootstrap-datepicker.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/js/pluginjs/jquery-ui.min.js') }}"></script>
+<link rel="stylesheet" href="{{ asset('/css/plugincss/jquery-ui.css') }}" />
 
+<script type="text/javascript" src="{{ asset('/js/common.js') }}"></script>
  
 <script>
 $(function () {
@@ -172,18 +175,9 @@ prepareData(data);
     var enddateValue = "<?php echo @$postData["enddate"] ?>";
     $('.select2').select2()
 //Date picker
-    $('#datepicker,#datepicker2').datepicker({
-        autoclose: true
-    })
+   dateChanges();
 
-    $('#example1').DataTable({
-        'paging': true,
-        'lengthChange': false,
-        'searching': false,
-        'ordering': true,
-        'info': true,
-        'autoWidth': false
-    })
+    dataTableInit("example1");
 
     //filter values set
     if (phcselectvalue.length > 0) {
@@ -191,13 +185,15 @@ prepareData(data);
     }
     if (villageselectvalue.length > 0) {
         getPHCVillages(phcselectvalue, villageselectvalue);
+    }else if (phcselectvalue.length > 0) {
+        getPHCVillages(phcselectvalue, villageselectvalue);
     }
     if (startdateValue.length > 0) {
         $('#datepicker').datepicker('setDate', new Date(startdateValue));
 
     }
     if (enddateValue.length > 0) {
-        $('#datepicker2').datepicker('setDate', new Date(enddateValue));
+        setEndDate(enddateValue);
     }
 
     ////
@@ -212,7 +208,7 @@ function getPHCVillages(phcValue, villageSelectValue)
 {
     $.ajax({
         type: "POST",
-        url: "{{ action('UserController@householdVillage') }}",
+        url: "{{ action('UserController@analyticsVillage') }}",
         data: {phcname: phcValue},
         dataType: 'json',
         success: function (response) {

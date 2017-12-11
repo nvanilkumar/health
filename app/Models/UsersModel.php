@@ -201,8 +201,22 @@ class UsersModel extends CommonModel
 
     public function reportsList($filters)
     {
-        $where = "";
+        $where = "where 1 ";
+        
+        //Applying the filters
+        if (count($filters) > 0) {
+            foreach ($filters as $key => $value) {
 
+                if ($key != "startdate" && $key != "enddate") {
+                    $where .= " and " . $key . "='" . $value . "'";
+                } else if ($key == "startdate") {
+                    $where .= "and created_date >='" . $value . "'";
+                } else if ($key == "enddate") {
+                    $where .= " and created_date <='" . $value . "'";
+                }
+            }
+        }
+        
         $select = "select phc_name, count(_id) as ashacount ,asha_assigned,
                     count(case when high_risk_calc = 2 then high_risk_calc end) as high_risk_count,
                     count(case when hbp = 1 then hbp end) as hbp,

@@ -72,7 +72,7 @@ class UserController extends Controller
     {
 
         $details = $this->userService->getPatients();
-        $houseHoldPhc = $this->userService->getHouseholdPHC();
+        $houseHoldPhc = $this->userService->getAnalyticsPHC();
         return view('users.patients', ["title" => "Patients ",
             "details" => $details,
             "householdphc" => $houseHoldPhc,

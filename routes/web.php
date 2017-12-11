@@ -37,11 +37,13 @@ Route::post('ajax/analyticsVillage', 'UserController@analyticsVillage');
 Route::group(['middleware' => 'customauth'], function () {
     Route::get('dashboard', 'UserController@dashboard');
     Route::get('admin/reports', 'UserController@reportsView');
+    Route::post('admin/reports', 'UserController@reportsView');
     Route::get('admin/household', 'UserController@householdView');
     Route::post('admin/household', 'UserController@householdView');
 
 
     Route::get('patients/list', 'UserController@getPatientsView');
+    Route::post('patients/list', 'UserController@getPatientsView');
     Route::get('analytics/{type}', 'UserController@analyticsView');
     Route::post('analytics/{type}', 'UserController@analyticsView');
 });

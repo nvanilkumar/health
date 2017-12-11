@@ -209,19 +209,19 @@ class UserService
         $villageselect = $this->request->input("villageselect");
         if ($villageselect && ($villageselect != "select option")) {
 
-            $where[] = ["village_name", "=", $villageselect];
+            $where[] = ["vill_name", "=", $villageselect];
         }
 
         $startdate = $this->request->input("startdate");
         if ($startdate) {
             $startdate = date("Y-m-d H:i:s", strtotime($startdate));
-            $where[] = ["date", ">=", $startdate];
+            $where[] = ["created_date", ">=", $startdate];
         }
 
         $enddate = $this->request->input("enddate");
         if ($enddate) {
             $enddate = date("Y-m-d H:i:s", strtotime($enddate));
-            $where[] = ["date", "<=", $enddate];
+            $where[] = ["created_date", "<=", $enddate];
         }
 
         $this->usersModel->setTableName("cvd_riskasses");
@@ -230,7 +230,7 @@ class UserService
             $this->usersModel->setWhere($where);
         }
 //  \DB::enableQueryLog();
-        $paitents = $this->usersModel->getData();
+        $paitents = $this->usersModel->getOrderByData("_id");
 
         $paitents = json_decode(json_encode($paitents), true);
 
@@ -245,31 +245,7 @@ class UserService
     public function getAnalytics($type)
     {
         $filters = array();
-        $phcselect = $this->request->input("phcselect");
-        if ($phcselect && ($phcselect != "select option")) {
-            $filters["phc_name"] =   $phcselect;
-        }
-        $asha_assigned = $this->request->input("asha_assigned");
-        if ($asha_assigned && ($asha_assigned != "select option")) {
-            $filters["asha_assigned"] =   $asha_assigned;
-        }
-
-        $villageselect = $this->request->input("villageselect");
-        if ($villageselect && ($villageselect != "select option")) {
-            $filters["vill_name"] = $villageselect;
-        }
-
-        $startdate = $this->request->input("startdate");
-        if ($startdate) {
-            $startdate = date("Y-m-d H:i:s", strtotime($startdate));
-            $filters["startdate"] =$startdate;
-        }
-
-        $enddate = $this->request->input("enddate");
-        if ($enddate) {
-            $enddate = date("Y-m-d H:i:s", strtotime($enddate));
-            $filters["enddate"] =  $enddate;
-        }
+        $filters=$this->prepareFilter();
         $analytics = $this->usersModel->analyticQuery($type, $filters);
         $analytics = json_decode(json_encode($analytics), true);
         return $analytics;
@@ -281,6 +257,7 @@ class UserService
         $householdphc = $this->usersModel->getAnalyticsPHC();
         return $householdphc;
     }
+
     public function getAnalyticsPHCVillage()
     {
         $phcname = $this->request->input("phcname");
@@ -292,24 +269,26 @@ class UserService
         $this->usersModel->setWhere($where);
         $analyticsPHCVillage = $this->usersModel->getAnalyticsPHCVillage();
         $analyticsPHCVillage = json_decode(json_encode($analyticsPHCVillage), true);
- 
+
         return $analyticsPHCVillage;
- 
     }
-    
+
     public function getreportsList()
     {
-         $reportsList = $this->usersModel->reportsList("");
-         $reportsList = json_decode(json_encode($reportsList), true);
+        $filters = array();
+        $filters=$this->prepareFilter();
+//        print_r($filters);exit;
+        $reportsList = $this->usersModel->reportsList($filters);
+        $reportsList = json_decode(json_encode($reportsList), true);
         return $reportsList;
     }
-    
+
     public function downloadData()
     {
-        $type=$this->request->input("type");
-       $details = $this->getPatients();      
-       return $details;
-    }        
+        $type = $this->request->input("type");
+        $details = $this->getPatients();
+        return $details;
+    }
 
     /**
      * To change the user password
@@ -730,6 +709,37 @@ class UserService
 
         var_dump($userId);
         exit;
+    }
+
+    public function prepareFilter()
+    {
+        $filters = array();
+        $phcselect = $this->request->input("phcselect");
+        if ($phcselect && ($phcselect != "select option")) {
+            $filters["phc_name"] = $phcselect;
+        }
+        $asha_assigned = $this->request->input("asha_assigned");
+        if ($asha_assigned && ($asha_assigned != "select option")) {
+            $filters["asha_assigned"] = $asha_assigned;
+        }
+
+        $villageselect = $this->request->input("villageselect");
+        if ($villageselect && ($villageselect != "select option")) {
+            $filters["vill_name"] = $villageselect;
+        }
+
+        $startdate = $this->request->input("startdate");
+        if ($startdate) {
+            $startdate = date("Y-m-d H:i:s", strtotime($startdate));
+            $filters["startdate"] = $startdate;
+        }
+
+        $enddate = $this->request->input("enddate");
+        if ($enddate) {
+            $enddate = date("Y-m-d H:i:s", strtotime($enddate));
+            $filters["enddate"] = $enddate;
+        }
+        return $filters;
     }
 
 }
