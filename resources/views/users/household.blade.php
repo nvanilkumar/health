@@ -154,15 +154,8 @@ $(function () {
 //Date picker
     dateChanges();
 
- 
-    $('#example1').DataTable({
-        'paging': true,
-        'lengthChange': false,
-        'searching': true,
-        'ordering': true,
-        'info': true,
-        'autoWidth': false
-    })
+    dataTableInit("example1");
+
 
     //filter values set
     if (phcselectvalue.length > 0) {
@@ -170,24 +163,27 @@ $(function () {
     }
     if (villageselectvalue.length > 0) {
         getPHCVillages(phcselectvalue, villageselectvalue);
-    }
+    }else if (phcselectvalue.length > 0) {
+        getPHCVillages(phcselectvalue, villageselectvalue);
+    } 
     if (startdateValue.length > 0) {
-         $('#datepicker').datepicker('setDate', new Date(startdateValue));
-            
+        $('#datepicker').datepicker('setDate', new Date(startdateValue));
+
     }
     if (enddateValue.length > 0) {
         $('#datepicker2').datepicker('setDate', new Date(enddateValue));
     }
 
-    ////
 
     $('#phcselect').on('change', function () {
         getPHCVillages($(this).val());
     });
-    
+
 });
 
-function getPHCVillages(phcValue,villageSelectValue)
+
+//House Hold table related phc
+function getPHCVillages(phcValue, villageSelectValue)
 {
     $.ajax({
         type: "POST",
@@ -195,7 +191,7 @@ function getPHCVillages(phcValue,villageSelectValue)
         data: {phcname: phcValue},
         dataType: 'json',
         success: function (response) {
-            villageSelectBox(response,villageSelectValue);
+            villageSelectBox(response, villageSelectValue);
         },
         error: function (error) {
             console.log("server error");
@@ -203,7 +199,8 @@ function getPHCVillages(phcValue,villageSelectValue)
     });
 }
 
-function villageSelectBox(response, selectOption )
+//House Hold table related phc related villages
+function villageSelectBox(response, selectOption)
 {
     $('#villageselect').val(null).trigger('change');
     $('#villageselect option').each(function () {

@@ -22,3 +22,20 @@ function dateChanges()
         }
     });
 }
+
+
+
+//Data table Initialization 
+
+function dataTableInit(_id)
+{
+    $('#'+_id).DataTable({
+        'paging': true,
+        'lengthChange': false,
+        'searching': true,
+        "order": [],
+        "bSort": true,
+        'info': true,
+        'autoWidth': false
+    })
+}

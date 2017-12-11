@@ -242,6 +242,7 @@ class UserController extends Controller
      */
     public function getUserList($type = NULL)
     {
+        echo 8888;exit;
         $title = "";
         if ($type == "student") {
             $this->request->request->add(['role_name' => "student"]);

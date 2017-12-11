@@ -117,6 +117,11 @@
 <script src="{{ asset('/js/pluginjs/amcharts/amcharts.js') }}" type="text/javascript"></script>
 <script src="{{ asset('/js/pluginjs/amcharts/serial.js') }}" type="text/javascript"></script>
 
+<script type="text/javascript" src="{{ asset('/js/pluginjs/jquery-ui.min.js') }}"></script>
+<link rel="stylesheet" href="{{ asset('/css/plugincss/jquery-ui.css') }}" />
+
+<script type="text/javascript" src="{{ asset('/js/common.js') }}"></script>
+
 <script>
     
     var data= '<?php echo json_encode($details); ?>';
@@ -217,18 +222,19 @@ $(function () {
     var enddateValue = "<?php echo @$postData["enddate"] ?>";
     $('.select2').select2()
 //Date picker
-    $('#datepicker,#datepicker2').datepicker({
-        autoclose: true
-    })
+ dateChanges();
 
 
     //filter values set
     if (phcselectvalue.length > 0) {
         $('#phcselect').val(phcselectvalue).trigger('change');
+         
     }
-    if (villageselectvalue.length > 0) {
+    if (villageselectvalue.length > 0 && phcselectvalue.length > 0) {
         getPHCVillages(phcselectvalue, villageselectvalue);
-    }
+    }else if (phcselectvalue.length > 0) {
+        getPHCVillages(phcselectvalue, villageselectvalue);
+    }    
     if (startdateValue.length > 0) {
         $('#datepicker').datepicker('setDate', new Date(startdateValue));
 

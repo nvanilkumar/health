@@ -26,7 +26,6 @@
         <![endif]-->
 
         <!-- Google Font -->
-        <!--<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">-->
         <script type="text/javascript" src="{{ asset('/js/jquery-2.1.1.min.js') }}"></script>
         <script src="{{ asset('/js/bootstrap.min.js') }}"></script>
         <script src="{{ asset('/js/pluginjs/Chart.js') }}"></script>

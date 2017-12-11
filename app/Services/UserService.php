@@ -161,7 +161,7 @@ class UserService
             $this->usersModel->setWhere($where);
         }
 //  \DB::enableQueryLog();
-        $households = $this->usersModel->getData();
+        $households = $this->usersModel->getOrderByData("_id");
 
         $households = json_decode(json_encode($households), true);
 
