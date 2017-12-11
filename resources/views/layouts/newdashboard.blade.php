@@ -152,16 +152,16 @@
         <script>
             $(function () {
                 var current = location.pathname;
-                console.log(current);
+//                console.log(current);
                 $('li a').each(function () {
                     var $this = $(this);
                     // if the current path is like this link, make it active
                     if ($this.attr('href').indexOf(current) !== -1) {
-                         console.log($this.attr('href'));
+                        
                         $this.parent().addClass('active');
                     }
-                    if ($this.attr('href').indexOf("analytics") !== -1) {
-                         console.log($this.attr('href'));
+                    if (($this.attr('href').indexOf("analytics") !== -1) && $this.attr('href').indexOf(current) !== -1) {
+                        
                         $this.parent().parent().parent().addClass('active');
                     }
                 })

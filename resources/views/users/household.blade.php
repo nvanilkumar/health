@@ -140,6 +140,10 @@
 <script type="text/javascript" src="{{ asset('/js/pluginjs/dataTables.bootstrap.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('/js/pluginjs/select2.full.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('/js/pluginjs/bootstrap-datepicker.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/js/pluginjs/jquery-ui.min.js') }}"></script>
+<link rel="stylesheet" href="{{ asset('/css/plugincss/jquery-ui.css') }}" />
+
+<script type="text/javascript" src="{{ asset('/js/common.js') }}"></script>
 <script>
 $(function () {
     var phcselectvalue = "<?php echo @$postData["phcselect"] ?>";
@@ -148,10 +152,9 @@ $(function () {
     var enddateValue = "<?php echo @$postData["enddate"] ?>";
     $('.select2').select2()
 //Date picker
-    $('#datepicker,#datepicker2').datepicker({
-        autoclose: true
-    })
+    dateChanges();
 
+ 
     $('#example1').DataTable({
         'paging': true,
         'lengthChange': false,

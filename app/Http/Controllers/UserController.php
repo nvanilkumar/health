@@ -73,7 +73,7 @@ class UserController extends Controller
 
         $details = $this->userService->getPatients();
         $houseHoldPhc = $this->userService->getHouseholdPHC();
-        return view('users.patients', ["title" => "Household",
+        return view('users.patients', ["title" => "Patients ",
             "details" => $details,
             "householdphc" => $houseHoldPhc,
             'postData' => Input::all()
