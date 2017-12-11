@@ -23,13 +23,25 @@ function dateChanges()
     });
 }
 
+//After selecting the data
+function setEndDate(enddateValue)
+{
+    $('#datepicker2').removeAttr("disabled");
+//    console.log(enddateValue);
+    $('#datepicker2').datepicker({
+        autoclose: true
+    })
+    $('#datepicker2').datepicker('setDate', new Date(enddateValue));
+
+}
+
 
 
 //Data table Initialization 
 
 function dataTableInit(_id)
 {
-    $('#'+_id).DataTable({
+    $('#' + _id).DataTable({
         'paging': true,
         'lengthChange': false,
         'searching': true,

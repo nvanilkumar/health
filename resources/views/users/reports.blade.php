@@ -155,7 +155,6 @@
 $(function () {
 
     $("#example1 tr").click(function () {
-console.log($(this).data("id"));
 var data=$(this).data("id");
 prepareData(data);
         var dialog;

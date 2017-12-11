@@ -240,7 +240,8 @@ $(function () {
 
     }
     if (enddateValue.length > 0) {
-        $('#datepicker2').datepicker('setDate', new Date(enddateValue));
+//        $('#datepicker2').datepicker('setDate', new Date(enddateValue));
+        setEndDate(enddateValue);
     }
 
     ////
