@@ -76,7 +76,7 @@
                 <section class="sidebar">
                     <ul class="sidebar-menu" data-widget="tree">
                         <li class="header">MAIN NAVIGATION</li>
-                        <li><a href="{{ action('UserController@dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+                        <li><a href="{{ action('UserController@dashboard') }}"><i class="fa fa-pie-chart"></i> <span>Dashboard</span></a></li>
                         <li><a href="{{ action('UserController@householdView') }}"><i class="fa fa-window-maximize"></i> <span>Household</span></a></li>
                         <li class="treeview">
                             <a href="">
