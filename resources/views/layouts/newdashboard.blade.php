@@ -47,9 +47,9 @@
                 <!-- Logo -->
                 <a href="#" class="logo">
                     <!-- mini logo for sidebar mini 50x50 pixels -->
-                    <span class="logo-mini"><b>A</b>LT</span>
+                    <span class="logo-mini"><b>N</b>CD</span>
                     <!-- logo for regular state and mobile devices -->
-                    <span class="logo-lg"><b>Admin</b>LTE</span>
+                    <span class="logo-lg"> <img src="{{ asset('/images/login_logo.png') }}" alt="health" style=" width: 105px; "/></span>
                 </a>
                 <!-- Header Navbar: style can be found in header.less -->
                 <nav class="navbar navbar-static-top">
@@ -115,11 +115,11 @@
                             </a>
                             <ul class="treeview-menu">
                                 <li><a href="{{ action('UserController@analyticsView',['default']) }}"><i class="fa fa-circle-o"></i>NCD Summary</a></li>
-                                <li><a href="{{ action('UserController@analyticsView',['hbp'])  }}"><i class="fa fa-circle-o"></i>High Blood Pressure</a></li>
-                                <li><a href="{{ action('UserController@analyticsView',['diag'])  }}"><i class="fa fa-circle-o"></i>Diabetes</a></li>
-                                <li><a href="{{ action('UserController@analyticsView',['cancer'])  }}"><i class="fa fa-circle-o"></i>Cancer</a></li>
-                                <li><a href="{{ action('UserController@analyticsView',['copd'])  }}"><i class="fa fa-circle-o"></i>COPD</a></li>
-                                <li><a href="{{ action('UserController@analyticsView',['cvd'])  }}"><i class="fa fa-circle-o"></i>CVD (High Risk)</a></li>
+                                <li><a href="{{ action('UserController@analyticsView',['hbp'])  }}"><i class="fa fa-heart "></i>High Blood Pressure</a></li>
+                                <li><a href="{{ action('UserController@analyticsView',['diag'])  }}"><i class="fa fa-heart "></i>Diabetes</a></li>
+                                <li><a href="{{ action('UserController@analyticsView',['cancer'])  }}"><i class="fa fa-heart "></i>Cancer</a></li>
+                                <li><a href="{{ action('UserController@analyticsView',['copd'])  }}"><i class="fa fa-heart "></i>COPD</a></li>
+                                <li><a href="{{ action('UserController@analyticsView',['cvd'])  }}"><i class="fa fa-heart "></i>CVD (High Risk)</a></li>
                             </ul>
                         </li>
                         <li><a href="{{ action('UserController@getPatientsView') }}"><i class="fa fa-user-o"></i> <span>Patients</span></a></li>

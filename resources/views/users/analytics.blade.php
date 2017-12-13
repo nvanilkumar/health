@@ -20,12 +20,30 @@
                             <div class="row">
                                 
                                 {{ Form::open(array('url' => url('/')."/analytics/".request()->route('type'))) }}
-                                <div class="col-md-3">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label>ASHA</label>
+                                        <select class="form-control select2 select2-hidden-accessible" 
+                                                name="ashaselect"  id="ashaselect" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                                            <option selected="selected">Choose Asha</option>
+                                            @if(count($csdbasha) > 0)
+                                           
+                                            @foreach ($csdbasha as $asha)
+                                                <option value="{{$asha->asha_assigned}}" > {{$asha->asha_assigned}}</option>
+
+                                            @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+                                    <!-- /.form-group -->
+
+                                </div>
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <label>PHC</label>
                                         <select class="form-control select2 select2-hidden-accessible" 
                                                 name="phcselect"  id="phcselect" style="width: 100%;" tabindex="-1" aria-hidden="true">
-                                            <option selected="selected">select option</option>
+                                            <option selected="selected">Choose PHC</option>
                                             @if(count($analyticsphc) > 0)
                                             @foreach ($analyticsphc as $phc)
                                                 <option value="{{$phc->phc_name}}" > {{$phc->phc_name}}</option>
@@ -37,12 +55,12 @@
                                     <!-- /.form-group -->
 
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <label>Village</label>
                                         <select class="form-control select2 select2-hidden-accessible" disabled 
                                                 name="villageselect" id="villageselect" style="width: 100%;" tabindex="-1" aria-hidden="true">
-                                            <option selected="selected">select option</option>
+                                            <option selected="selected">Choose Village</option>
 
                                         </select>
                                     </div>
@@ -50,7 +68,7 @@
 
                                 </div>
 
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <label>Date:</label>
 
@@ -65,7 +83,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <label>Date:</label>
 
@@ -80,7 +98,7 @@
                                     </div>
                                 </div>
 
-                                <div class="box-footer">
+                                <div class="col-md-2" style="padding: 25px 92px 0px 14px;">
 
                                     <button type="submit" class="btn btn-info pull-right">Set Filter</button>
 
@@ -216,6 +234,7 @@ function zoomChart() {
     
 <script>
 $(function () {
+    var ashaselectvalue = "<?php echo @$postData["ashaselect"] ?>";
     var phcselectvalue = "<?php echo @$postData["phcselect"] ?>";
     var villageselectvalue = "<?php echo @$postData["villageselect"] ?>";
     var startdateValue = "<?php echo @$postData["startdate"] ?>";
@@ -226,7 +245,10 @@ $(function () {
 
 
     //filter values set
-    if (phcselectvalue.length > 0) {
+    if (ashaselectvalue.length > 0 && ashaselectvalue!="Choose Asha") {
+        $('#ashaselect').val(ashaselectvalue).trigger('change');
+    }
+    if (phcselectvalue.length > 0 && phcselectvalue!="Choose PHC") {
         $('#phcselect').val(phcselectvalue).trigger('change');
          
     }

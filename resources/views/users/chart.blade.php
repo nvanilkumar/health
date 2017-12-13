@@ -5,8 +5,8 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            ChartJS
-            <small>Preview sample</small>
+            NCD Reports
+            
         </h1>
 
     </section>
@@ -18,17 +18,16 @@
                 <!-- AREA CHART -->
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Asha Screening Count</h3>
+                        <h3 class="box-title">PHC Household </h3>
 
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                             </button>
-                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                        </div>
+                         </div>
                     </div>
                     <div class="box-body">
                         <div class="chart">
-                            <canvas id="barChart2" style="height:230px"></canvas>
+                            <canvas id="barChart" style="height:230px"></canvas>
                         </div>
                     </div>
                 </div>
@@ -42,12 +41,13 @@
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                             </button>
-                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            
                         </div>
                     </div>
                     <div class="box-body">
                         <canvas id="pieChart" style="height:250px"></canvas>
                     </div>
+                     
                     <!-- /.box-body -->
                 </div>
                 <!-- /.box -->
@@ -58,17 +58,17 @@
                 <!-- BAR CHART -->
                 <div class="box box-success">
                     <div class="box-header with-border">
-                        <h3 class="box-title">PHC Chart</h3>
+                        <h3 class="box-title">PHC Individual Health Records</h3>
 
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                             </button>
-                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                             
                         </div>
                     </div>
                     <div class="box-body">
                         <div class="chart">
-                            <canvas id="barChart" style="height:230px"></canvas>
+                            <canvas id="barChart2" style="height:230px"></canvas>
                         </div>
                     </div>
                     <!-- /.box-body -->
@@ -78,12 +78,12 @@
                 <!-- LINE CHART -->
                 <div class="box box-info">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Line Chart</h3>
+                        <h3 class="box-title">NCD Burden</h3>
 
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                             </button>
-                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                             
                         </div>
                     </div>
                     <div class="box-body">
@@ -189,19 +189,26 @@ $(function () {
             value: '<?php echo $details['piechart'][0]->hbp;?>',
             color: '#f56954',
             highlight: '#f56954',
-            label: 'hbp'
+            label: 'hbp',
+            labelColor : 'white',
+            labelFontSize : '16'
         },
         {
             value: '<?php echo $details['piechart'][0]->diag;?>',
             color: '#00a65a',
             highlight: '#00a65a',
-            label: 'diag'
+            label: 'diag',
+            labelColor : 'white',
+            labelFontSize : '16'
         },
         {
             value: '<?php echo $details['piechart'][0]->cancer;?>',
             color: '#f39c12',
             highlight: '#f39c12',
-            label: 'cancer'
+            label: 'cancer',
+             
+            labelColor : 'white',
+            labelFontSize : '16'
         },
         {
             value: '<?php echo $details['piechart'][0]->COPD;?>',
@@ -213,7 +220,9 @@ $(function () {
             value:'<?php echo $details['piechart'][0]->cvd;?>',
             color: '#3c8dbc',
             highlight: '#3c8dbc',
-            label: 'cvd'
+            label: 'cvd',
+            labelColor : 'white',
+            labelFontSize : '16'
         }
     ]
     
@@ -222,40 +231,32 @@ $(function () {
         {
             value: '<?php echo $details['malecount'];?>',
             color: '#f56954',
-            highlight: '#f56954',
-            label: 'MALE'
+             
+            label: 'MALE',
+            labelColor : 'white',
+            labelFontSize : '16'
         },
         {
             value: '<?php echo $details['femalecount'];?>',
             color: '#00a65a',
-            highlight: '#00a65a',
-            label: 'FEMALE'
+            
+            label: 'FEMALE',
+            labelColor : 'white',
+            labelFontSize : '16'
         },
         
     ]
     var pieOptions = {
-        //Boolean - Whether we should show a stroke on each segment
-        segmentShowStroke: true,
-        //String - The colour of each segment stroke
-        segmentStrokeColor: '#fff',
-        //Number - The width of each segment stroke
-        segmentStrokeWidth: 2,
-        //Number - The percentage of the chart that we cut out of the middle
-        percentageInnerCutout: 50, // This is 0 for Pie charts
-        //Number - Amount of animation steps
         animationSteps: 100,
-        //String - Animation easing effect
-        animationEasing: 'easeOutBounce',
-        //Boolean - Whether we animate the rotation of the Doughnut
-        animateRotate: true,
-        //Boolean - Whether we animate scaling the Doughnut from the centre
-        animateScale: false,
-        //Boolean - whether to make the chart responsive to window resizing
-        responsive: true,
-        // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-        maintainAspectRatio: true,
-        //String - A legend template
-        legendTemplate: '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<segments.length; i++){%><li><span style="background-color:<%=segments[i].fillColor%>"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>'
+        animationEasing: 'easeInOutQuart',
+        legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
+
+//         tooltipEvents: [],
+//        showTooltips: true,
+//        onAnimationComplete: function() {
+//            this.showTooltip(this.segments, true);
+//        },
+//        tooltipTemplate: "<%= label %> - <%= value %>"
     }
     //Create pie or douhnut chart
     // You can switch between pie and douhnut using the method below.

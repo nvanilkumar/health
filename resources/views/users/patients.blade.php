@@ -21,6 +21,23 @@
                                 {{ Form::open(array('action' => 'UserController@getPatientsView')) }}
                                 <div class="col-md-3">
                                     <div class="form-group">
+                                        <label>ENC TYPE</label>
+                                        <select class="form-control select2 select2-hidden-accessible" 
+                                                name="encselect"  id="encselect" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                                            <option selected="selected">Choose ENC Type</option>
+                                            @if(count($encType) > 0)
+                                            @foreach ($encType as $enc)
+                                            <option value="{{$enc->enc_type}}" > {{$enc->enc_type}}</option>
+
+                                            @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+                                    <!-- /.form-group -->
+
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
                                         <label>PHC</label>
                                         <select class="form-control select2 select2-hidden-accessible" 
                                                 name="phcselect"  id="phcselect" style="width: 100%;" tabindex="-1" aria-hidden="true">
@@ -36,7 +53,7 @@
                                     <!-- /.form-group -->
 
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <label>Village</label>
                                         <select class="form-control select2 select2-hidden-accessible" disabled 
@@ -49,7 +66,7 @@
 
                                 </div>
 
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <label>Date:</label>
 
@@ -64,7 +81,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <label>Date:</label>
 
@@ -79,14 +96,15 @@
                                     </div>
                                 </div>
 
-                                <div class="box-footer">
+                                <div class="col-md-2 pull-right" >
 
                                     <button type="submit" class="btn btn-info pull-right">Set Filter</button>
+                                    <button type="button" id="exportButton" class="btn btn-info pull-left">Export</button>
 
                                 </div>
                                 {{ Form::close() }}
                             </div>
-                            <button type="button" id="exportButton" class="btn btn-info pull-right">Export</button>
+
                             <!-- /.row -->
                         </div>
                         <!-- /.box-body -->
@@ -98,14 +116,14 @@
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
+                                    <th>PHC </th>
                                     <th>Village</th>
-                                    <th>Locality </th>
-                                    <th> Identifier</th>
-                                    <th> Name </th>
-                                    <th> Gender</th>
-                                    <th> Age</th>
-                                    <th> Encounter Type </th>						
-                                    <th> Encounter Date </th>												
+                                    <th>Patient Id</th>
+                                    <th>Name </th>
+                                    <th>Gender</th>
+                                    <th>Age</th>
+                                    <th>Encounter Type </th>						
+                                    <th>Encounter Date </th>												
                                     <th>ASHA Assigned</th>
                                 </tr>
 
@@ -115,8 +133,9 @@
                                 @if(count($details) > 0)
                                 @foreach ($details as $detail)
                                 <tr data-id="{{json_encode($detail)}}">
+                                    <td>{{$detail['phc_name']}} </td>
                                     <td >{{$detail['vill_name']}} </td>
-                                    <td>{{$detail['locality']}} </td>
+
                                     <td>{{$detail['patient_id']}} </td>
                                     <td> {{$detail['first_name'] ." ".$detail['sur_name']}}</td>
                                     <td>{{$detail['gender']}} </td>
@@ -147,7 +166,7 @@
                                             </tr>    
                                         </thead>
                                         <tbody>
-                                            
+
 
                                         </tbody></table>
                                 </div>
@@ -181,10 +200,10 @@
         z-index: 2000;
     }
     .ui-widget-header{
-    border: 1px solid #3c8dbc;
-    background: none;
-    background-color: #3c8dbc;
-    color: #fff;
+        border: 1px solid #3c8dbc;
+        background: none;
+        background-color: #3c8dbc;
+        color: #fff;
     }
     #patientdata thead{
         background-color: #222d32;
@@ -196,15 +215,15 @@
 $(function () {
     //export button changes
 //    window.location.href
-    $("#exportButton").click(function(){
-        path='{{url('/')."/downloadExcel"}}'+'?type=test';
-        window.location.href=path;
+    $("#exportButton").click(function () {
+        path = '{{url(' / ')."/downloadExcel"}}' + '?type=test';
+        window.location.href = path;
     });
     $("#dialog-form").hide();
     $("#example1 tr").click(function () {
-console.log($(this).data("id"));
-var data=$(this).data("id");
-prepareData(data);
+        console.log($(this).data("id"));
+        var data = $(this).data("id");
+        prepareData(data);
         var dialog;
         dialog = $("#dialog-form").dialog({
             autoOpen: false,
@@ -220,7 +239,7 @@ prepareData(data);
     var enddateValue = "<?php echo @$postData["enddate"] ?>";
     $('.select2').select2()
 //Date picker
-     dateChanges();
+    dateChanges();
 
     dataTableInit("example1");
 
@@ -230,15 +249,15 @@ prepareData(data);
     }
     if (villageselectvalue.length > 0) {
         getPHCVillages(phcselectvalue, villageselectvalue);
-    }else if (phcselectvalue.length > 0) {
+    } else if (phcselectvalue.length > 0) {
         getPHCVillages(phcselectvalue, villageselectvalue);
-    } 
+    }
     if (startdateValue.length > 0) {
         $('#datepicker').datepicker('setDate', new Date(startdateValue));
 
     }
     if (enddateValue.length > 0) {
-         setEndDate(enddateValue);
+        setEndDate(enddateValue);
     }
 
     ////
@@ -295,10 +314,10 @@ function villageSelectBox(response, selectOption)
     }
 }
 
-function prepareData(data){
+function prepareData(data) {
     $("#patientdata > tbody").empty();
-        $.each(data, function (i, item) {
-            $('#patientdata > tbody').append('<tr><td>'+i+'</td> <td>'+item+' </td></tr>');
+    $.each(data, function (i, item) {
+        $('#patientdata > tbody').append('<tr><td>' + i + '</td> <td>' + item + ' </td></tr>');
 
 
     });

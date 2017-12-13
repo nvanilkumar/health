@@ -130,15 +130,22 @@ class UserService
     public function getHousehold()
     {
         $setWhere = FALSE;
+        $ashaselect = $this->request->input("ashaselect");
+        if ($ashaselect && ($ashaselect != "Choose Asha")) {
+            $where = [];
+            $where[] = ["asha_assigned", "=", $ashaselect];
+            $setWhere = TRUE;
+        }
+        
         $phcselect = $this->request->input("phcselect");
-        if ($phcselect && ($phcselect != "select option")) {
+        if ($phcselect && ($phcselect != "Choose PHC")) {
             $where = [];
             $where[] = ["phc_name", "=", $phcselect];
             $setWhere = TRUE;
         }
 
         $villageselect = $this->request->input("villageselect");
-        if ($villageselect && ($villageselect != "select option")) {
+        if ($villageselect && ($villageselect != "Choose Village")) {
 
             $where[] = ["village_name", "=", $villageselect];
         }
@@ -179,6 +186,12 @@ class UserService
         $householdphc = $this->usersModel->getHouseholdPHC();
 
         return $householdphc;
+    }
+    public function getHouseholdAsha()
+    {
+        $this->usersModel->resetVariable();
+        $householdAsha = $this->usersModel->getHouseholdAsha();
+        return $householdAsha;
     }
 
     public function getHouseholdPHCVillage()
@@ -256,6 +269,18 @@ class UserService
         $this->usersModel->resetVariable();
         $householdphc = $this->usersModel->getAnalyticsPHC();
         return $householdphc;
+    }
+    public function getCsdbAsha()
+    {
+        $this->usersModel->resetVariable();
+        $householdphc = $this->usersModel->getCsdbAsha();
+        return $householdphc;
+    }
+    public function getCsdbEncType()
+    {
+        $this->usersModel->resetVariable();
+        return $this->usersModel->getCsdbEncType();
+        
     }
 
     public function getAnalyticsPHCVillage()
@@ -715,16 +740,16 @@ class UserService
     {
         $filters = array();
         $phcselect = $this->request->input("phcselect");
-        if ($phcselect && ($phcselect != "select option")) {
+        if ($phcselect && ($phcselect != "Choose PHC")) {
             $filters["phc_name"] = $phcselect;
         }
-        $asha_assigned = $this->request->input("asha_assigned");
-        if ($asha_assigned && ($asha_assigned != "select option")) {
+        $asha_assigned = $this->request->input("ashaselect");
+        if ($asha_assigned && ($asha_assigned != "Choose Asha") && $type==null) {
             $filters["asha_assigned"] = $asha_assigned;
         }
 
         $villageselect = $this->request->input("villageselect");
-        if ($villageselect && ($villageselect != "select option")) {
+        if ($villageselect && ($villageselect != "Choose Village")) {
             $filters["vill_name"] = $villageselect;
         }
 

@@ -4,11 +4,9 @@ namespace App\Models;
 
 use DB;
 
-class UsersModel extends CommonModel
-{
+class UsersModel extends CommonModel {
 
-    public function loginCheck()
-    {
+    public function loginCheck() {
         $users = DB::table('users')
                 ->select('*')
                 ->where($this->where);
@@ -20,8 +18,7 @@ class UsersModel extends CommonModel
         return $users;
     }
 
-    public function getUsers($columnName = NULL)
-    {
+    public function getUsers($columnName = NULL) {
         $users = DB::table('users')
                 ->select('users.*', 'roles.role_name')
                 ->join('role_users', 'users.user_id', '=', 'role_users.user_id')
@@ -39,8 +36,7 @@ class UsersModel extends CommonModel
         return $users;
     }
 
-    public function dashboardDetails()
-    {
+    public function dashboardDetails() {
         $dashboard = array();
         $select = "select phc_name, count(_id) as ashacount 
                    from cvd_riskasses 
@@ -83,8 +79,7 @@ class UsersModel extends CommonModel
         return $dashboard;
     }
 
-    public function getHouseholdPHC()
-    {
+    public function getHouseholdPHC() {
         $select = "select distinct phc_name
                    from household";
         $householdphc = DB::select(DB::raw($select), $this->where);
@@ -96,8 +91,17 @@ class UsersModel extends CommonModel
         return $householdphc;
     }
 
-    public function getHouseholdPHCVillage()
-    {
+    public function getHouseholdAsha() {
+        $select = "select distinct asha_assigned
+                   from household";
+        $householdAsha = DB::select(DB::raw($select), $this->where);
+        if (count($householdAsha) == 0) {
+            return NULL;
+        }
+        return $householdAsha;
+    }
+
+    public function getHouseholdPHCVillage() {
         $select = "select distinct village_name
                    from household
                    where phc_name = ?
@@ -111,8 +115,7 @@ class UsersModel extends CommonModel
         return $householdphc;
     }
 
-    public function analyticQuery($type, $filters)
-    {
+    public function analyticQuery($type, $filters) {
         $where = "";
         if ($type == "default") {
             $where = "where 1 ";
@@ -147,20 +150,19 @@ class UsersModel extends CommonModel
             }
         }
 
-        $select = "select created_date as date,count(_id) as value
+        $select = "select  DATE_FORMAT(created_date, '%Y-%m-%d') as date,count(_id) as value
                     from cvd_riskasses " . $where . " 
                     group by created_date
                     order by created_date";
         $analyticData = DB::select(DB::raw($select), $this->where);
-
+ 
         if (count($analyticData) == 0) {
             return NULL;
         }
         return $analyticData;
     }
 
-    public function getAnalyticsPHC()
-    {
+    public function getAnalyticsPHC() {
         $select = "select distinct phc_name
                    from cvd_riskasses";
         $analyticsphc = DB::select(DB::raw($select), $this->where);
@@ -170,9 +172,28 @@ class UsersModel extends CommonModel
         }
         return $analyticsphc;
     }
+    public function getCsdbAsha() {
+        $select = "select distinct asha_assigned
+                   from cvd_riskasses order by asha_assigned ASC ";
+        $analyticsphc = DB::select(DB::raw($select), $this->where);
 
-    public function getAnalyticsPHCVillage()
-    {
+        if (count($analyticsphc) == 0) {
+            return NULL;
+        }
+        return $analyticsphc;
+    }
+    public function getCsdbEncType() {
+        $select = "select distinct enc_type
+                   from cvd_riskasses order by enc_type ASC ";
+        $analyticsphc = DB::select(DB::raw($select), $this->where);
+
+        if (count($analyticsphc) == 0) {
+            return NULL;
+        }
+        return $analyticsphc;
+    }
+
+    public function getAnalyticsPHCVillage() {
         $select = "select distinct vill_name as village_name
                    from cvd_riskasses
                    where phc_name = ?
@@ -186,8 +207,7 @@ class UsersModel extends CommonModel
         return $analyticsPHCVillage;
     }
 
-    public function getAshaList()
-    {
+    public function getAshaList() {
         $select = "select distinct asha_assigned
                    from cvd_riskasses
                    where asha_assigned<>'null' order by asha_assigned ASC ";
@@ -199,10 +219,9 @@ class UsersModel extends CommonModel
         return $analyticsphc;
     }
 
-    public function reportsList($filters)
-    {
+    public function reportsList($filters) {
         $where = "where 1 ";
-        
+
         //Applying the filters
         if (count($filters) > 0) {
             foreach ($filters as $key => $value) {
@@ -216,7 +235,7 @@ class UsersModel extends CommonModel
                 }
             }
         }
-        
+
         $select = "select phc_name, count(_id) as ashacount ,asha_assigned,
                     count(case when high_risk_calc = 2 then high_risk_calc end) as high_risk_count,
                     count(case when hbp = 1 then hbp end) as hbp,

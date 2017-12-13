@@ -61,9 +61,11 @@ class UserController extends Controller
 
         $details = $this->userService->getHousehold();
         $houseHoldPhc = $this->userService->getHouseholdPHC();
+        $householdAsha = $this->userService->getHouseholdAsha();
         return view('users.household', ["title" => "Household",
             "details" => $details,
             "householdphc" => $houseHoldPhc,
+            "householdasha" => $householdAsha,
             'postData' => Input::all()
         ]);
     }
@@ -73,9 +75,11 @@ class UserController extends Controller
 
         $details = $this->userService->getPatients();
         $houseHoldPhc = $this->userService->getAnalyticsPHC();
+        $encType = $this->userService->getCsdbEncType();
         return view('users.patients', ["title" => "Patients ",
             "details" => $details,
             "householdphc" => $houseHoldPhc,
+            "encType"=>$encType,
             'postData' => Input::all()
         ]);
     }
@@ -87,9 +91,12 @@ class UserController extends Controller
 //        echo "<pre>";
 //        print_r($details);exit;
         $analyticsphc = $this->userService->getAnalyticsPHC();
+        $csdbasha= $this->userService->getCsdbAsha();
+
         return view('users.analytics', ["title" => "Analytics",
             "details" => $details,
             "analyticsphc" => $analyticsphc,
+            "csdbasha" => $csdbasha,
             'postData' => Input::all()
         ]);
     }
