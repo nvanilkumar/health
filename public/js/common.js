@@ -44,7 +44,7 @@ function dataTableInit(_id)
     $('#' + _id).DataTable({
         'paging': true,
         'lengthChange': false,
-//        'searching': true,
+        "dom": '<"top"i>rt<"bottom"flp><"clear">',
         "order": [],
        "searching": false,
         "bSort": true,

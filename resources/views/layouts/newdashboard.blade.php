@@ -61,40 +61,12 @@
                         <span class="icon-bar"></span>
                     </a>
 
-                    <div class="navbar-custom-menu">
-                        <ul class="nav navbar-nav">
-
-
-                            <!-- User Account: style can be found in dropdown.less -->
-                            <li class="dropdown user user-menu">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <!--              <img src="../../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">-->
-                                    <span class="hidden-xs">Bhanu B</span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <!-- User image -->
-                                    <li class="user-header">
-                      <!--                <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">-->
-
-                                        <p>
-                                            Bhanu B 
-
-                                        </p>
-                                    </li>
-                                    <!-- Menu Body -->
-
-                                    <!-- Menu Footer-->
-                                    <li class="user-footer">
-
-                                        <div class="pull-right">
-                                            <a href="{{action('UserController@logout')}}" class="btn btn-default btn-flat">Sign out</a>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </li>
-                            <!-- Control Sidebar Toggle Button -->
-
-                        </ul>
+                    <div class="navbar-custom-menu" style=" padding: 0px 20px; ">
+                         
+                                            <a href="{{action('UserController@logout')}}" class="btn btn-default btn-flat" 
+                                               style=" padding: 10px 0px; height: 49px;">Sign out</a>
+                                        
+                       
                     </div>
                 </nav>
             </header>

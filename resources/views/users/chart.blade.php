@@ -45,7 +45,7 @@
                         </div>
                     </div>
                     <div class="box-body">
-                        <canvas id="pieChart" style="height:250px"></canvas>
+                        <div id="pieChart" style="height: 300px;"></div>
                     </div>
                      
                     <!-- /.box-body -->
@@ -87,7 +87,7 @@
                         </div>
                     </div>
                     <div class="box-body">
-                        <canvas id="pieChart2" style="height:250px"></canvas>
+                        <div id="pieChart2" style="height: 300px;"></div>
                     </div>
                     <!-- /.box-body -->
                 </div>
@@ -103,6 +103,9 @@
     </section>
     <!-- /.content -->
 </div>
+<script type="text/javascript" src="{{ asset('/js/pluginjs/float/jquery.flot.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/js/pluginjs/float/jquery.flot.pie.js') }}"></script>
+
 <script>
 $(function () {
     /* ChartJS
@@ -110,161 +113,113 @@ $(function () {
      * Here we will create a few charts using ChartJS
      */
 
-    //--------------
-    //- AREA CHART -
-    //--------------
-
-    // Get context with jQuery - using jQuery's .get() method.
-  /*  var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
-    // This will get the first returned node in the jQuery collection.
-    var areaChart = new Chart(areaChartCanvas)
-*/
-    var areaChartData = {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-        datasets: [
-            {
-                label: 'Electronics',
-                fillColor: 'rgba(210, 214, 222, 1)',
-                strokeColor: 'rgba(210, 214, 222, 1)',
-                pointColor: 'rgba(210, 214, 222, 1)',
-                pointStrokeColor: '#c1c7d1',
-                pointHighlightFill: '#fff',
-                pointHighlightStroke: 'rgba(220,220,220,1)',
-                data: [65, 59, 80, 81, 56, 55, 40]
-            }
-        ]
-    }
-
-    var areaChartOptions = {
-        //Boolean - If we should show the scale at all
-        showScale: true,
-        //Boolean - Whether grid lines are shown across the chart
-        scaleShowGridLines: false,
-        //String - Colour of the grid lines
-        scaleGridLineColor: 'rgba(0,0,0,.05)',
-        //Number - Width of the grid lines
-        scaleGridLineWidth: 1,
-        //Boolean - Whether to show horizontal lines (except X axis)
-        scaleShowHorizontalLines: true,
-        //Boolean - Whether to show vertical lines (except Y axis)
-        scaleShowVerticalLines: true,
-        //Boolean - Whether the line is curved between points
-        bezierCurve: true,
-        //Number - Tension of the bezier curve between points
-        bezierCurveTension: 0.3,
-        //Boolean - Whether to show a dot for each point
-        pointDot: false,
-        //Number - Radius of each point dot in pixels
-        pointDotRadius: 4,
-        //Number - Pixel width of point dot stroke
-        pointDotStrokeWidth: 1,
-        //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
-        pointHitDetectionRadius: 20,
-        //Boolean - Whether to show a stroke for datasets
-        datasetStroke: true,
-        //Number - Pixel width of dataset stroke
-        datasetStrokeWidth: 2,
-        //Boolean - Whether to fill the dataset with a color
-        datasetFill: true,
-        //String - A legend template
-        legendTemplate: '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<datasets.length; i++){%><li><span style="background-color:<%=datasets[i].lineColor%>"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>',
-        //Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-        maintainAspectRatio: true,
-        //Boolean - whether to make the chart responsive to window resizing
-        responsive: true
-    }
-/*
-    //Create the line chart
-    areaChart.Line(areaChartData, areaChartOptions)*/
+  
  
 
     //-------------
     //- PIE CHART -
     //-------------
     // Get context with jQuery - using jQuery's .get() method.
-    var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
-    var pieChart = new Chart(pieChartCanvas)
+//    var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
+//    var pieChart = new Chart(pieChartCanvas)
     var PieData = [
         {
-            value: '<?php echo $details['piechart'][0]->hbp;?>',
+            data: '<?php echo $details['piechart'][0]->hbp;?>',
             color: '#f56954',
             highlight: '#f56954',
-            label: 'hbp',
+            label: 'HBP',
             labelColor : 'white',
-            labelFontSize : '16'
+            labelFontSize : '5'
         },
         {
-            value: '<?php echo $details['piechart'][0]->diag;?>',
+            data: '<?php echo $details['piechart'][0]->diag;?>',
             color: '#00a65a',
             highlight: '#00a65a',
-            label: 'diag',
+            label: 'Diabetes',
             labelColor : 'white',
-            labelFontSize : '16'
+            labelFontSize : '10'
         },
         {
-            value: '<?php echo $details['piechart'][0]->cancer;?>',
+            data: '<?php echo $details['piechart'][0]->cancer;?>',
             color: '#f39c12',
             highlight: '#f39c12',
-            label: 'cancer',
+            label: 'Cancer',
              
             labelColor : 'white',
-            labelFontSize : '16'
+            labelFontSize : '10'
         },
         {
-            value: '<?php echo $details['piechart'][0]->COPD;?>',
+            data: '<?php echo $details['piechart'][0]->COPD;?>',
             color: '#00c0ef',
             highlight: '#00c0ef',
             label: 'COPD'
         },
         {
-            value:'<?php echo $details['piechart'][0]->cvd;?>',
+            data:'<?php echo $details['piechart'][0]->cvd;?>',
             color: '#3c8dbc',
             highlight: '#3c8dbc',
-            label: 'cvd',
+            label: 'CVD',
             labelColor : 'white',
-            labelFontSize : '16'
+            labelFontSize : '10'
         }
     ]
     
     
     var genderData = [
         {
-            value: '<?php echo $details['malecount'];?>',
+            data: '<?php echo $details['malecount'];?>',
             color: '#f56954',
-             
+             labelAlign : 'left',
             label: 'MALE',
             labelColor : 'white',
-            labelFontSize : '16'
+            labelFontSize : '12'
         },
         {
-            value: '<?php echo $details['femalecount'];?>',
+            data: '<?php echo $details['femalecount'];?>',
             color: '#00a65a',
-            
+            labelAlign : 'left',
             label: 'FEMALE',
             labelColor : 'white',
-            labelFontSize : '16'
+            labelFontSize : '12'
         },
         
     ]
-    var pieOptions = {
-        animationSteps: 100,
-        animationEasing: 'easeInOutQuart',
-        legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
+ 
+    var pieOptions =  {
+      series: {
+        pie: {
+          show       : true,
+          radius     : 1,
+          innerRadius: 0.5,
+          label      : {
+            show     : true,
+            radius   : 2 / 3,
+            formatter: labelFormatter,
+            threshold: 0.1
+          }
 
-//         tooltipEvents: [],
-//        showTooltips: true,
-//        onAnimationComplete: function() {
-//            this.showTooltip(this.segments, true);
-//        },
-//        tooltipTemplate: "<%= label %> - <%= value %>"
-    }
-    //Create pie or douhnut chart
-    // You can switch between pie and douhnut using the method below.
-    pieChart.Doughnut(genderData, pieOptions);
-    
-    var pieChartCanvas2 = $('#pieChart2').get(0).getContext('2d')
-    var pieChart2 = new Chart(pieChartCanvas2)
-     pieChart2.Doughnut(PieData, pieOptions);
+        }
+      },
+      legend: {
+        show: false
+      }
+    };
+      /*
+   * Custom Label formatter
+   * ----------------------
+   */
+  function labelFormatter(label, series) {
+    return '<div style="font-size:13px; text-align:center; padding:2px; color: #fff; font-weight: 600;">'
+      + label
+      + '<br>'
+     + '</div>'
+  }
+    //Gender pie chart 
+    $.plot('#pieChart', genderData,pieOptions)
+ 
+    //cancer pie chart
+    $.plot('#pieChart2', PieData,pieOptions)
+ 
 
     //-------------
     //- BAR CHART -
@@ -274,10 +229,7 @@ $(function () {
     
     var barChartCanvas = $('#barChart').get(0).getContext('2d')
     var barChart = new Chart(barChartCanvas)
-    var barChartData = areaChartData
-//    barChartData.datasets[1].fillColor = '#00a65a'
-//    barChartData.datasets[1].strokeColor = '#00a65a'
-//    barChartData.datasets[1].pointColor = '#00a65a'
+ 
     var barChartOptions = {
         //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
         scaleBeginAtZero: true,
@@ -313,13 +265,14 @@ $(function () {
         datasets: [
             {
                 label: 'Electronics',
-                fillColor: 'rgba(210, 214, 222, 1)',
+                fillColor: 'rgba(245,105,84, 0.7)',
                 strokeColor: 'rgba(210, 214, 222, 1)',
                 pointColor: 'rgba(210, 214, 222, 1)',
                 pointStrokeColor: '#c1c7d1',
                 pointHighlightFill: '#fff',
                 pointHighlightStroke: 'rgba(220,220,220,1)',
-                data: [<?php echo '"'.implode('","', $details['phcdata']).'"' ?>]
+                data: [<?php echo '"'.implode('","', $details['phcdata']).'"' ?>],
+                  
             }
         ]
     }
@@ -331,7 +284,7 @@ $(function () {
         datasets: [
             {
                 label: 'Electronics',
-                fillColor: 'rgba(210, 214, 222, 1)',
+                fillColor: 'rgba(243, 156, 18,0.8)',
                 strokeColor: 'rgba(210, 214, 222, 1)',
                 pointColor: 'rgba(210, 214, 222, 1)',
                 pointStrokeColor: '#c1c7d1',

@@ -4,7 +4,7 @@
 
  <div class="login-box">
   <div class="login-logo">
-     <b>Admin</b>LTE 
+    <img src="{{ asset('/images/login_logo.png') }}" alt="health" style=" width: 105px; "/>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body" id="login-page">
