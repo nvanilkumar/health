@@ -51,7 +51,7 @@ class UsersModel extends CommonModel
         $dashboard["barchart1"] = $barchartdetails;
 
         //Asha Screening
-        $select = "select phc_name, count(_id) as ashacount 
+        $select = "select phc_name, count(hh_id) as ashacount 
                    from cvd_riskasses 
                    group by phc_name";
         $barchartdetails = DB::select(DB::raw($select), $this->where);
