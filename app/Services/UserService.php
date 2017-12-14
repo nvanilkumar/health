@@ -136,7 +136,7 @@ class UserService
             $where[] = ["asha_assigned", "=", $ashaselect];
             $setWhere = TRUE;
         }
-        
+
         $phcselect = $this->request->input("phcselect");
         if ($phcselect && ($phcselect != "Choose PHC")) {
             $where = [];
@@ -187,6 +187,7 @@ class UserService
 
         return $householdphc;
     }
+
     public function getHouseholdAsha()
     {
         $this->usersModel->resetVariable();
@@ -212,15 +213,20 @@ class UserService
     public function getPatients()
     {
         $setWhere = FALSE;
-        $phcselect = $this->request->input("phcselect");
-        if ($phcselect && ($phcselect != "select option")) {
+        $encselect = $this->request->input("encselect");
+        if ($encselect && ($encselect != "Choose ENC Type")) {
             $where = [];
+            $where[] = ["enc_type", "=", $encselect];
+            $setWhere = TRUE;
+        }
+        $phcselect = $this->request->input("phcselect");
+        if ($phcselect && ($phcselect != "Choose PHC")) {
             $where[] = ["phc_name", "=", $phcselect];
             $setWhere = TRUE;
         }
 
         $villageselect = $this->request->input("villageselect");
-        if ($villageselect && ($villageselect != "select option")) {
+        if ($villageselect && ($villageselect != "Choose Village")) {
 
             $where[] = ["vill_name", "=", $villageselect];
         }
@@ -258,7 +264,7 @@ class UserService
     public function getAnalytics($type)
     {
         $filters = array();
-        $filters=$this->prepareFilter();
+        $filters = $this->prepareFilter();
         $analytics = $this->usersModel->analyticQuery($type, $filters);
         $analytics = json_decode(json_encode($analytics), true);
         return $analytics;
@@ -267,20 +273,31 @@ class UserService
     public function getAnalyticsPHC()
     {
         $this->usersModel->resetVariable();
+        $where = [];
+        $encselect = $this->request->input("encselect");
+        if ($encselect && ($encselect != "Choose ENC Type")) 
+        {
+
+            $where[] = ["enc_type", "=", $encselect];
+            $this->usersModel->setWhere($where);
+ 
+        }
+        
         $householdphc = $this->usersModel->getAnalyticsPHC();
         return $householdphc;
     }
+
     public function getCsdbAsha()
     {
         $this->usersModel->resetVariable();
         $householdphc = $this->usersModel->getCsdbAsha();
         return $householdphc;
     }
+
     public function getCsdbEncType()
     {
         $this->usersModel->resetVariable();
         return $this->usersModel->getCsdbEncType();
-        
     }
 
     public function getAnalyticsPHCVillage()
@@ -301,7 +318,7 @@ class UserService
     public function getreportsList()
     {
         $filters = array();
-        $filters=$this->prepareFilter();
+        $filters = $this->prepareFilter();
 //        print_r($filters);exit;
         $reportsList = $this->usersModel->reportsList($filters);
         $reportsList = json_decode(json_encode($reportsList), true);
@@ -744,7 +761,7 @@ class UserService
             $filters["phc_name"] = $phcselect;
         }
         $asha_assigned = $this->request->input("ashaselect");
-        if ($asha_assigned && ($asha_assigned != "Choose Asha") && $type==null) {
+        if ($asha_assigned && ($asha_assigned != "Choose Asha") && $type == null) {
             $filters["asha_assigned"] = $asha_assigned;
         }
 

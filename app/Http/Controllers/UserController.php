@@ -106,6 +106,11 @@ class UserController extends Controller
         $status = $this->userService->getAnalyticsPHCVillage();
         return response()->json($status, 200);
     }
+    public function patientPHC()
+    {
+        $status = $this->userService->getAnalyticsPHC();
+        return response()->json($status, 200);
+    }
 
     public function householdVillage()
     {
@@ -129,7 +134,8 @@ class UserController extends Controller
     public function downloadExcel()
     {
         $data = $this->userService->downloadData();
-
+        echo "<pre>";
+print_r($data);exit;
         $type = "xlsx";
         return Excel::create('Regports', function($excel) use ($data) {
                     $excel->sheet('Patients', function($sheet) use ($data) {

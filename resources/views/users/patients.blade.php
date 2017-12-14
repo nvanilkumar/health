@@ -18,7 +18,7 @@
                         <!-- /.box-header -->
                         <div class="box-body" style="">
                             <div class="row">
-                                {{ Form::open(array('action' => 'UserController@getPatientsView')) }}
+                                {{ Form::open(array('action' => 'UserController@getPatientsView', "id"=>"patientform")) }}
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label>ENC TYPE</label>
@@ -39,15 +39,10 @@
                                 <div class="col-md-2">
                                     <div class="form-group">
                                         <label>PHC</label>
-                                        <select class="form-control select2 select2-hidden-accessible" 
+                                        <select class="form-control select2 select2-hidden-accessible" disabled
                                                 name="phcselect"  id="phcselect" style="width: 100%;" tabindex="-1" aria-hidden="true">
-                                            <option selected="selected">select option</option>
-                                            @if(count($householdphc) > 0)
-                                            @foreach ($householdphc as $phc)
-                                            <option value="{{$phc->phc_name}}" > {{$phc->phc_name}}</option>
+                                            <option selected="selected">Choose PHC</option>
 
-                                            @endforeach
-                                            @endif
                                         </select>
                                     </div>
                                     <!-- /.form-group -->
@@ -58,7 +53,7 @@
                                         <label>Village</label>
                                         <select class="form-control select2 select2-hidden-accessible" disabled 
                                                 name="villageselect" id="villageselect" style="width: 100%;" tabindex="-1" aria-hidden="true">
-                                            <option selected="selected">select option</option>
+                                            <option selected="selected">Choose Village</option>
 
                                         </select>
                                     </div>
@@ -99,7 +94,7 @@
                                 <div class="col-md-2 pull-right" >
 
                                     <button type="submit" class="btn btn-info pull-right">Set Filter</button>
-                                    <button type="button" id="exportButton" class="btn btn-info pull-left">Export</button>
+                                    <button type="button" id="resetbutton" class="btn btn-info pull-left">Reset</button>
 
                                 </div>
                                 {{ Form::close() }}
@@ -113,6 +108,12 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
+                        <div  > 
+                            <span class="btn label-danger" id="exportButton"><i class="fa fa-download"></i> Export</span>
+                            <span class="btn label-success" id="exportAllButton"><i class="fa fa-download"></i> Export All</span>
+                            <span class="btn label-warning" id="exportSButton"><i class="fa fa-download"></i> Export Screening</span>
+
+                        </div>
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
@@ -213,15 +214,16 @@
 </style>
 <script>
 $(function () {
-    //export button changes
-//    window.location.href
+
     $("#exportButton").click(function () {
-        path = '{{url(' / ')."/downloadExcel"}}' + '?type=test';
+        path = '{{url('')."/downloadExcel"}}' + '?type=test'+queryString();
+//        console.log(path);
         window.location.href = path;
     });
     $("#dialog-form").hide();
+    //Show Dialog box
     $("#example1 tr").click(function () {
-        console.log($(this).data("id"));
+         
         var data = $(this).data("id");
         prepareData(data);
         var dialog;
@@ -233,28 +235,35 @@ $(function () {
         });
         dialog.dialog("open");
     });
+
+    var encselectvalue = "<?php echo @$postData["encselect"] ?>";
     var phcselectvalue = "<?php echo @$postData["phcselect"] ?>";
     var villageselectvalue = "<?php echo @$postData["villageselect"] ?>";
     var startdateValue = "<?php echo @$postData["startdate"] ?>";
     var enddateValue = "<?php echo @$postData["enddate"] ?>";
-    $('.select2').select2()
-//Date picker
+    $('.select2').select2();
+    //Date picker
     dateChanges();
 
     dataTableInit("example1");
 
+
     //filter values set
+    if (encselectvalue.length > 0) {
+        $('#encselect').val(encselectvalue).trigger('change');
+    }
     if (phcselectvalue.length > 0) {
-        $('#phcselect').val(phcselectvalue).trigger('change');
+        getPHC(encselectvalue, phcselectvalue);
     }
     if (villageselectvalue.length > 0) {
+         
         getPHCVillages(phcselectvalue, villageselectvalue);
-    } else if (phcselectvalue.length > 0) {
-        getPHCVillages(phcselectvalue, villageselectvalue);
-    }
+    } 
     if (startdateValue.length > 0) {
         $('#datepicker').datepicker('setDate', new Date(startdateValue));
 
+    } else if(encselectvalue.length == 0){
+        $('#datepicker').attr("disabled", 'disabled');
     }
     if (enddateValue.length > 0) {
         setEndDate(enddateValue);
@@ -262,21 +271,30 @@ $(function () {
 
     ////
 
+    $('#encselect').on('change', function () {
+        $('#datepicker').removeAttr("disabled");
+        getPHC($(this).val());
+    });
     $('#phcselect').on('change', function () {
-        getPHCVillages($(this).val());
+        getPHCVillages($(this).val(),villageselectvalue);
+    });
+    
+    //reset form
+    $("#resetbutton").click(function(){
+        $("#phcselect, #encselect, #villageselect").val('').trigger('change');
     });
 
 });
 
-function getPHCVillages(phcValue, villageSelectValue)
+function getPHC(encValue, phcselectvalue)
 {
     $.ajax({
         type: "POST",
-        url: "{{ action('UserController@analyticsVillage') }}",
-        data: {phcname: phcValue},
+        url: "{{ action('UserController@patientPHC') }}",
+        data: {encselect: encValue},
         dataType: 'json',
         success: function (response) {
-            villageSelectBox(response, villageSelectValue);
+            phcSelectBox(response, phcselectvalue);
         },
         error: function (error) {
             console.log("server error");
@@ -284,12 +302,61 @@ function getPHCVillages(phcValue, villageSelectValue)
     });
 }
 
+function getPHCVillages(phcValue, villageSelectValue)
+{
+    if (phcValue && phcValue.length > 0) {
+        $.ajax({
+            type: "POST",
+            url: "{{ action('UserController@analyticsVillage') }}",
+            data: {phcname: phcValue},
+            dataType: 'json',
+            success: function (response) {
+                villageSelectBox(response, villageSelectValue);
+            },
+            error: function (error) {
+                console.log("server error");
+            }
+        });
+
+    }
+
+}
+
+
+function phcSelectBox(response, phcselectvalue)
+{
+    $('#phcselect').val(null);
+    $('#phcselect option').each(function () {
+
+        if ($(this).val() != "Choose PHC") {
+            $(this).remove();
+        }
+    });
+
+    var enableslect = false
+    $.each(response, function (i, item) {
+
+        if (response[i].phc_name.length > 0)
+        {
+            var newOption = new Option(response[i].phc_name, response[i].phc_name, false, false);
+            $('#phcselect').append(newOption);
+            enableslect = true;
+        }
+
+    });
+ 
+    $('#phcselect').val(phcselectvalue).trigger('change');
+    if (enableslect) { 
+        $('#phcselect').select2('enable');
+    }
+}
+
 function villageSelectBox(response, selectOption)
 {
-    $('#villageselect').val(null).trigger('change');
+    $('#villageselect').val(null);
     $('#villageselect option').each(function () {
 
-        if ($(this).val() != "select option") {
+        if ($(this).val() != "Choose Village") {
             $(this).remove();
         }
     });
@@ -300,20 +367,21 @@ function villageSelectBox(response, selectOption)
         if (response[i].village_name.length > 0)
         {
             var newOption = new Option(response[i].village_name, response[i].village_name, false, false);
-            $('#villageselect').append(newOption).trigger('change');
+//            $('#villageselect').append(newOption).trigger('change');
+            $('#villageselect').append(newOption);
             enableslect = true;
         }
 
     });
 
-    if (selectOption !== 'undefined') {
-        $('#villageselect').val(selectOption).trigger('change');
-    }
-    if (enableslect) {
+    $('#villageselect').val(selectOption).trigger('change');
+    if (enableslect) 
+    {
         $('#villageselect').select2('enable');
     }
 }
 
+//For dialog box preparation
 function prepareData(data) {
     $("#patientdata > tbody").empty();
     $.each(data, function (i, item) {
@@ -321,6 +389,43 @@ function prepareData(data) {
 
 
     });
+}
+function queryString(){
+    query="";
+
+    $encVal=$("#encselect").val();
+    if($encVal && $encVal !="Choose ENC Type"){
+        query+="&encselect="+$encVal;
+    }
+    
+    $phcVal=$("#phcselect").val();
+    if($phcVal && $phcVal !="Choose PHC"){
+        query+="&phcselect="+$phcVal;
+    }
+    
+    $villageVal=$("#villageselect").val();
+    if($villageVal && $villageVal !="Choose Village"){
+        query+="&villageselect="+$villageVal;
+    }
+ 
+//    startdateVal=$("#startdate").datepicker('getDate');
+    
+    if ($("#datepicker").is('.hasDatepicker')) {
+        startdateVal=$("#datepicker").val();
+        if(startdateVal ){
+            query+="&startdate="+startdateVal;
+        }
+    }
+    if ($("#datepicker2").is('.hasDatepicker')) {
+        enddateVal=$("#datepicker2").val();
+        if(enddateVal ){
+            query+="&enddate="+enddateVal;
+        }
+    }
+ 
+    return query;
+    
+    
 }
 </script>
 @endsection

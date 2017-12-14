@@ -49,7 +49,7 @@
                     <!-- mini logo for sidebar mini 50x50 pixels -->
                     <span class="logo-mini"><b>N</b>CD</span>
                     <!-- logo for regular state and mobile devices -->
-                    <span class="logo-lg"> <img src="{{ asset('/images/login_logo.png') }}" alt="health" style=" width: 105px; "/></span>
+                    <span class="logo-lg"> <img src="{{ asset('/images/login_logo1.png') }}" alt="health" style=" width: 105px; "/></span>
                 </a>
                 <!-- Header Navbar: style can be found in header.less -->
                 <nav class="navbar navbar-static-top">
@@ -61,11 +61,13 @@
                         <span class="icon-bar"></span>
                     </a>
 
-                    <div class="navbar-custom-menu" style=" padding: 0px 20px; ">
+                    <div class="navbar-custom-menu">
                          
-                                            <a href="{{action('UserController@logout')}}" class="btn btn-default btn-flat" 
-                                               style=" padding: 10px 0px; height: 49px;">Sign out</a>
-                                        
+                        <a href="{{action('UserController@logout')}}" class="btn" 
+                           style=" padding: 15px 20px;" data-toggle="tooltip" title="SignOut"> 
+                            <i class="fa fa-power-off" aria-hidden="true" style="color:#eeeeee; font-size:18px;"></i>
+                        </a>
+
                        
                     </div>
                 </nav>

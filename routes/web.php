@@ -33,6 +33,7 @@ Route::get('household/list', 'UserController@getHousehold');
 
 
 Route::post('ajax/analyticsVillage', 'UserController@analyticsVillage');
+Route::post('ajax/patientPHC', 'UserController@patientPHC');
 
 Route::group(['middleware' => 'customauth'], function () {
     Route::get('dashboard', 'UserController@dashboard');

@@ -99,6 +99,7 @@
                                 <div class="box-footer" style="padding: 23px 40px 0px 14px;border-top:none;">
 
                                     <button type="submit" class="btn btn-info pull-right">Set Filter</button>
+                                    <button type="button" id="resetbutton" class="btn btn-info pull-left">Reset</button>
 
                                 </div>
                                 {{ Form::close() }}
