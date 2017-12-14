@@ -19,7 +19,7 @@
                         <div class="box-body" style="">
                             <div class="row">
                                 {{ Form::open(array('action' => 'UserController@reportsView')) }}
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <label>PHC</label>
                                         <select class="form-control select2 select2-hidden-accessible" 
@@ -36,7 +36,7 @@
                                     <!-- /.form-group -->
 
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <label>Village</label>
                                         <select class="form-control select2 select2-hidden-accessible" disabled 
@@ -49,7 +49,7 @@
 
                                 </div>
 
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <label>Date:</label>
 
@@ -64,7 +64,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <label>Date:</label>
 
@@ -79,14 +79,15 @@
                                     </div>
                                 </div>
 
-                                <div class="box-footer">
+                                <div class="col-md-2 " style=" margin: 24px 0px 8px 10px;">
 
-                                    <button type="submit" class="btn btn-info pull-right">Set Filter</button>
+                                    <button type="submit" class="btn btn-info ">Set Filter</button>
+                                    <button type="button" id="resetbutton" class="btn btn-default">Reset</button>
 
                                 </div>
                                 {{ Form::close() }}
                             </div>
-                            <button type="button" id="export" class="btn btn-info pull-right">Export</button>
+                             
                             <!-- /.row -->
                         </div>
                         <!-- /.box-body -->
@@ -95,6 +96,10 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
+                        <div  > 
+                            <span class="btn label-danger" id="exportButton"><i class="fa fa-download"></i> Export</span>
+                             
+                        </div>
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
@@ -201,6 +206,11 @@ prepareData(data);
     $('#phcselect').on('change', function () {
         getPHCVillages($(this).val());
     });
+    
+        $("#resetbutton").click(function(){
+        $("#phcselect, #villageselect").val('').trigger('change');
+    });
+
 
 });
 

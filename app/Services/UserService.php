@@ -761,7 +761,7 @@ class UserService
             $filters["phc_name"] = $phcselect;
         }
         $asha_assigned = $this->request->input("ashaselect");
-        if ($asha_assigned && ($asha_assigned != "Choose Asha") && $type == null) {
+        if ($asha_assigned && ($asha_assigned != "Choose Asha") ) {
             $filters["asha_assigned"] = $asha_assigned;
         }
 

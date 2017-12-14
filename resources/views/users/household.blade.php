@@ -96,10 +96,12 @@
                                     </div>
                                 </div>
 
-                                <div class="box-footer" style="padding: 23px 40px 0px 14px;border-top:none;">
 
-                                    <button type="submit" class="btn btn-info pull-right">Set Filter</button>
-                                    <button type="button" id="resetbutton" class="btn btn-info pull-left">Reset</button>
+                                 <div class="col-md-2 pull-right" style=" margin: 24px 0px 0px;">
+
+                                   
+                                     <button type="submit" class="btn btn-info ">Set Filter</button>
+                                    <button type="button" id="resetbutton" class="btn btn-default ">Reset</button>
 
                                 </div>
                                 {{ Form::close() }}
@@ -200,6 +202,11 @@ $(function () {
     $('#phcselect').on('change', function () {
         getPHCVillages($(this).val());
     });
+    
+        //reset form
+    $("#resetbutton").click(function(){
+        $("#phcselect, #villageselect").val('').trigger('change');
+    });
 
 });
 
@@ -238,7 +245,7 @@ function villageSelectBox(response, selectOption)
         if (response[i].village_name.length > 0)
         {
             var newOption = new Option(response[i].village_name, response[i].village_name, false, false);
-            $('#villageselect').append(newOption).trigger('change');
+            $('#villageselect').append(newOption);
             enableslect = true;
         }
 

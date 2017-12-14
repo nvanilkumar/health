@@ -98,9 +98,11 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-2" style="padding: 25px 92px 0px 14px;">
+                                <div class="col-md-2 pull-right" style=" margin: 24px 0px 0px;">
 
-                                    <button type="submit" class="btn btn-info pull-right">Set Filter</button>
+                                   
+                                     <button type="submit" class="btn btn-info ">Set Filter</button>
+                                    <button type="button" id="resetbutton" class="btn btn-default ">Reset</button>
 
                                 </div>
                                 {{ Form::close() }}

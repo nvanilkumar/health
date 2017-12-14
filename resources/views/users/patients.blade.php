@@ -93,8 +93,8 @@
 
                                 <div class="col-md-2 pull-right" >
 
-                                    <button type="submit" class="btn btn-info pull-right">Set Filter</button>
-                                    <button type="button" id="resetbutton" class="btn btn-info pull-left">Reset</button>
+                                    <button type="submit" class="btn btn-info ">Set Filter</button>
+                                    <button type="button" id="resetbutton" class="btn btn-default ">Reset</button>
 
                                 </div>
                                 {{ Form::close() }}
@@ -218,6 +218,10 @@ $(function () {
     $("#exportButton").click(function () {
         path = '{{url('')."/downloadExcel"}}' + '?type=test'+queryString();
 //        console.log(path);
+        window.location.href = path;
+    });
+    $("#exportAllButton").click(function () {
+        path = '{{url('')."/downloadExcel"}}' + '?type=test';
         window.location.href = path;
     });
     $("#dialog-form").hide();
