@@ -215,15 +215,16 @@
 <script>
 $(function () {
 
+    //Download Report 
     $("#exportButton").click(function () {
-        path = '{{url('')."/downloadExcel"}}' + '?type=test'+queryString();
-//        console.log(path);
+        path = '{{url('')."/downloadExcel"}}' + '?type=patients'+queryString();
         window.location.href = path;
     });
     $("#exportAllButton").click(function () {
-        path = '{{url('')."/downloadExcel"}}' + '?type=test';
+        path = '{{url('')."/downloadExcel"}}' + '?type=patients';
         window.location.href = path;
     });
+    
     $("#dialog-form").hide();
     //Show Dialog box
     $("#example1 tr").click(function () {
@@ -256,7 +257,7 @@ $(function () {
     if (encselectvalue.length > 0) {
         $('#encselect').val(encselectvalue).trigger('change');
     }
-    if (phcselectvalue.length > 0) {
+    if ((phcselectvalue.length > 0) ||(encselectvalue.length > 0)){
         getPHC(encselectvalue, phcselectvalue);
     }
     if (villageselectvalue.length > 0) {
@@ -394,42 +395,6 @@ function prepareData(data) {
 
     });
 }
-function queryString(){
-    query="";
 
-    $encVal=$("#encselect").val();
-    if($encVal && $encVal !="Choose ENC Type"){
-        query+="&encselect="+$encVal;
-    }
-    
-    $phcVal=$("#phcselect").val();
-    if($phcVal && $phcVal !="Choose PHC"){
-        query+="&phcselect="+$phcVal;
-    }
-    
-    $villageVal=$("#villageselect").val();
-    if($villageVal && $villageVal !="Choose Village"){
-        query+="&villageselect="+$villageVal;
-    }
- 
-//    startdateVal=$("#startdate").datepicker('getDate');
-    
-    if ($("#datepicker").is('.hasDatepicker')) {
-        startdateVal=$("#datepicker").val();
-        if(startdateVal ){
-            query+="&startdate="+startdateVal;
-        }
-    }
-    if ($("#datepicker2").is('.hasDatepicker')) {
-        enddateVal=$("#datepicker2").val();
-        if(enddateVal ){
-            query+="&enddate="+enddateVal;
-        }
-    }
- 
-    return query;
-    
-    
-}
 </script>
 @endsection

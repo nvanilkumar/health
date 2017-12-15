@@ -96,9 +96,9 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-                        <div  > 
+                        <div> 
                             <span class="btn label-danger" id="exportButton"><i class="fa fa-download"></i> Export</span>
-                             
+                            <span class="btn label-success" id="exportAllButton"><i class="fa fa-download"></i> Export All</span>
                         </div>
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
@@ -161,19 +161,18 @@
  
 <script>
 $(function () {
-
-    $("#example1 tr").click(function () {
-var data=$(this).data("id");
-prepareData(data);
-        var dialog;
-        dialog = $("#dialog-form").dialog({
-            autoOpen: false,
-            height: 600,
-            width: 600,
-            modal: true
-        });
-        dialog.dialog("open");
+    
+    //Download Report 
+    $("#exportButton").click(function () {
+        path = '{{url('')."/downloadExcel"}}' + '?type=reports'+queryString();
+        window.location.href = path;
     });
+    $("#exportAllButton").click(function () {
+        path = '{{url('')."/downloadExcel"}}' + '?type=reports';
+        window.location.href = path;
+    });
+
+ 
     var phcselectvalue = "<?php echo @$postData["phcselect"] ?>";
     var villageselectvalue = "<?php echo @$postData["villageselect"] ?>";
     var startdateValue = "<?php echo @$postData["startdate"] ?>";
@@ -200,14 +199,13 @@ prepareData(data);
     if (enddateValue.length > 0) {
         setEndDate(enddateValue);
     }
-
     ////
 
     $('#phcselect').on('change', function () {
         getPHCVillages($(this).val());
     });
     
-        $("#resetbutton").click(function(){
+     $("#resetbutton").click(function(){
         $("#phcselect, #villageselect").val('').trigger('change');
     });
 
@@ -246,15 +244,13 @@ function villageSelectBox(response, selectOption)
         if (response[i].village_name.length > 0)
         {
             var newOption = new Option(response[i].village_name, response[i].village_name, false, false);
-            $('#villageselect').append(newOption).trigger('change');
+            $('#villageselect').append(newOption);
             enableslect = true;
         }
 
     });
 
-    if (selectOption !== 'undefined') {
-        $('#villageselect').val(selectOption).trigger('change');
-    }
+    $('#villageselect').val(selectOption).trigger('change');
     if (enableslect) {
         $('#villageselect').select2('enable');
     }

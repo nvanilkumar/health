@@ -230,7 +230,10 @@ chart.addListener("rendered", zoomChart);
 zoomChart();
 
 function zoomChart() {
-    chart.zoomToIndexes(chart.dataProvider.length - 40, chart.dataProvider.length - 1);
+    if(chartData){
+        chart.zoomToIndexes(chart.dataProvider.length - 40, chart.dataProvider.length - 1);
+    }
+    
 }
 </script>
     
@@ -272,6 +275,11 @@ $(function () {
 
     $('#phcselect').on('change', function () {
         getPHCVillages($(this).val());
+    });
+    
+    //reset form
+    $("#resetbutton").click(function(){
+        $("#ashaselect,#phcselect, #villageselect").val('').trigger('change');
     });
 
 });

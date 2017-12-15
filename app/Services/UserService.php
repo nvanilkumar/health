@@ -275,14 +275,12 @@ class UserService
         $this->usersModel->resetVariable();
         $where = [];
         $encselect = $this->request->input("encselect");
-        if ($encselect && ($encselect != "Choose ENC Type")) 
-        {
+        if ($encselect && ($encselect != "Choose ENC Type")) {
 
             $where[] = ["enc_type", "=", $encselect];
             $this->usersModel->setWhere($where);
- 
         }
-        
+
         $householdphc = $this->usersModel->getAnalyticsPHC();
         return $householdphc;
     }
@@ -327,8 +325,16 @@ class UserService
 
     public function downloadData()
     {
+        $details=array();
         $type = $this->request->input("type");
-        $details = $this->getPatients();
+        if ($type == "patients") {
+            $details = $this->getPatients();
+        } else if ($type == "reports") {
+            $details = $this->getreportsList();
+        } else if ($type == "household") {
+            $details = $this->getHousehold();
+        }
+
         return $details;
     }
 
@@ -761,7 +767,7 @@ class UserService
             $filters["phc_name"] = $phcselect;
         }
         $asha_assigned = $this->request->input("ashaselect");
-        if ($asha_assigned && ($asha_assigned != "Choose Asha") ) {
+        if ($asha_assigned && ($asha_assigned != "Choose Asha")) {
             $filters["asha_assigned"] = $asha_assigned;
         }
 

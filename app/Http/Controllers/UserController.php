@@ -18,20 +18,9 @@ class UserController extends Controller
         $this->userService = $userService;
     }
 
-    /**
-     * Show the profile for the given user.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function show2()
-    {
-        return view('login.login', []);
-    }
 
     public function show()
     {
-
         return view('login.login', []);
     }
 
@@ -120,13 +109,12 @@ class UserController extends Controller
 
     public function createHousehold()
     {
-//        echo 88;exit;
         $this->userService->createHousehold();
     }
 
     public function getHousehold()
     {
-//        echo 88;exit;
+ 
         $data = $this->userService->getHousehold();
         return response()->json(['data' => $data], 200);
     }

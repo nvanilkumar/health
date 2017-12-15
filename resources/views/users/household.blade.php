@@ -114,6 +114,10 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
+                        <div> 
+                            <span class="btn label-danger" id="exportButton"><i class="fa fa-download"></i> Export</span>
+                            <span class="btn label-success" id="exportAllButton"><i class="fa fa-download"></i> Export All</span>
+                        </div>
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
@@ -166,6 +170,16 @@
 <script type="text/javascript" src="{{ asset('/js/common.js') }}"></script>
 <script>
 $(function () {
+    //Download Report 
+    $("#exportButton").click(function () {
+        path = '{{url('')."/downloadExcel"}}' + '?type=household'+queryString();
+        window.location.href = path;
+    });
+    $("#exportAllButton").click(function () {
+        path = '{{url('')."/downloadExcel"}}' + '?type=household';
+        window.location.href = path;
+    });
+    
     var ashaselectvalue = "<?php echo @$postData["ashaselect"] ?>";
     var phcselectvalue = "<?php echo @$postData["phcselect"] ?>";
     var villageselectvalue = "<?php echo @$postData["villageselect"] ?>";
@@ -205,7 +219,7 @@ $(function () {
     
         //reset form
     $("#resetbutton").click(function(){
-        $("#phcselect, #villageselect").val('').trigger('change');
+        $("#ashaselect,#phcselect, #villageselect").val('').trigger('change');
     });
 
 });

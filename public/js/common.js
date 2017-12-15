@@ -46,9 +46,49 @@ function dataTableInit(_id)
         'lengthChange': false,
         "dom": '<"top"i>rt<"bottom"flp><"clear">',
         "order": [],
-       "searching": false,
+        "searching": false,
         "bSort": true,
         'info': true,
         'autoWidth': false
     })
+}
+
+//To Prepare the Query String
+function queryString() {
+    var query = "";
+
+    ashaVal = $("#ashaselect").val();
+    if (ashaVal && ashaVal != "Choose Asha") {
+        query += "&ashaselect=" + ashaVal;
+    }
+    encVal = $("#encselect").val();
+    if (encVal && encVal != "Choose ENC Type") {
+        query += "&encselect=" + encVal;
+    }
+
+    phcVal = $("#phcselect").val();
+    if (phcVal && phcVal != "Choose PHC") {
+        query += "&phcselect=" + phcVal;
+    }
+
+    villageVal = $("#villageselect").val();
+    if (villageVal && villageVal != "Choose Village") {
+        query += "&villageselect=" + villageVal;
+    }
+
+//    startdateVal=$("#startdate").datepicker('getDate');
+
+    if ($("#datepicker").is('.hasDatepicker')) {
+        startdateVal = $("#datepicker").val();
+        if (startdateVal) {
+            query += "&startdate=" + startdateVal;
+        }
+    }
+    if ($("#datepicker2").is('.hasDatepicker')) {
+        enddateVal = $("#datepicker2").val();
+        if (enddateVal) {
+            query += "&enddate=" + enddateVal;
+        }
+    }
+    return query;
 }
