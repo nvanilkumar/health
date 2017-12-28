@@ -1,108 +1,152 @@
 @extends('layouts.newdashboard')
 
 @section('content')
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <h1>
-            NCD Reports
-            
-        </h1>
-
-    </section>
-
-    <!-- Main content -->
-    <section class="content">
+<div class="content-wrapper" style="padding: 15px 25px;">
+     <div class="row">
+    <div class="col-md-8">
         <div class="row">
-            <div class="col-md-6">
-                <!-- AREA CHART -->
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">PHC Household </h3>
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                NCD Reports
 
-                        <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                            </button>
-                         </div>
-                    </div>
-                    <div class="box-body">
-                        <div class="chart">
-                            <canvas id="barChart" style="height:230px"></canvas>
+            </h1>
+           
+
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-md-6">
+                    <!-- AREA CHART -->
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Total households registered PHC wise </h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                </button>
+                             </div>
+                        </div>
+                        <div class="box-body">
+                            <div class="chart">
+                                <canvas id="barChart" style="height:230px"></canvas>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <!-- /.box -->
+                    <!-- /.box -->
 
-                <!-- DONUT CHART -->
-                <div class="box box-danger">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Gender Chart</h3>
+                    <!-- DONUT CHART -->
+                    <div class="box box-danger">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Total individual registered Gender wise</h3>
 
-                        <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                            </button>
-                            
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                    <i class="fa fa-minus"></i>
+                                </button>
+
+                            </div>
                         </div>
-                    </div>
-                    <div class="box-body">
-                        <div id="pieChart" style="height: 300px;"></div>
-                    </div>
-                     
-                    <!-- /.box-body -->
-                </div>
-                <!-- /.box -->
+                        <div class="box-body">
+<!--                            <div id="pieChart" style="height: 300px;"></div>-->
+                            <canvas id="pieChart"></canvas>
+                        </div>
 
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+
+                </div>
+                <!-- /.col (LEFT) -->
+                <div class="col-md-6">
+                    <!-- BAR CHART -->
+                    <div class="box box-success">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Total Individual health records created PHC wise</h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                </button>
+
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <div class="chart">
+                                <canvas id="barChart2" style="height:230px"></canvas>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+
+                    <!-- LINE CHART -->
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">total NCD burden phc wise </h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                </button>
+
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <div id="pieChart2" style="height: 300px;"></div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+
+
+
+                </div>
+                <!-- /.col (RIGHT) -->
             </div>
-            <!-- /.col (LEFT) -->
-            <div class="col-md-6">
-                <!-- BAR CHART -->
-                <div class="box box-success">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">PHC Individual Health Records</h3>
+            <!-- /.row -->
 
-                        <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                            </button>
-                             
-                        </div>
-                    </div>
-                    <div class="box-body">
-                        <div class="chart">
-                            <canvas id="barChart2" style="height:230px"></canvas>
-                        </div>
-                    </div>
-                    <!-- /.box-body -->
-                </div>
-                <!-- /.box -->
-                
-                <!-- LINE CHART -->
-                <div class="box box-info">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">NCD Burden</h3>
-
-                        <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                            </button>
-                             
-                        </div>
-                    </div>
-                    <div class="box-body">
-                        <div id="pieChart2" style="height: 300px;"></div>
-                    </div>
-                    <!-- /.box-body -->
-                </div>
-                <!-- /.box -->
-
-                
-
-            </div>
-            <!-- /.col (RIGHT) -->
+        </section>
+        <!-- /.content -->
         </div>
-        <!-- /.row -->
+    </div>
+    <div class="col-md-4">
+         <div class="pull-right">
+                image
 
-    </section>
-    <!-- /.content -->
+
+
+
+         </div>
+        <p class="bold-text">total house holds registered</p>
+        <p class="box-strip bold-text"> {{array_sum($details['phcdata'])}}</p>
+        <p class="bold-text">total individual records created</p>
+        <p class="box-strip bold-text">{{array_sum($details['ashaphcdata'])}}</p>
+        <p class="bold-text">total individual records created with diabates</p>
+        <p class="box-strip bold-text">{{$details['piechart'][0]->diag}}</p>
+        <p class="bold-text">total individual records created with hbp</p>
+        <p class="box-strip bold-text">{{$details['piechart'][0]->hbp}}</p>
+        <p class="bold-text">total individual records created with cancer</p>
+        <p class="box-strip bold-text">{{$details['piechart'][0]->cancer}}</p>
+        <p class="bold-text">total individual records created with copd</p>
+        <p class="box-strip bold-text">{{$details['piechart'][0]->COPD}}</p>
+        <p class="bold-text">total individual records created with cvd</p>
+        <p class="box-strip bold-text">{{$details['piechart'][0]->cvd}}</p>
+    </div>
+     </div>
 </div>
+<style>
+    .box-strip{
+        background: #7f4992;
+        text-align: center;
+        padding: 10px;
+        color: #fff;
+        font-size: 22px;
+    }
+    .bold-text{
+        font-weight: 600;
+    }
+</style>
 <script type="text/javascript" src="{{ asset('/js/pluginjs/float/jquery.flot.js') }}"></script>
 <script type="text/javascript" src="{{ asset('/js/pluginjs/float/jquery.flot.pie.js') }}"></script>
 
@@ -265,7 +309,7 @@ $(function () {
         datasets: [
             {
                 label: 'Electronics',
-                fillColor: 'rgba(245,105,84, 0.7)',
+                fillColor: 'rgba(250,170,236, 0.8)',
                 strokeColor: 'rgba(210, 214, 222, 1)',
                 pointColor: 'rgba(210, 214, 222, 1)',
                 pointStrokeColor: '#c1c7d1',

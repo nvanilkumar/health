@@ -260,43 +260,10 @@ class UserController extends Controller
             "usersList" => $users, "type" => $type]);
     }
 
-    /**
-     * To Assign selected users to the specified group
-     * @return type
-     */
-    public function assignGroupUsersView()
-    {
-        $userData = $this->request->input("userData");
-        $userData = json_decode($userData);
 
-        $groupService = new \App\Services\GroupService($this->request);
-        $groups = $groupService->getGroupList();
 
-        return view('users.groupAssign', ["title" => "Assign Users to group",
-            "groups" => $groups,
-            "userData" => $userData,
-            "pageHeading" => "Add New User"]);
-    }
 
-    public function assignGroupUsers()
-    {
-        $value = $this->userService->assignGroupUsers();
-        //On Success redirecting to edit group page
-        if ($value == true) {
-            return redirect('groups/update/' . $this->request->input("group_id"))
-                            ->with('status', 'Users Assigned Successfully');
-        }
-        return redirect('dashboard');
-    }
 
-    public function chat()
-    {
-        $this->request->request->add(['role_name' => "student"]);
-        $usersList = $this->userService->getUserList();
-        return view('users.chat', ["title" => "Mtc Chat",
-            "pageHeading" => "Mtc Chat",
-            "usersList" => $usersList
-        ]);
-    }
+
 
 }
