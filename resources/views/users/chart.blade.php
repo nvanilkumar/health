@@ -139,12 +139,14 @@
     .box-strip{
         background: #7f4992;
         text-align: center;
-        padding: 10px;
+        border-radius: 5px;
         color: #fff;
-        font-size: 22px;
+        font-size: 20px;
+        
     }
     .bold-text{
         font-weight: 600;
+        text-transform: capitalize;
     }
 </style>
 <script type="text/javascript" src="{{ asset('/js/pluginjs/float/jquery.flot.js') }}"></script>
