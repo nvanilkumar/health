@@ -325,7 +325,7 @@ class UserService
 
     public function downloadData()
     {
-        $details=array();
+        $details = array();
         $type = $this->request->input("type");
         if ($type == "patients") {
             $details = $this->getPatients();
@@ -674,6 +674,7 @@ class UserService
     public function dashboardDetails()
     {
         $details = $this->usersModel->dashboardDetails();
+        $details["cvdgroup"] = $this->usersModel->dashboardCVD();
 
         $label = array();
         $data = array();
@@ -699,13 +700,23 @@ class UserService
         //gender details
         $genderDetails = $details['gender'];
         foreach ($genderDetails as $glist) {
+            $details["genderphc"][] = $glist->phc_name;
             if ($glist->gender == "F") {
-                $details["femalecount"] = $glist->gender_count;
+                $details["femalecount"][$glist->phc_name] = $glist->gender_count;
             } else {
-                $details["malecount"] = $glist->gender_count;
+                $details["malecount"][$glist->phc_name] = $glist->gender_count;
             }
         }
-
+        
+        if (count($details["genderphc"]) > 0) {
+            $details["genderphc"] = array_unique($details["genderphc"]);
+        }
+        $details["femalecount"]=$this->keyValueCheck($details["femalecount"],$details["genderphc"]);
+        $details["malecount"]=$this->keyValueCheck($details["malecount"],$details["genderphc"]);
+//        echo "<pre>";
+//        print_r($details["cvdgroup"]);
+//     
+//        exit;
         return $details;
     }
 
@@ -788,6 +799,20 @@ class UserService
             $filters["enddate"] = $enddate;
         }
         return $filters;
+    }
+
+    public function keyValueCheck($searchArray, $indexArray)
+    {
+        $mainArray=array();
+        foreach ($indexArray as  $basevalue ) {
+            if (array_key_exists($basevalue, $searchArray)) {
+                 $mainArray[$basevalue]=$searchArray[$basevalue];
+                 
+            }else{
+                $mainArray[$basevalue]=0;
+            }
+        }
+        return $mainArray;
     }
 
 }

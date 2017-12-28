@@ -58,10 +58,10 @@ class UsersModel extends CommonModel
 
         $dashboard["barchart2"] = $barchartdetails;
 
-        $select2 = "select count(_id) gender_count,gender
+        $select2 = "select count(_id) gender_count,gender,phc_name
                     from cvd_riskasses 
                     where enc_type='SH_CVD_ASHA_SCREENING_1'
-                    group by gender";
+                    group by phc_name,gender";
         $gendertdetails = DB::select(DB::raw($select2), $this->where);
         $dashboard["gender"] = $gendertdetails;
 
@@ -76,6 +76,43 @@ class UsersModel extends CommonModel
         $dashboard["piechart"] = $piedetails;
 
 //        echo "<pre>"; print_r($dashboard);exit;
+        if (count($dashboard) == 0) {
+            return NULL;
+        }
+
+        return $dashboard;
+    }
+
+    public function dashboardCVD()
+    {
+        $dashboard = array();
+        
+        $hbp = "select count(_id) as hbp, phc_name from cvd_riskasses where hbp =1 group by phc_name";
+        $hbpdetails = DB::select(DB::raw($hbp), $this->where);
+        $dashboard["hbp"] = $hbpdetails;
+        
+        $diag = "select count(_id) as diag, phc_name from cvd_riskasses where diag =1  group by phc_name";
+        $diagdetails = DB::select(DB::raw($diag), $this->where);
+        $dashboard["diag"] = $diagdetails;
+        
+        $cancer = "select count(_id) as cancer, phc_name from cvd_riskasses where mth_cn =1 or brts_cn=1 or cvr_cn = 1 group by phc_name";
+        $cancerdetails = DB::select(DB::raw($cancer), $this->where);
+        $dashboard["cancer"] = $cancerdetails;
+        
+        $copd = "select count(_id) as COPD, phc_name from cvd_riskasses where  copd_dis = 1 group by phc_name";
+        $copddetails = DB::select(DB::raw($copd), $this->where);
+        $dashboard["copd"] = $copddetails;
+        
+        $cvd = "select count(_id) as cvd, phc_name from cvd_riskasses where  high_risk_calc = 2 group by phc_name";
+        $cvdddetails = DB::select(DB::raw($cvd), $this->where);
+        $dashboard["cvd"] = $cvdddetails;
+        
+        $phc_name="select  distinct phc_name 
+                    from cvd_riskasses
+                    where (hbp =1 or diag =1 or  mth_cn =1 or brts_cn=1 or cvr_cn = 1 or  copd_dis = 1 or high_risk_calc = 2)";
+        $phc_namedetails = DB::select(DB::raw($phc_name), $this->where);
+        $dashboard["phc_names"] = $phc_namedetails;
+        
         if (count($dashboard) == 0) {
             return NULL;
         }
