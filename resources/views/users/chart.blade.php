@@ -152,6 +152,14 @@
             <p class="box-strip bold-text">{{$details['piechart'][0]->COPD}}</p>
             <p class="bold-text">total individual records created with cvd</p>
             <p class="box-strip bold-text">{{$details['piechart'][0]->cvd}}</p>
+            
+            <p class="bold-text">total individual records any one of the above diseases</p>
+            <p class="box-strip bold-text">{{$details['cvdgroup']["count_details"][0]->diseases_count}}</p>
+            
+            <p class="bold-text">Asha Follow Ups count</p>
+            <p class="box-strip bold-text">{{$details['cvdgroup']["count_details"][0]->followup_count}}</p>
+            <p class="bold-text">Doctor Follow ups count</p>
+            <p class="box-strip bold-text">{{$details['cvdgroup']["count_details"][0]->docotor_count}}</p>
         </div>
     </div>
 </div>
@@ -365,44 +373,33 @@ $(function () {
         });
         
         var barChartData = {
-            labels: ["January", "February", "March", "April", "May", "June", "July"],
+            labels: [<?php echo '"' . implode('","', $details['cvdgroup']['phc_name']) . '"' ?>],
             datasets: [{
-                label: 'Dataset 1',
+                label: 'CVD',
                 backgroundColor: window.chartColors.red,
-                data: [
-                    1,
-                    2,
-                    30,
-                    40,
-                    60,
-                    70,
-                    12
-                ]
-            }, {
-                label: 'Dataset 2',
-                backgroundColor: window.chartColors.blue,
-                data: [
-                    1,
-                    2,
-                    30,
-                    40,
-                    60,
-                    70,
-                    12
-                ]
-            }, {
-                label: 'Dataset 3',
+                data: [<?php echo '"' . implode('","', $details['cvdgroup']['cvd']) . '"' ?>]
+            },
+            {
+                label: 'HBP',
+                backgroundColor: window.chartColors.orange,
+                data: [<?php echo '"' . implode('","', $details['cvdgroup']['hbp']) . '"' ?>]
+            },
+            {
+                label: 'Diabetes',
+                backgroundColor: window.chartColors.yellow,
+                data: [<?php echo '"' . implode('","', $details['cvdgroup']['diag']) . '"' ?>]
+            },
+            {
+                label: 'Cancer',
                 backgroundColor: window.chartColors.green,
-                data: [
-                    1,
-                    2,
-                    30,
-                    40,
-                    60,
-                    70,
-                    12
-                ]
-            }]
+                data: [<?php echo '"' . implode('","', $details['cvdgroup']['cancer']) . '"' ?>]
+            },
+            {
+                label: 'COPD',
+                backgroundColor: window.chartColors.blue,
+                data: [<?php echo '"' . implode('","', $details['cvdgroup']['copd']) . '"' ?>]
+            }        
+            ]  
 
         };
          var ctx2 = document.getElementById("gender2").getContext("2d");

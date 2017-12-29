@@ -113,6 +113,20 @@ class UsersModel extends CommonModel
         $phc_namedetails = DB::select(DB::raw($phc_name), $this->where);
         $dashboard["phc_names"] = $phc_namedetails;
         
+        //To bring the doctor follow ups , asha follow ups , any disese patient count
+        $query='select * from
+                (select count(_id) as diseases_count
+                from cvd_riskasses
+                where (hbp =1 or diag =1 or  mth_cn =1 or brts_cn=1 or cvr_cn = 1 or  copd_dis = 1 or high_risk_calc = 2)) diseases_count,
+                (select count(_id) as docotor_count
+                from cvd_riskasses
+                where enc_type like "SH_CVD_DOCTOR") docotor_count,
+                (select count(_id) as followup_count
+                from cvd_riskasses
+                where enc_type like "sh_cvd_asha_followup_1") followup_count';
+        $count_details = DB::select(DB::raw($query), $this->where);
+        $dashboard["count_details"] = $count_details;
+        
         if (count($dashboard) == 0) {
             return NULL;
         }

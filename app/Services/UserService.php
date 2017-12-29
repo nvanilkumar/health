@@ -713,6 +713,8 @@ class UserService
         }
         $details["femalecount"]=$this->keyValueCheck($details["femalecount"],$details["genderphc"]);
         $details["malecount"]=$this->keyValueCheck($details["malecount"],$details["genderphc"]);
+        
+        $details["cvdgroup"]=$this->processCVD($details["cvdgroup"]);
 //        echo "<pre>";
 //        print_r($details["cvdgroup"]);
 //     
@@ -814,5 +816,54 @@ class UserService
         }
         return $mainArray;
     }
+    
+    public function processCVD($cvdDetails)
+    {
+        $resultArray=array();
+        
+      
+        foreach($cvdDetails["phc_names"] as $value)
+        {
+            
+            $resultArray["phc_name"][]=$value->phc_name;
+        }
+        
+        foreach($cvdDetails["cvd"] as $value)
+        {
+            
+            $resultArray["cvd"][$value->phc_name]=$value->cvd;
+        }
+        
+        foreach($cvdDetails["hbp"] as $value)
+        {
+            
+            $resultArray["hbp"][$value->phc_name]=$value->hbp;
+        }
+        
+        foreach($cvdDetails["diag"] as $value)
+        {
+            
+            $resultArray["diag"][$value->phc_name]=$value->diag;
+        }
+        foreach($cvdDetails["cancer"] as $value)
+        {
+            
+            $resultArray["cancer"][$value->phc_name]=$value->cancer;
+        }
+        
+        foreach($cvdDetails["copd"] as  $value)
+        {
+            
+            $resultArray["copd"][$value->phc_name]=$value->COPD;
+        }
+        $resultArray["cvd"]=$this->keyValueCheck($resultArray["cvd"],$resultArray["phc_name"]);       
+        $resultArray["hbp"]=$this->keyValueCheck($resultArray["hbp"],$resultArray["phc_name"]);       
+        $resultArray["diag"]=$this->keyValueCheck($resultArray["diag"],$resultArray["phc_name"]);       
+        $resultArray["cancer"]=$this->keyValueCheck($resultArray["cancer"],$resultArray["phc_name"]);       
+        $resultArray["copd"]=$this->keyValueCheck($resultArray["copd"],$resultArray["phc_name"]);  
+        $resultArray["count_details"]=$cvdDetails["count_details"];
+
+        return $resultArray;
+    }        
 
 }
