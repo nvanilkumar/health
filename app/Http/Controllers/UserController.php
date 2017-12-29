@@ -89,6 +89,24 @@ class UserController extends Controller
             'postData' => Input::all()
         ]);
     }
+    
+    public function diseaseView()
+    {
+       
+        $details = $this->userService->getDisease();
+//        echo "<pre>";
+//        print_r($details);exit;
+        $analyticsphc = $this->userService->getAnalyticsPHC();
+        $csdbasha= $this->userService->getCsdbAsha();
+
+        return view('users.disease', ["title" => "Analytics",
+            "details" => $details,
+            "analyticsphc" => $analyticsphc,
+            "csdbasha" => $csdbasha,
+            'postData' => Input::all()
+        ]);
+        
+    }        
 
     public function analyticsVillage()
     {

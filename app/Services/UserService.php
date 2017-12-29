@@ -276,6 +276,21 @@ class UserService
         $analytics = json_decode(json_encode($analytics), true);
         return $analytics;
     }
+    
+    public function getDisease()
+    {
+        $allList=array();
+        $allList["hbp"]=$this->getAnalytics("hbp");
+        $allList["diag"]=$this->getAnalytics("diag");
+        $allList["cancer"]=$this->getAnalytics("cancer");
+        $allList["copd"]=$this->getAnalytics("copd");
+        $allList["cvd"]=$this->getAnalytics("cvd");
+        
+        $allList =$this->analyticGraphDataProcess($allList);
+//        echo "<pre>";
+//        print_r($allList);exit;
+        return $allList;
+    }        
 
     public function getAnalyticsPHC()
     {
@@ -871,6 +886,71 @@ class UserService
         $resultArray["count_details"]=$cvdDetails["count_details"];
 
         return $resultArray;
-    }        
+    } 
+    
+    public function analyticGraphDataProcess($cvdDetails)
+    {
+         $resultArray=array();
+        
+        if(count($cvdDetails["cvd"]) > 0)
+        foreach($cvdDetails["cvd"] as $value)
+        {
+            $resultArray[$value["date"]]["cvd"]=$value["value"];
+        }
+        
+        if(count($cvdDetails["hbp"]) > 0)
+        foreach($cvdDetails["hbp"] as $value)
+        {
+            $resultArray[$value["date"]]["hbp"]=$value["value"];
+        }
+        
+        if(count($cvdDetails["diag"]) > 0)
+        foreach($cvdDetails["diag"] as $value)
+        {
+            $resultArray[$value["date"]]["diag"]=$value["value"];
+        }
+        
+        if(count($cvdDetails["cancer"]) > 0)
+        foreach($cvdDetails["cancer"] as $value)
+        {
+            $resultArray[$value["date"]]["cancer"]=$value["value"];
+        }
+        
+        if(count($cvdDetails["copd"]) > 0)
+        foreach($cvdDetails["copd"] as $value)
+        {
+            $resultArray[$value["date"]]["copd"]=$value["value"];
+        }
+        
+        //Add all categoires to array list
+        $indexArray=array("cvd","hbp","diag","cancer","copd");
+        $labelsArray=array();
+        $returnArray=array();
+        $returnArray["data"]=array();
+        
+        foreach($resultArray as $key => $value)
+        {
+            $returnArray["data"][]=$this->keyValueCheckAddField($resultArray[$key],$indexArray,$key);
+            $labelsArray[]=$key;
+        }    
+        $returnArray["labels"]=$labelsArray;
+        return $returnArray;
+        
+    } 
+    
+    public function keyValueCheckAddField($searchArray, $indexArray,$label)
+    {
+        $mainArray=array();
+        foreach ($indexArray as  $basevalue ) {
+            if (array_key_exists($basevalue, $searchArray)) {
+                 $mainArray[$basevalue]=$searchArray[$basevalue];
+                 
+            }else{
+                $mainArray[$basevalue]=0;
+            }
+            $mainArray['label']=$label;
+        }
+        return $mainArray;
+    }
 
 }

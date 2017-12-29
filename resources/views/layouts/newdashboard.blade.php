@@ -37,8 +37,8 @@
                 width	: 100%;
                 height	: 500px;
             }
-
-        </style>
+ 
+       </style>
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
@@ -89,11 +89,9 @@
                             </a>
                             <ul class="treeview-menu">
                                 <li><a href="{{ action('UserController@analyticsView',['default']) }}"><i class="fa fa-circle-o"></i>NCD Summary</a></li>
-                                <li><a href="{{ action('UserController@analyticsView',['hbp'])  }}"><i class="fa fa-heart "></i>High Blood Pressure</a></li>
-                                <li><a href="{{ action('UserController@analyticsView',['diag'])  }}"><i class="fa fa-heart "></i>Diabetes</a></li>
-                                <li><a href="{{ action('UserController@analyticsView',['cancer'])  }}"><i class="fa fa-heart "></i>Cancer</a></li>
-                                <li><a href="{{ action('UserController@analyticsView',['copd'])  }}"><i class="fa fa-heart "></i>COPD</a></li>
-                                <li><a href="{{ action('UserController@analyticsView',['cvd'])  }}"><i class="fa fa-heart "></i>CVD (High Risk)</a></li>
+                                <li><a href="{{ action('UserController@analyticsView',['doctor']) }}"><i class="fa fa-user-md"></i>Doctor (or)Followup Summary</a></li>
+                                <li><a href="{{ action('UserController@diseaseView') }}"><i class="fa fa-user-md"></i>ALL Summary</a></li>
+                                
                             </ul>
                         </li>
                         <li><a href="{{ action('UserController@getPatientsView') }}"><i class="fa fa-user-o"></i> <span>Patients</span></a></li>

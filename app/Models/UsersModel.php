@@ -177,7 +177,10 @@ class UsersModel extends CommonModel
     {
         $where = "";
         if ($type == "default") {
-            $where = "where 1 ";
+            $where = "where 1 and enc_type='SH_CVD_ASHA_SCREENING_1'";
+        }
+        if ($type == "doctor") {
+            $where = "where 1 and (enc_type like 'sh_cvd_asha_followup_%' or enc_type like 'SH_CVD_DOCTOR%')";
         }
         if ($type == "hbp") {
             $where = "where hbp =1 ";
@@ -186,7 +189,7 @@ class UsersModel extends CommonModel
             $where = "where diag =1 ";
         }
         if ($type == "cancer") {
-            $where = "where mth_cn =1 or brts_cn=1 or cvr_cn = 1 ";
+            $where = "where (mth_cn =1 or brts_cn=1 or cvr_cn = 1) ";
         }
         if ($type == "copd") {
             $where = "where copd_dis = 1 ";
@@ -208,7 +211,7 @@ class UsersModel extends CommonModel
                 }
             }
         }
-
+ 
         $select = "select  DATE_FORMAT(created_date, '%Y-%m-%d') as date,count(_id) as value
                     from cvd_riskasses " . $where . " 
                     group by created_date
