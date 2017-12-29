@@ -61,7 +61,7 @@ class UserController extends Controller
 
     public function getPatientsView()
     {
-
+ 
         $details = $this->userService->getPatients();
         $houseHoldPhc = $this->userService->getAnalyticsPHC();
         $encType = $this->userService->getCsdbEncType();

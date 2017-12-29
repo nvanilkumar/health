@@ -90,6 +90,19 @@
                                         <!-- /.input group -->
                                     </div>
                                 </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label>Patient Id:</label>
+
+                                        <div class="input-group date">
+                                             
+                                            <input type="text" class="form-control input-sm" 
+                                                value="<?php echo @$postData["patient_id"] ?>"   id="patient_id" name="patient_id" placeholder="pateint_id">
+                                             
+                                        </div>
+                                        <!-- /.input group -->
+                                    </div>
+                                </div>
 
                                 <div class="col-md-2 pull-right" >
 

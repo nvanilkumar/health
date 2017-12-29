@@ -242,6 +242,13 @@ class UserService
             $enddate = date("Y-m-d H:i:s", strtotime($enddate));
             $where[] = ["created_date", "<=", $enddate];
         }
+        
+        $patient_id = $this->request->input("patient_id");
+        if ($patient_id) {
+             
+            $where[] = ["patient_id", "=", $patient_id];
+            $setWhere = TRUE;
+        }
 
         $this->usersModel->setTableName("cvd_riskasses");
 
