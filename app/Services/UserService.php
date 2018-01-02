@@ -326,12 +326,29 @@ class UserService
 
     public function getAnalytics($type)
     {
+
         $filters = array();
         $filters = $this->prepareFilter();
         $analytics = $this->usersModel->analyticQuery($type, $filters);
         $analytics = json_decode(json_encode($analytics), true);
+        $user_role_type=session('user_role');
+        if($user_role_type == 'stakeholders'){
+            $analytics =$this->getStakeUserAnalytics($analytics);
+        }
         return $analytics;
     }
+    
+    public function getStakeUserAnalytics($analytics)
+    {
+        $fillterValue=0;
+        foreach ($analytics as $key => $value)
+        {
+            $temp=$value["value"];
+            $analytics[$key]["value"]=$value["value"]+$fillterValue;
+            $fillterValue=$fillterValue+$temp;
+        }  
+        return $analytics;
+    }        
     
     public function getDisease()
     {
@@ -343,8 +360,6 @@ class UserService
         $allList["cvd"]=$this->getAnalytics("cvd");
         
         $allList =$this->analyticGraphDataProcess($allList);
-//        echo "<pre>";
-//        print_r($allList);exit;
         return $allList;
     }        
 
