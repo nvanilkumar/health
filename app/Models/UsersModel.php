@@ -330,5 +330,41 @@ class UsersModel extends CommonModel
         }
         return $analyticData;
     }
+    
+    /**
+     * To Bring the patient min screening type and max screening type
+     * @return type
+     */
+    public function patientScreening($filters)
+    {
+        $where = " and  1 ";
+
+        //Applying the filters
+        if (count($filters) > 0) {
+            foreach ($filters as $key => $value) {
+
+                if ($key != "startdate" && $key != "enddate") {
+                    $where .= " and " . $key . "='" . $value . "'";
+                } else if ($key == "startdate") {
+                    $where .= "and created_date >='" . $value . "'";
+                } else if ($key == "enddate") {
+                    $where .= " and created_date <='" . $value . "'";
+                }
+            }
+        }
+
+        $select = "select _id,patient_id,first_name,enc_type,current_encounter
+                   from cvd_riskasses as cvr
+                   where (_id =(select min(_id) from cvd_riskasses as min_cvd where min_cvd.patient_id= cvr.patient_id)
+                    or _id =(select max(_id) from cvd_riskasses as min_cvd where min_cvd.patient_id= cvr.patient_id))
+                    " . $where . " 
+                    order by patient_id asc";
+        $paitentData = DB::select(DB::raw($select), $this->where);
+
+        if (count($paitentData) == 0) {
+            return NULL;
+        }
+        return $paitentData;
+    }        
 
 }

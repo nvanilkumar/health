@@ -237,6 +237,10 @@ $(function () {
         path = '{{url('')."/downloadExcel"}}' + '?type=patients';
         window.location.href = path;
     });
+    $("#exportSButton").click(function () {
+        path = '{{url('')."/downloadExcel"}}' + '?type=patientScreening';
+        window.location.href = path;
+    });
     
     $("#dialog-form").hide();
     //Show Dialog box

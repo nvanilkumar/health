@@ -267,6 +267,62 @@ class UserService
 //         print_r($households);exit;
         return $paitents;
     }
+    /**
+     * To Bring enc type screening first and last screening of the paitent
+     * @return type
+     */
+    public function getPatientScreening()
+    {
+    
+        $where = [];
+        $encselect = $this->request->input("encselect");
+        if ($encselect && ($encselect != "Choose ENC Type")) {
+            
+            $where["enc_type"] =$encselect;
+            
+        }
+        $phcselect = $this->request->input("phcselect");
+        if ($phcselect && ($phcselect != "Choose PHC")) {
+            $where["phc_name"] = $phcselect;
+        }
+
+        $villageselect = $this->request->input("villageselect");
+        if ($villageselect && ($villageselect != "Choose Village")) {
+
+            $where["vill_name"] = $villageselect;
+        }
+
+        $startdate = $this->request->input("startdate");
+        if ($startdate) {
+            $startdate = date("Y-m-d H:i:s", strtotime($startdate));
+            $where["created_date"] = $startdate;
+        }
+
+        $enddate = $this->request->input("enddate");
+        if ($enddate) {
+            $enddate = date("Y-m-d H:i:s", strtotime($enddate));
+            $where["created_date"] =$enddate;
+        }
+        
+        $patient_id = $this->request->input("patient_id");
+        if ($patient_id) {
+             
+            $where["patient_id"] = $patient_id;
+            
+        }
+
+        
+//  \DB::enableQueryLog();
+        $paitents = $this->usersModel->patientScreening($where);
+       $paitents = json_decode(json_encode($paitents), true);
+
+//                $query = \DB::getQueryLog();
+// $query = end($query);
+// var_dump($query);exit;
+//         echo "<pre>";
+//         print_r($households);exit;
+        return $paitents;
+    }
 
     public function getAnalytics($type)
     {
@@ -355,6 +411,8 @@ class UserService
             $details = $this->getreportsList();
         } else if ($type == "household") {
             $details = $this->getHousehold();
+        } else if ($type == "patientScreening") {
+            $details = $this->getPatientScreening();
         }
 
         return $details;
