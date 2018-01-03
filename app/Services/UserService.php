@@ -341,6 +341,7 @@ class UserService
     public function getStakeUserAnalytics($analytics)
     {
         $fillterValue=0;
+        if(count($analytics)>0)
         foreach ($analytics as $key => $value)
         {
             $temp=$value["value"];
