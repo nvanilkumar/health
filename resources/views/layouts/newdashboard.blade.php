@@ -88,9 +88,9 @@
                                 </span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="{{ action('UserController@analyticsView',['default']) }}"><i class="fa fa-circle-o"></i>NCD Summary</a></li>
-                                <li><a href="{{ action('UserController@analyticsView',['doctor']) }}"><i class="fa fa-user-md"></i>Doctor (or)Followup Summary</a></li>
-                                <li><a href="{{ action('UserController@diseaseView') }}"><i class="fa fa-user-md"></i>ALL Summary</a></li>
+                                <li><a href="{{ action('UserController@analyticsView',['default']) }}"><i class="fa fa-circle-o"></i>Screening</a></li>
+                                <li><a href="{{ action('UserController@analyticsView',['doctor']) }}"><i class="fa fa-user-md"></i>Followup</a></li>
+                                <li><a href="{{ action('UserController@diseaseView') }}"><i class="fa fa-user-md"></i>Diseases</a></li>
                                 
                             </ul>
                         </li>

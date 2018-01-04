@@ -37,7 +37,7 @@
                                 </div>
                             </div>
                             <!-- /.box -->
-                            <div class="box box-danger">
+                            <div class="box box-primary">
                                 <div class="box-header with-border">
                                     <h3 class="box-title">Total individual registered Gender wise</h3>
 
@@ -58,7 +58,7 @@
                                 <!-- /.box-body -->
                             </div>
 
-                            <div class="box box-danger">
+                            <div class="box box-primary">
                                 <div class="box-header with-border">
                                     <h3 class="box-title">Total ncd burden phc wise</h3>
 
@@ -104,7 +104,7 @@
                             <!-- LINE CHART -->
                             <div class="box box-info">
                                 <div class="box-header with-border">
-                                    <h3 class="box-title">total NCD burden phc wise </h3>
+                                    <h3 class="box-title">Total NCD burden phc wise </h3>
 
                                     <div class="box-tools pull-right">
                                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -142,15 +142,15 @@
             <p class="box-strip bold-text"> {{array_sum($details['phcdata'])}}</p>
             <p class="bold-text">total individual records created</p>
             <p class="box-strip bold-text">{{array_sum($details['ashaphcdata'])}}</p>
-            <p class="bold-text">total individual records created with diabates</p>
+            <p class="bold-text">total individual records created with Diabates</p>
             <p class="box-strip bold-text">{{$details['piechart'][0]->diag}}</p>
-            <p class="bold-text">total individual records created with hbp</p>
+            <p class="bold-text">total individual records created with HBP</p>
             <p class="box-strip bold-text">{{$details['piechart'][0]->hbp}}</p>
-            <p class="bold-text">total individual records created with cancer</p>
+            <p class="bold-text">total individual records created with Cancer</p>
             <p class="box-strip bold-text">{{$details['piechart'][0]->cancer}}</p>
-            <p class="bold-text">total individual records created with copd</p>
+            <p class="bold-text">total individual records created with COPD</p>
             <p class="box-strip bold-text">{{$details['piechart'][0]->COPD}}</p>
-            <p class="bold-text">total individual records created with cvd</p>
+            <p class="bold-text">total individual records created with CVD</p>
             <p class="box-strip bold-text">{{$details['piechart'][0]->cvd}}</p>
             
             <p class="bold-text">total individual records any one of the above diseases</p>
@@ -169,7 +169,7 @@
         text-align: center;
         border-radius: 5px;
         color: #fff;
-        font-size: 20px;
+        font-size: 40px;
 
     }
     .bold-text{
@@ -178,9 +178,10 @@
     }
 </style>
 <script type="text/javascript" src="{{ asset('/js/pluginjs/float/jquery.flot.js') }}"></script>
-<script type="text/javascript" src="{{ asset('/js/pluginjs/float/jquery.flot.pie.js') }}"></script>
+
 <script type="text/javascript" src="{{ asset('/js/pluginjs/Chartv2.js') }}"></script>
 <script type="text/javascript" src="{{ asset('/js/pluginjs/utils.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/js/pluginjs/float/jquery.flot.pie.js') }}"></script>
 <style>
     canvas {
         -moz-user-select: none;
@@ -204,7 +205,7 @@ $(function () {
             data: '<?php echo $details['piechart'][0]->hbp; ?>',
             color: '#f56954',
             highlight: '#f56954',
-            label: 'HBP',
+            label: 'HBP- '+'<?php echo $details['piechart'][0]->hbp; ?>',
             labelColor: 'white',
             labelFontSize: '5'
         },
@@ -212,7 +213,7 @@ $(function () {
             data: '<?php echo $details['piechart'][0]->diag; ?>',
             color: '#00a65a',
             highlight: '#00a65a',
-            label: 'Diabetes',
+            label: 'Diabetes - '+'<?php echo $details['piechart'][0]->diag; ?>',
             labelColor: 'white',
             labelFontSize: '10'
         },
@@ -220,7 +221,7 @@ $(function () {
             data: '<?php echo $details['piechart'][0]->cancer; ?>',
             color: '#f39c12',
             highlight: '#f39c12',
-            label: 'Cancer',
+            label: 'Cancer - '+'<?php echo $details['piechart'][0]->cancer; ?>',
 
             labelColor: 'white',
             labelFontSize: '10'
@@ -229,13 +230,13 @@ $(function () {
             data: '<?php echo $details['piechart'][0]->COPD; ?>',
             color: '#00c0ef',
             highlight: '#00c0ef',
-            label: 'COPD'
+            label: 'COPD - '+'<?php echo $details['piechart'][0]->COPD; ?>',
         },
         {
             data: '<?php echo $details['piechart'][0]->cvd; ?>',
             color: '#3c8dbc',
             highlight: '#3c8dbc',
-            label: 'CVD',
+            label: 'CVD - ' + '<?php echo $details['piechart'][0]->cvd; ?>',
             labelColor: 'white',
             labelFontSize: '10'
         }
@@ -267,14 +268,13 @@ $(function () {
      * Custom Label formatter
      * ----------------------
      */
-    function labelFormatter(label, series) {
+    function labelFormatter(label, series) { 
         return '<div style="font-size:13px; text-align:center; padding:2px; color: #fff; font-weight: 600;">'
                 + label
                 + '<br>'
                 + '</div>'
     }
-    //Gender pie chart 
-//    $.plot('#pieChart', genderData,pieOptions)
+ 
 
     //cancer pie chart
     $.plot('#pieChart2', PieData, pieOptions)

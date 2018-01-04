@@ -8,7 +8,7 @@
 </div> 
 <div class="login-box">
     <div class="login-logo">
-        <img src="{{ asset('/images/login_logo.png') }}" alt="health" style=" width: 100%; padding: 0px 60px 0 60px;">
+        <img src="{{ asset('/images/login_logo2.png') }}" alt="health" style=" width: 100%; padding: 0px 60px 0 60px;">
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body hoverable" id="login-page">
