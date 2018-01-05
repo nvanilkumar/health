@@ -20,10 +20,10 @@
                 <section class="content">
                     <div class="row">
                         <div class="col-md-6">
-                            <!-- AREA CHART -->
+                             <!-- AREA CHART -->
                             <div class="box box-primary">
                                 <div class="box-header with-border">
-                                    <h3 class="box-title">Total households registered PHC wise </h3>
+                                    <h3 class="box-title">Total Households Registered PHC Wise </h3>
 
                                     <div class="box-tools pull-right">
                                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -37,9 +37,35 @@
                                 </div>
                             </div>
                             <!-- /.box -->
-                            <div class="box box-primary">
+                            
+                        </div>
+                        <div class="col-md-6">
+                             <!-- BAR CHART -->
+                            <div class="box box-success">
                                 <div class="box-header with-border">
-                                    <h3 class="box-title">Total individual registered Gender wise</h3>
+                                    <h3 class="box-title">Total Individual Health Records created PHC Wise</h3>
+
+                                    <div class="box-tools pull-right">
+                                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                        </button>
+
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <div class="chart">
+                                        <canvas id="barChart2" style="height:230px"></canvas>
+                                    </div>
+                                </div>
+                                <!-- /.box-body -->
+                            </div>
+                            <!-- /.box -->
+                        </div>
+                    </div>    
+                    <div class="row">
+                        <div class="col-md-6">
+                             <div class="box box-primary">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Total Registered Gender Wise</h3>
 
                                     <div class="box-tools pull-right">
                                         <button type="button" class="btn btn-box-tool" data-widget="collapse">
@@ -49,7 +75,7 @@
                                     </div>
                                 </div>
                                 <div class="box-body">
-                                    <!--                            <div id="pieChart" style="height: 300px;"></div>-->
+                                    
                                     <canvas id="gender"></canvas>
 
 
@@ -57,10 +83,11 @@
 
                                 <!-- /.box-body -->
                             </div>
-
-                            <div class="box box-primary">
+                        </div>
+                        <div class="col-md-6">
+                             <div class="box box-primary">
                                 <div class="box-header with-border">
-                                    <h3 class="box-title">Total ncd burden phc wise</h3>
+                                    <h3 class="box-title">Total NCD Burden PHC Wise</h3>
 
                                     <div class="box-tools pull-right">
                                         <button type="button" class="btn btn-box-tool" data-widget="collapse">
@@ -79,32 +106,12 @@
                                 <!-- /.box-body -->
                             </div>
                         </div>
-                        <!-- /.col (LEFT) -->
-                        <div class="col-md-6">
-                            <!-- BAR CHART -->
-                            <div class="box box-success">
-                                <div class="box-header with-border">
-                                    <h3 class="box-title">Total Individual health records created PHC wise</h3>
-
-                                    <div class="box-tools pull-right">
-                                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                                        </button>
-
-                                    </div>
-                                </div>
-                                <div class="box-body">
-                                    <div class="chart">
-                                        <canvas id="barChart2" style="height:230px"></canvas>
-                                    </div>
-                                </div>
-                                <!-- /.box-body -->
-                            </div>
-                            <!-- /.box -->
-
-                            <!-- LINE CHART -->
+                    </div>    
+                    <div class="row">
+                          <!-- LINE CHART -->
                             <div class="box box-info">
                                 <div class="box-header with-border">
-                                    <h3 class="box-title">Total NCD burden phc wise </h3>
+                                    <h3 class="box-title">Total NCD Burden PHC Wise </h3>
 
                                     <div class="box-tools pull-right">
                                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -118,12 +125,8 @@
                                 <!-- /.box-body -->
                             </div>
                             <!-- /.box -->
-
-
-
-                        </div>
-                        <!-- /.col (RIGHT) -->
-                    </div>
+                    </div>    
+                   
                     <!-- /.row -->
 
                 </section>
@@ -169,8 +172,8 @@
         text-align: center;
         border-radius: 5px;
         color: #fff;
-        font-size: 40px;
-
+        font-size: 25px;
+        padding: 12px;
     }
     .bold-text{
         font-weight: 600;
@@ -342,7 +345,7 @@ $(function () {
                     intersect: false
                 },
                 responsive: true,
-
+                barThickness:2
             }
         });
 

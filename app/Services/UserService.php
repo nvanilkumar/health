@@ -782,7 +782,7 @@ class UserService
         }
         $details["phclabel"] = $label;
         $details["phcdata"] = $data;
-
+        
         $label = array();
         $data = array();
         $ashaphcdetails = $details["barchart1"];
