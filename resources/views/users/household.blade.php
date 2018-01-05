@@ -12,16 +12,16 @@
 
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">Household Report</h3>
+                        <h3 class="box-title" style="padding-left: 10px;">Household Report</h3>
 
 
                         <!-- /.box-header -->
-                        <div class="box-body" style="">
+                        <div class="box-body" style="padding-bottom: 0px;">
                             <div class="row">
                                 {{ Form::open(array('action' => 'UserController@householdView')) }}
                                 <div class="col-md-2">
                                     <div class="form-group">
-                                        <label>PHC</label>
+<!--                                        <label>PHC</label>-->
                                         <select class="form-control select2 select2-hidden-accessible" 
                                                 name="phcselect"  id="phcselect" style="width: 100%;" tabindex="-1" aria-hidden="true">
                                             <option selected="selected">Choose PHC</option>
@@ -38,7 +38,7 @@
                                 </div>
                                 <div class="col-md-2">
                                     <div class="form-group">
-                                        <label>ASHA</label>
+<!--                                        <label>ASHA</label>-->
                                         <select class="form-control select2 select2-hidden-accessible" 
                                                 name="ashaselect"  id="ashaselect" style="width: 100%;" tabindex="-1" aria-hidden="true">
                                             <option selected="selected">Choose Asha</option>
@@ -56,7 +56,7 @@
                                 
                                 <div class="col-md-2">
                                     <div class="form-group">
-                                        <label>Village</label>
+<!--                                        <label>Village</label>-->
                                         <select class="form-control select2 select2-hidden-accessible" disabled 
                                                 name="villageselect" id="villageselect" style="width: 100%;" tabindex="-1" aria-hidden="true">
                                             <option selected="selected">Choose Village</option>
@@ -69,7 +69,7 @@
 
                                 <div class="col-md-2">
                                     <div class="form-group">
-                                        <label>Date:</label>
+<!--                                        <label>Date:</label>-->
 
                                         <div class="input-group date">
                                             <div class="input-group-addon">
@@ -84,7 +84,7 @@
 
                                 <div class="col-md-2">
                                     <div class="form-group">
-                                        <label>Date:</label>
+<!--                                        <label>Date:</label>-->
 
                                         <div class="input-group date">
                                             <div class="input-group-addon">
@@ -98,7 +98,7 @@
                                 </div>
 
 
-                                 <div class="col-md-2 pull-right" style=" margin: 24px 0px 0px;">
+                                 <div class="col-md-2 pull-right">
 
                                    
                                      <button type="submit" class="btn btn-info ">Set Filter</button>
@@ -114,7 +114,7 @@
 
                     </div>
                     <!-- /.box-header -->
-                    <div class="box-body">
+                    <div class="box-body" style="padding: 0px 20px 0px 20px; ">
                         <div> 
                             <span class="btn label-danger" id="exportButton"><i class="fa fa-download"></i> Export</span>
                             <span class="btn label-success" id="exportAllButton"><i class="fa fa-download"></i> Export All</span>
