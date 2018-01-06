@@ -21,7 +21,7 @@
                                 {{ Form::open(array('action' => 'UserController@getPatientsView', "id"=>"patientform")) }}
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label>ENC TYPE</label>
+                                        
                                         <select class="form-control select2 select2-hidden-accessible" 
                                                 name="encselect"  id="encselect" style="width: 100%;" tabindex="-1" aria-hidden="true">
                                             <option selected="selected">Choose ENC Type</option>
@@ -38,7 +38,7 @@
                                 </div>
                                 <div class="col-md-2">
                                     <div class="form-group">
-                                        <label>PHC</label>
+                                        
                                         <select class="form-control select2 select2-hidden-accessible" disabled
                                                 name="phcselect"  id="phcselect" style="width: 100%;" tabindex="-1" aria-hidden="true">
                                             <option selected="selected">Choose PHC</option>
@@ -50,7 +50,7 @@
                                 </div>
                                 <div class="col-md-2">
                                     <div class="form-group">
-                                        <label>Village</label>
+                                         
                                         <select class="form-control select2 select2-hidden-accessible" disabled 
                                                 name="villageselect" id="villageselect" style="width: 100%;" tabindex="-1" aria-hidden="true">
                                             <option selected="selected">Choose Village</option>
@@ -63,14 +63,14 @@
 
                                 <div class="col-md-2">
                                     <div class="form-group">
-                                        <label>Date:</label>
+                                       
 
                                         <div class="input-group date">
                                             <div class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>
                                             </div>
                                             <input type="text" class="form-control pull-right" 
-                                                   id="datepicker" name="startdate">
+                                                   id="datepicker" name="startdate" placeholder="From">
                                         </div>
                                         <!-- /.input group -->
                                     </div>
@@ -78,26 +78,41 @@
 
                                 <div class="col-md-2">
                                     <div class="form-group">
-                                        <label>Date:</label>
+                                        
 
                                         <div class="input-group date">
                                             <div class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>
                                             </div>
                                             <input type="text" class="form-control pull-right" 
-                                                   id="datepicker2" name="enddate">
+                                                   id="datepicker2" name="enddate" placeholder="To">
                                         </div>
                                         <!-- /.input group -->
                                     </div>
                                 </div>
                                 <div class="col-md-2">
                                     <div class="form-group">
-                                        <label>Patient Id:</label>
+                                        
 
                                         <div class="input-group date">
                                              
                                             <input type="text" class="form-control input-sm" 
                                                 value="<?php echo @$postData["patient_id"] ?>"   id="patient_id" name="patient_id" placeholder="pateint_id">
+                                             
+                                        </div>
+                                        <!-- /.input group -->
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        
+
+                                        <div class="input-group date">
+                                             
+                                            <input type="text" class="form-control input-sm" 
+                                                value="<?php echo @$postData["hh_id"] ?>"   
+                                                id="hh_id" name="hh_id" placeholder="Household_id">
                                              
                                         </div>
                                         <!-- /.input group -->
@@ -133,6 +148,7 @@
                                     <th>PHC </th>
                                     <th>Village</th>
                                     <th>Patient Id</th>
+                                    <th>Household Id</th>
                                     <th>Name </th>
                                     <th>Gender</th>
                                     <th>Age</th>
@@ -147,10 +163,11 @@
                                 @if(count($details) > 0)
                                 @foreach ($details as $detail)
                                 <tr data-id="{{json_encode($detail)}}">
-                                    <td>{{$detail['phc_name']}} </td>
+                                    <td>{{strtoupper($detail['phc_name'])}} </td>
                                     <td >{{$detail['vill_name']}} </td>
 
                                     <td>{{$detail['patient_id']}} </td>
+                                    <td>{{$detail['hh_id']}} </td>
                                     <td> {{$detail['first_name'] ." ".$detail['sur_name']}}</td>
                                     <td>{{$detail['gender']}} </td>
                                     <td>{{$detail['age']}} </td>
@@ -214,9 +231,9 @@
         z-index: 2000;
     }
     .ui-widget-header{
-        border: 1px solid #3c8dbc;
+        border: 1px solid #7f4992;
         background: none;
-        background-color: #3c8dbc;
+        background-color: #7f4992;
         color: #fff;
     }
     #patientdata thead{
@@ -303,7 +320,7 @@ $(function () {
     
     //reset form
     $("#resetbutton").click(function(){
-        $("#phcselect, #encselect, #villageselect").val('').trigger('change');
+        $("#phcselect, #encselect, #villageselect, #hh_id, #patient_id").val('').trigger('change');
     });
 
 });

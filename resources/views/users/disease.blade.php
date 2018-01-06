@@ -168,31 +168,31 @@ var chart = AmCharts.makeChart("chartdiv", {
     "graphs": [{
         "balloonText": "cvd in [[category]]: [[value]]",
         "bullet": "round",
-        "title": "cvd",
+        "title": "CVD",
         "valueField": "cvd",
         "fillAlphas": 0
     },{
         "balloonText": "hbp in [[category]]: [[value]]",
         "bullet": "round",
-        "title": "hbp",
+        "title": "HBP",
         "valueField": "hbp",
         "fillAlphas": 0
     },{
         "balloonText": "disease in [[category]]: [[value]]",
         "bullet": "round",
-        "title": "disease",
+        "title": "DISEASE",
         "valueField": "diag",
         "fillAlphas": 0
     },{
         "balloonText": "cancer in [[category]]: [[value]]",
         "bullet": "round",
-        "title": "cancer",
+        "title": "CA",
         "valueField": "cancer",
         "fillAlphas": 0
     },{
         "balloonText": "copd in [[category]]: [[value]]",
         "bullet": "round",
-        "title": "copd",
+        "title": "COPD",
         "valueField": "copd",
         "fillAlphas": 0
     }],

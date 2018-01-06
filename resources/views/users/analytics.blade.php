@@ -22,7 +22,7 @@
                                 {{ Form::open(array('url' => url('/')."/analytics/".request()->route('type'))) }}
                                 <div class="col-md-2">
                                     <div class="form-group">
-                                        <label>ASHA</label>
+                                       
                                         <select class="form-control select2 select2-hidden-accessible" 
                                                 name="ashaselect"  id="ashaselect" style="width: 100%;" tabindex="-1" aria-hidden="true">
                                             <option selected="selected">Choose Asha</option>
@@ -40,7 +40,7 @@
                                 </div>
                                 <div class="col-md-2">
                                     <div class="form-group">
-                                        <label>PHC</label>
+                                         
                                         <select class="form-control select2 select2-hidden-accessible" 
                                                 name="phcselect"  id="phcselect" style="width: 100%;" tabindex="-1" aria-hidden="true">
                                             <option selected="selected">Choose PHC</option>
@@ -57,7 +57,7 @@
                                 </div>
                                 <div class="col-md-2">
                                     <div class="form-group">
-                                        <label>Village</label>
+                                        
                                         <select class="form-control select2 select2-hidden-accessible" disabled 
                                                 name="villageselect" id="villageselect" style="width: 100%;" tabindex="-1" aria-hidden="true">
                                             <option selected="selected">Choose Village</option>
@@ -70,14 +70,14 @@
 
                                 <div class="col-md-2">
                                     <div class="form-group">
-                                        <label>Date:</label>
+                                        
 
                                         <div class="input-group date">
                                             <div class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>
                                             </div>
                                             <input type="text" class="form-control pull-right" 
-                                                   id="datepicker" name="startdate">
+                                                   id="datepicker" name="startdate" placeholder="From">
                                         </div>
                                         <!-- /.input group -->
                                     </div>
@@ -85,20 +85,20 @@
 
                                 <div class="col-md-2">
                                     <div class="form-group">
-                                        <label>Date:</label>
+                                         
 
                                         <div class="input-group date">
                                             <div class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>
                                             </div>
                                             <input type="text" class="form-control pull-right" 
-                                                   id="datepicker2" name="enddate">
+                                                   id="datepicker2" name="enddate" placeholder="To">
                                         </div>
                                         <!-- /.input group -->
                                     </div>
                                 </div>
 
-                                <div class="col-md-2 pull-right" style=" margin: 24px 0px 0px;">
+                                <div class="col-md-2 pull-right"  >
 
                                    
                                      <button type="submit" class="btn btn-info ">Set Filter</button>

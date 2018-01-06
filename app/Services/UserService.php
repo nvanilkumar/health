@@ -249,6 +249,12 @@ class UserService
             $where[] = ["patient_id", "=", $patient_id];
             $setWhere = TRUE;
         }
+        $hh_id = $this->request->input("hh_id");
+        if ($hh_id) {
+             
+            $where[] = ["hh_id", "=", $hh_id];
+            $setWhere = TRUE;
+        }
 
         $this->usersModel->setTableName("cvd_riskasses");
 
@@ -777,7 +783,7 @@ class UserService
 
         $phcdetails = $details["barchart2"];
         foreach ($phcdetails as $list) {
-            $label[] = $list->phc_name;
+            $label[] = strtoupper($list->phc_name);
             $data[] = $list->ashacount;
         }
         $details["phclabel"] = $label;
@@ -787,7 +793,7 @@ class UserService
         $data = array();
         $ashaphcdetails = $details["barchart1"];
         foreach ($ashaphcdetails as $list) {
-            $label[] = $list->phc_name;
+            $label[] = strtoupper($list->phc_name);
             $data[] = $list->ashacount;
         }
         $details["ashaphclabel"] = $label;
@@ -796,7 +802,7 @@ class UserService
         //gender details
         $genderDetails = $details['gender'];
         foreach ($genderDetails as $glist) {
-            $details["genderphc"][] = $glist->phc_name;
+            $details["genderphc"][] = strtoupper($glist->phc_name);
             if ($glist->gender == "F") {
                 $details["femalecount"][$glist->phc_name] = $glist->gender_count;
             } else {
@@ -921,7 +927,7 @@ class UserService
         foreach($cvdDetails["phc_names"] as $value)
         {
             
-            $resultArray["phc_name"][]=$value->phc_name;
+            $resultArray["phc_name"][]=strtoupper($value->phc_name);
         }
         
         foreach($cvdDetails["cvd"] as $value)

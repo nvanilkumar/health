@@ -76,7 +76,7 @@
                                                 <i class="fa fa-calendar"></i>
                                             </div>
                                             <input type="text" class="form-control pull-right" 
-                                                   id="datepicker" name="startdate">
+                                                   id="datepicker" name="startdate" placeholder="From">
                                         </div>
                                         <!-- /.input group -->
                                     </div>
@@ -91,7 +91,7 @@
                                                 <i class="fa fa-calendar"></i>
                                             </div>
                                             <input type="text" class="form-control pull-right" 
-                                                   id="datepicker2" name="enddate">
+                                                   id="datepicker2" name="enddate" placeholder="To">
                                         </div>
                                         <!-- /.input group -->
                                     </div>
@@ -126,7 +126,7 @@
                                     <th>HH Id</th>
                                     <th>PHC name</th>
                                     <th>Village name</th>
-                                    <th>Family Head Name </th>
+                                    <th>Family head name </th>
 
 
                                 </tr>
