@@ -180,7 +180,7 @@ var chart = AmCharts.makeChart("chartdiv", {
     },{
         "balloonText": "disease in [[category]]: [[value]]",
         "bullet": "round",
-        "title": "DISEASE",
+        "title": "Diabates",
         "valueField": "diag",
         "fillAlphas": 0
     },{
