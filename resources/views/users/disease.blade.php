@@ -178,15 +178,15 @@ var chart = AmCharts.makeChart("chartdiv", {
         "valueField": "hbp",
         "fillAlphas": 0
     },{
-        "balloonText": "disease in [[category]]: [[value]]",
+        "balloonText": "DM in [[category]]: [[value]]",
         "bullet": "round",
-        "title": "Diabates",
+        "title": "Dm",
         "valueField": "diag",
         "fillAlphas": 0
     },{
         "balloonText": "cancer in [[category]]: [[value]]",
         "bullet": "round",
-        "title": "CA",
+        "title": "Ca",
         "valueField": "cancer",
         "fillAlphas": 0
     },{

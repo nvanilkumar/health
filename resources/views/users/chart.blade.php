@@ -145,7 +145,7 @@
             <p class="box-strip bold-text"> {{array_sum($details['phcdata'])}}</p>
             <p class="bold-text">total individual records created</p>
             <p class="box-strip bold-text">{{array_sum($details['ashaphcdata'])}}</p>
-            <p class="bold-text">total individual records created with Diabates</p>
+            <p class="bold-text">total individual records created with Dm</p>
             <p class="box-strip bold-text">{{$details['piechart'][0]->diag}}</p>
             <p class="bold-text">total individual records created with HBP</p>
             <p class="box-strip bold-text">{{$details['piechart'][0]->hbp}}</p>
@@ -216,7 +216,7 @@ $(function () {
             data: '<?php echo $details['piechart'][0]->diag; ?>',
             color: '#00a65a',
             highlight: '#00a65a',
-            label: 'Diabetes - '+'<?php echo $details['piechart'][0]->diag; ?>',
+            label: 'Dm - '+'<?php echo $details['piechart'][0]->diag; ?>',
             labelColor: 'white',
             labelFontSize: '10'
         },
@@ -388,7 +388,7 @@ $(function () {
                 data: [<?php echo '"' . implode('","', $details['cvdgroup']['hbp']) . '"' ?>]
             },
             {
-                label: 'Diabetes',
+                label: 'Dm',
                 backgroundColor: window.chartColors.yellow,
                 data: [<?php echo '"' . implode('","', $details['cvdgroup']['diag']) . '"' ?>]
             },
