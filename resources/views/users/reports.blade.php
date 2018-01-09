@@ -110,7 +110,7 @@
                                     <th> DM </th>
                                     <th> Cancer</th>
                                     <th> COPD</th>
-                                    <th> High Risk Calc</th>
+                                    <th> CNDHigh Risk Calc</th>
                                      
                                 </tr>
 

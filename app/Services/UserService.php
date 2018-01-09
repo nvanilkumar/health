@@ -18,11 +18,13 @@ class UserService
     protected $request;
     protected $usersModel;
     protected $auth;
+    protected $maxDisease;
 
     public function __construct(Request $request)
     {
         $this->request = $request;
         $this->usersModel = new UsersModel();
+        $this->maxDisease =0;
     }
 
     /**
@@ -131,7 +133,7 @@ class UserService
     {
         $setWhere = FALSE;
         $ashaselect = $this->request->input("ashaselect");
-        if ($ashaselect && ($ashaselect != "Choose Asha")) {
+        if ($ashaselect && ($ashaselect != "Choose ANM")) {
             $where = [];
             $where[] = ["asha_assigned", "=", $ashaselect];
             $setWhere = TRUE;
@@ -242,16 +244,16 @@ class UserService
             $enddate = date("Y-m-d H:i:s", strtotime($enddate));
             $where[] = ["created_date", "<=", $enddate];
         }
-        
+
         $patient_id = $this->request->input("patient_id");
         if ($patient_id) {
-             
+
             $where[] = ["patient_id", "=", $patient_id];
             $setWhere = TRUE;
         }
         $hh_id = $this->request->input("hh_id");
         if ($hh_id) {
-             
+
             $where[] = ["hh_id", "=", $hh_id];
             $setWhere = TRUE;
         }
@@ -273,19 +275,19 @@ class UserService
 //         print_r($households);exit;
         return $paitents;
     }
+
     /**
      * To Bring enc type screening first and last screening of the paitent
      * @return type
      */
     public function getPatientScreening()
     {
-    
+
         $where = [];
         $encselect = $this->request->input("encselect");
         if ($encselect && ($encselect != "Choose ENC Type")) {
-            
-            $where["enc_type"] =$encselect;
-            
+
+            $where["enc_type"] = $encselect;
         }
         $phcselect = $this->request->input("phcselect");
         if ($phcselect && ($phcselect != "Choose PHC")) {
@@ -307,20 +309,19 @@ class UserService
         $enddate = $this->request->input("enddate");
         if ($enddate) {
             $enddate = date("Y-m-d H:i:s", strtotime($enddate));
-            $where["created_date"] =$enddate;
-        }
-        
-        $patient_id = $this->request->input("patient_id");
-        if ($patient_id) {
-             
-            $where["patient_id"] = $patient_id;
-            
+            $where["created_date"] = $enddate;
         }
 
-        
+        $patient_id = $this->request->input("patient_id");
+        if ($patient_id) {
+
+            $where["patient_id"] = $patient_id;
+        }
+
+
 //  \DB::enableQueryLog();
         $paitents = $this->usersModel->patientScreening($where);
-       $paitents = json_decode(json_encode($paitents), true);
+        $paitents = json_decode(json_encode($paitents), true);
 
 //                $query = \DB::getQueryLog();
 // $query = end($query);
@@ -336,39 +337,58 @@ class UserService
         $filters = array();
         $filters = $this->prepareFilter();
         $analytics = $this->usersModel->analyticQuery($type, $filters);
+//        echo "<pre>";
+//        print_r($analytics);
+//        echo max(array_column($analytics, 'value'));
+//        exit;
+        $this->getDiseaseMaxValue($analytics);
         $analytics = json_decode(json_encode($analytics), true);
-        $user_role_type=session('user_role');
-        if($user_role_type == 'stakeholders'){
-            $analytics =$this->getStakeUserAnalytics($analytics);
+        $user_role_type = session('user_role');
+        if ($user_role_type == 'stakeholders') {
+            $analytics = $this->getStakeUserAnalytics($analytics);
         }
         return $analytics;
     }
-    
+
+    /**
+     * To calculate the max value
+     * @param type $analytics
+     */
+    public function getDiseaseMaxValue($analytics)
+    {
+        foreach ($analytics as $k => $v) {
+            if ($v->value > $this->maxDisease) {
+                $this->maxDisease = $v->value;
+
+            }
+        }
+    }
+
     public function getStakeUserAnalytics($analytics)
     {
-        $fillterValue=0;
-        if(count($analytics)>0)
-        foreach ($analytics as $key => $value)
-        {
-            $temp=$value["value"];
-            $analytics[$key]["value"]=$value["value"]+$fillterValue;
-            $fillterValue=$fillterValue+$temp;
-        }  
+        $fillterValue = 0;
+        if (count($analytics) > 0)
+            foreach ($analytics as $key => $value) {
+                $temp = $value["value"];
+                $analytics[$key]["value"] = $value["value"] + $fillterValue;
+                $fillterValue = $fillterValue + $temp;
+            }
         return $analytics;
-    }        
-    
+    }
+
     public function getDisease()
     {
-        $allList=array();
-        $allList["hbp"]=$this->getAnalytics("hbp");
-        $allList["diag"]=$this->getAnalytics("diag");
-        $allList["cancer"]=$this->getAnalytics("cancer");
-        $allList["copd"]=$this->getAnalytics("copd");
-        $allList["cvd"]=$this->getAnalytics("cvd");
-        
-        $allList =$this->analyticGraphDataProcess($allList);
+        $allList = array();
+        $allList["hbp"] = $this->getAnalytics("hbp");
+        $allList["diag"] = $this->getAnalytics("diag");
+        $allList["cancer"] = $this->getAnalytics("cancer");
+        $allList["copd"] = $this->getAnalytics("copd");
+        $allList["cvd"] = $this->getAnalytics("cvd");
+
+        $allList = $this->analyticGraphDataProcess($allList);
+        $allList["maxValue"]=$this->maxDisease;
         return $allList;
-    }        
+    }
 
     public function getAnalyticsPHC()
     {
@@ -788,7 +808,7 @@ class UserService
         }
         $details["phclabel"] = $label;
         $details["phcdata"] = $data;
-        
+
         $label = array();
         $data = array();
         $ashaphcdetails = $details["barchart1"];
@@ -809,14 +829,14 @@ class UserService
                 $details["malecount"][$glist->phc_name] = $glist->gender_count;
             }
         }
-        
+
         if (count($details["genderphc"]) > 0) {
             $details["genderphc"] = array_unique($details["genderphc"]);
         }
-        $details["femalecount"]=$this->keyValueCheck($details["femalecount"],$details["genderphc"]);
-        $details["malecount"]=$this->keyValueCheck($details["malecount"],$details["genderphc"]);
-        
-        $details["cvdgroup"]=$this->processCVD($details["cvdgroup"]);
+        $details["femalecount"] = $this->keyValueCheck($details["femalecount"], $details["genderphc"]);
+        $details["malecount"] = $this->keyValueCheck($details["malecount"], $details["genderphc"]);
+
+        $details["cvdgroup"] = $this->processCVD($details["cvdgroup"]);
 //        echo "<pre>";
 //        print_r($details["cvdgroup"]);
 //     
@@ -882,7 +902,7 @@ class UserService
             $filters["phc_name"] = $phcselect;
         }
         $asha_assigned = $this->request->input("ashaselect");
-        if ($asha_assigned && ($asha_assigned != "Choose Asha")) {
+        if ($asha_assigned && ($asha_assigned != "Choose ANM")) {
             $filters["asha_assigned"] = $asha_assigned;
         }
 
@@ -907,128 +927,113 @@ class UserService
 
     public function keyValueCheck($searchArray, $indexArray)
     {
-        $mainArray=array();
-        foreach ($indexArray as  $basevalue ) {
+        $mainArray = array();
+        foreach ($indexArray as $basevalue) {
             if (array_key_exists($basevalue, $searchArray)) {
-                 $mainArray[$basevalue]=$searchArray[$basevalue];
-                 
-            }else{
-                $mainArray[$basevalue]=0;
+                $mainArray[$basevalue] = $searchArray[$basevalue];
+            } else {
+                $mainArray[$basevalue] = 0;
             }
         }
         return $mainArray;
     }
-    
+
     public function processCVD($cvdDetails)
     {
-        $resultArray=array();
-        
-      
-        foreach($cvdDetails["phc_names"] as $value)
-        {
-            
-            $resultArray["phc_name"][]=strtoupper($value->phc_name);
+        $resultArray = array();
+
+
+        foreach ($cvdDetails["phc_names"] as $value) {
+
+            $resultArray["phc_name"][] = strtoupper($value->phc_name);
         }
-        
-        foreach($cvdDetails["cvd"] as $value)
-        {
-            
-            $resultArray["cvd"][$value->phc_name]=$value->cvd;
+
+        foreach ($cvdDetails["cvd"] as $value) {
+
+            $resultArray["cvd"][$value->phc_name] = $value->cvd;
         }
-        
-        foreach($cvdDetails["hbp"] as $value)
-        {
-            
-            $resultArray["hbp"][$value->phc_name]=$value->hbp;
+
+        foreach ($cvdDetails["hbp"] as $value) {
+
+            $resultArray["hbp"][$value->phc_name] = $value->hbp;
         }
-        
-        foreach($cvdDetails["diag"] as $value)
-        {
-            
-            $resultArray["diag"][$value->phc_name]=$value->diag;
+
+        foreach ($cvdDetails["diag"] as $value) {
+
+            $resultArray["diag"][$value->phc_name] = $value->diag;
         }
-        foreach($cvdDetails["cancer"] as $value)
-        {
-            
-            $resultArray["cancer"][$value->phc_name]=$value->cancer;
+        foreach ($cvdDetails["cancer"] as $value) {
+
+            $resultArray["cancer"][$value->phc_name] = $value->cancer;
         }
-        
-        foreach($cvdDetails["copd"] as  $value)
-        {
-            
-            $resultArray["copd"][$value->phc_name]=$value->COPD;
+
+        foreach ($cvdDetails["copd"] as $value) {
+
+            $resultArray["copd"][$value->phc_name] = $value->COPD;
         }
-        $resultArray["cvd"]=$this->keyValueCheck($resultArray["cvd"],$resultArray["phc_name"]);       
-        $resultArray["hbp"]=$this->keyValueCheck($resultArray["hbp"],$resultArray["phc_name"]);       
-        $resultArray["diag"]=$this->keyValueCheck($resultArray["diag"],$resultArray["phc_name"]);       
-        $resultArray["cancer"]=$this->keyValueCheck($resultArray["cancer"],$resultArray["phc_name"]);       
-        $resultArray["copd"]=$this->keyValueCheck($resultArray["copd"],$resultArray["phc_name"]);  
-        $resultArray["count_details"]=$cvdDetails["count_details"];
+        $resultArray["cvd"] = $this->keyValueCheck($resultArray["cvd"], $resultArray["phc_name"]);
+        $resultArray["hbp"] = $this->keyValueCheck($resultArray["hbp"], $resultArray["phc_name"]);
+        $resultArray["diag"] = $this->keyValueCheck($resultArray["diag"], $resultArray["phc_name"]);
+        $resultArray["cancer"] = $this->keyValueCheck($resultArray["cancer"], $resultArray["phc_name"]);
+        $resultArray["copd"] = $this->keyValueCheck($resultArray["copd"], $resultArray["phc_name"]);
+        $resultArray["count_details"] = $cvdDetails["count_details"];
 
         return $resultArray;
-    } 
-    
+    }
+
     public function analyticGraphDataProcess($cvdDetails)
     {
-         $resultArray=array();
-        
-        if(count($cvdDetails["cvd"]) > 0)
-        foreach($cvdDetails["cvd"] as $value)
-        {
-            $resultArray[$value["date"]]["cvd"]=$value["value"];
-        }
-        
-        if(count($cvdDetails["hbp"]) > 0)
-        foreach($cvdDetails["hbp"] as $value)
-        {
-            $resultArray[$value["date"]]["hbp"]=$value["value"];
-        }
-        
-        if(count($cvdDetails["diag"]) > 0)
-        foreach($cvdDetails["diag"] as $value)
-        {
-            $resultArray[$value["date"]]["diag"]=$value["value"];
-        }
-        
-        if(count($cvdDetails["cancer"]) > 0)
-        foreach($cvdDetails["cancer"] as $value)
-        {
-            $resultArray[$value["date"]]["cancer"]=$value["value"];
-        }
-        
-        if(count($cvdDetails["copd"]) > 0)
-        foreach($cvdDetails["copd"] as $value)
-        {
-            $resultArray[$value["date"]]["copd"]=$value["value"];
-        }
-        
-        //Add all categoires to array list
-        $indexArray=array("cvd","hbp","diag","cancer","copd");
-        $labelsArray=array();
-        $returnArray=array();
-        $returnArray["data"]=array();
-        
-        foreach($resultArray as $key => $value)
-        {
-            $returnArray["data"][]=$this->keyValueCheckAddField($resultArray[$key],$indexArray,$key);
-            $labelsArray[]=$key;
-        }    
-        $returnArray["labels"]=$labelsArray;
-        return $returnArray;
-        
-    } 
-    
-    public function keyValueCheckAddField($searchArray, $indexArray,$label)
-    {
-        $mainArray=array();
-        foreach ($indexArray as  $basevalue ) {
-            if (array_key_exists($basevalue, $searchArray)) {
-                 $mainArray[$basevalue]=$searchArray[$basevalue];
-                 
-            }else{
-                $mainArray[$basevalue]=0;
+        $resultArray = array();
+
+        if (count($cvdDetails["cvd"]) > 0)
+            foreach ($cvdDetails["cvd"] as $value) {
+                $resultArray[$value["date"]]["cvd"] = $value["value"];
             }
-            $mainArray['label']=$label;
+
+        if (count($cvdDetails["hbp"]) > 0)
+            foreach ($cvdDetails["hbp"] as $value) {
+                $resultArray[$value["date"]]["hbp"] = $value["value"];
+            }
+
+        if (count($cvdDetails["diag"]) > 0)
+            foreach ($cvdDetails["diag"] as $value) {
+                $resultArray[$value["date"]]["diag"] = $value["value"];
+            }
+
+        if (count($cvdDetails["cancer"]) > 0)
+            foreach ($cvdDetails["cancer"] as $value) {
+                $resultArray[$value["date"]]["cancer"] = $value["value"];
+            }
+
+        if (count($cvdDetails["copd"]) > 0)
+            foreach ($cvdDetails["copd"] as $value) {
+                $resultArray[$value["date"]]["copd"] = $value["value"];
+            }
+
+        //Add all categoires to array list
+        $indexArray = array("cvd", "hbp", "diag", "cancer", "copd");
+        $labelsArray = array();
+        $returnArray = array();
+        $returnArray["data"] = array();
+
+        foreach ($resultArray as $key => $value) {
+            $returnArray["data"][] = $this->keyValueCheckAddField($resultArray[$key], $indexArray, $key);
+            $labelsArray[] = $key;
+        }
+        $returnArray["labels"] = $labelsArray;
+        return $returnArray;
+    }
+
+    public function keyValueCheckAddField($searchArray, $indexArray, $label)
+    {
+        $mainArray = array();
+        foreach ($indexArray as $basevalue) {
+            if (array_key_exists($basevalue, $searchArray)) {
+                $mainArray[$basevalue] = $searchArray[$basevalue];
+            } else {
+                $mainArray[$basevalue] = 0;
+            }
+            $mainArray['label'] = $label;
         }
         return $mainArray;
     }

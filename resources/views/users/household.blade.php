@@ -41,7 +41,7 @@
 <!--                                        <label>ASHA</label>-->
                                         <select class="form-control select2 select2-hidden-accessible" 
                                                 name="ashaselect"  id="ashaselect" style="width: 100%;" tabindex="-1" aria-hidden="true">
-                                            <option selected="selected">Choose Asha</option>
+                                            <option selected="selected">Choose ANM</option>
                                             @if(count($householdasha) > 0)
                                             @foreach ($householdasha as $asha)
                                                 <option value="{{$asha->asha_assigned}}" > {{$asha->asha_assigned}}</option>

@@ -23,7 +23,7 @@
                              <!-- AREA CHART -->
                             <div class="box box-primary">
                                 <div class="box-header with-border">
-                                    <h3 class="box-title">Total Households Registered PHC Wise </h3>
+                                    <h3 class="box-title">Total Households Registered</h3>
 
                                     <div class="box-tools pull-right">
                                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -43,7 +43,7 @@
                              <!-- BAR CHART -->
                             <div class="box box-success">
                                 <div class="box-header with-border">
-                                    <h3 class="box-title">Total Individual Health Records created PHC Wise</h3>
+                                    <h3 class="box-title">Total Individual Screened</h3>
 
                                     <div class="box-tools pull-right">
                                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -65,7 +65,7 @@
                         <div class="col-md-6">
                              <div class="box box-primary">
                                 <div class="box-header with-border">
-                                    <h3 class="box-title">Total Registered Gender Wise</h3>
+                                    <h3 class="box-title">Screening:  Gender Wise</h3>
 
                                     <div class="box-tools pull-right">
                                         <button type="button" class="btn btn-box-tool" data-widget="collapse">
@@ -87,7 +87,7 @@
                         <div class="col-md-6">
                              <div class="box box-primary">
                                 <div class="box-header with-border">
-                                    <h3 class="box-title">Total NCD Burden PHC Wise</h3>
+                                    <h3 class="box-title">Total NCD Burden</h3>
 
                                     <div class="box-tools pull-right">
                                         <button type="button" class="btn btn-box-tool" data-widget="collapse">
@@ -111,7 +111,7 @@
                           <!-- LINE CHART -->
                             <div class="box box-info">
                                 <div class="box-header with-border">
-                                    <h3 class="box-title">Total NCD Burden PHC Wise </h3>
+                                    <h3 class="box-title">Total NCD Burden</h3>
 
                                     <div class="box-tools pull-right">
                                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -143,23 +143,23 @@
             </div>
             <p class="bold-text">total house holds registered</p>
             <p class="box-strip bold-text"> {{array_sum($details['phcdata'])}}</p>
-            <p class="bold-text">total individual records created</p>
+            <p class="bold-text">total individual records (IR) Created</p>
             <p class="box-strip bold-text">{{array_sum($details['ashaphcdata'])}}</p>
-            <p class="bold-text">total individual records created with DM</p>
+            <p class="bold-text">total IR created with DIABETS</p>
             <p class="box-strip bold-text">{{$details['piechart'][0]->diag}}</p>
-            <p class="bold-text">total individual records created with HBP</p>
+            <p class="bold-text">total IR created with HIGH BP</p>
             <p class="box-strip bold-text">{{$details['piechart'][0]->hbp}}</p>
-            <p class="bold-text">total individual records created with Cancer</p>
+            <p class="bold-text">total IR created with Cancer</p>
             <p class="box-strip bold-text">{{$details['piechart'][0]->cancer}}</p>
-            <p class="bold-text">total individual records created with COPD</p>
+            <p class="bold-text">total IR created with COPD</p>
             <p class="box-strip bold-text">{{$details['piechart'][0]->COPD}}</p>
-            <p class="bold-text">total individual records created with CVD</p>
+            <p class="bold-text">total IR created with CVD</p>
             <p class="box-strip bold-text">{{$details['piechart'][0]->cvd}}</p>
             
-            <p class="bold-text">total individual records any one of the above diseases</p>
+            <p class="bold-text">total IR with any one of the above diseases</p>
             <p class="box-strip bold-text">{{$details['cvdgroup']["count_details"][0]->diseases_count}}</p>
             
-            <p class="bold-text">Asha Follow Ups count</p>
+            <p class="bold-text">ANM Follow Ups count</p>
             <p class="box-strip bold-text">{{$details['cvdgroup']["count_details"][0]->followup_count}}</p>
             <p class="bold-text">Doctor Follow ups count</p>
             <p class="box-strip bold-text">{{$details['cvdgroup']["count_details"][0]->docotor_count}}</p>
