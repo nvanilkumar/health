@@ -166,13 +166,13 @@ var chart = AmCharts.makeChart("chartdiv", {
     }],
     "startDuration": 0.5,
     "graphs": [{
-        "balloonText": "cvd in [[category]]: [[value]]",
+        "balloonText": "CVD in [[category]]: [[value]]",
         "bullet": "round",
         "title": "CVD",
         "valueField": "cvd",
         "fillAlphas": 0
     },{
-        "balloonText": "hbp in [[category]]: [[value]]",
+        "balloonText": "HBP in [[category]]: [[value]]",
         "bullet": "round",
         "title": "HBP",
         "valueField": "hbp",
@@ -180,17 +180,17 @@ var chart = AmCharts.makeChart("chartdiv", {
     },{
         "balloonText": "DM in [[category]]: [[value]]",
         "bullet": "round",
-        "title": "Dm",
+        "title": "DM",
         "valueField": "diag",
         "fillAlphas": 0
     },{
-        "balloonText": "cancer in [[category]]: [[value]]",
+        "balloonText": "Ca in [[category]]: [[value]]",
         "bullet": "round",
         "title": "Ca",
         "valueField": "cancer",
         "fillAlphas": 0
     },{
-        "balloonText": "copd in [[category]]: [[value]]",
+        "balloonText": "COPD in [[category]]: [[value]]",
         "bullet": "round",
         "title": "COPD",
         "valueField": "copd",

@@ -107,7 +107,7 @@
                                     <th>COUNT </th>
                                     <th>Asha </th>
                                     <th> HBP</th>
-                                    <th> Diag </th>
+                                    <th> DM </th>
                                     <th> Cancer</th>
                                     <th> COPD</th>
                                     <th> High Risk Calc</th>
