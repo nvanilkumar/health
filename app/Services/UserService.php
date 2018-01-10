@@ -821,12 +821,14 @@ class UserService
 
         //gender details
         $genderDetails = $details['gender'];
+//        echo "<pre>";
+//        print_r($genderDetails); 
         foreach ($genderDetails as $glist) {
             $details["genderphc"][] = strtoupper($glist->phc_name);
             if ($glist->gender == "F") {
-                $details["femalecount"][$glist->phc_name] = $glist->gender_count;
+                $details["femalecount"][strtoupper($glist->phc_name)] = $glist->gender_count;
             } else {
-                $details["malecount"][$glist->phc_name] = $glist->gender_count;
+                $details["malecount"][strtoupper($glist->phc_name)] = $glist->gender_count;
             }
         }
 
@@ -950,26 +952,26 @@ class UserService
 
         foreach ($cvdDetails["cvd"] as $value) {
 
-            $resultArray["cvd"][$value->phc_name] = $value->cvd;
+            $resultArray["cvd"][strtoupper($value->phc_name)] = $value->cvd;
         }
 
         foreach ($cvdDetails["hbp"] as $value) {
 
-            $resultArray["hbp"][$value->phc_name] = $value->hbp;
+            $resultArray["hbp"][strtoupper($value->phc_name)] = $value->hbp;
         }
 
         foreach ($cvdDetails["diag"] as $value) {
 
-            $resultArray["diag"][$value->phc_name] = $value->diag;
+            $resultArray["diag"][strtoupper($value->phc_name)] = $value->diag;
         }
         foreach ($cvdDetails["cancer"] as $value) {
 
-            $resultArray["cancer"][$value->phc_name] = $value->cancer;
+            $resultArray["cancer"][strtoupper($value->phc_name)] = $value->cancer;
         }
 
         foreach ($cvdDetails["copd"] as $value) {
 
-            $resultArray["copd"][$value->phc_name] = $value->COPD;
+            $resultArray["copd"][strtoupper($value->phc_name)] = $value->COPD;
         }
         $resultArray["cvd"] = $this->keyValueCheck($resultArray["cvd"], $resultArray["phc_name"]);
         $resultArray["hbp"] = $this->keyValueCheck($resultArray["hbp"], $resultArray["phc_name"]);
