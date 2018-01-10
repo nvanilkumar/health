@@ -838,7 +838,7 @@ class UserService
 
         $details["cvdgroup"] = $this->processCVD($details["cvdgroup"]);
 //        echo "<pre>";
-//        print_r($details["cvdgroup"]);
+//        print_r($details);
 //     
 //        exit;
         return $details;

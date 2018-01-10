@@ -3,7 +3,7 @@
 @section('content')
 <div class="loginPageStrip">
     <div class="row">
-        <div class="col-md-3"><img src="{{ asset('/images/header-logo.png') }} " alt="health" style=" width: 100%; padding:10px 12px;"></div>
+        <div class="col-md-3"><img src="{{ asset('/images/main_logo.png') }} " alt="health" style=" width: 100%; padding:10px 12px;"></div>
     </div>
 </div> 
 <div class="login-box">

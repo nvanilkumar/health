@@ -49,20 +49,21 @@
                     <!-- mini logo for sidebar mini 50x50 pixels -->
                     <span class="logo-mini"><b>N</b>CD</span>
                     <!-- logo for regular state and mobile devices -->
-                    <span class="logo-lg"> <img src="{{ asset('/images/header-logo.png') }}" alt="health"  class="img-responsive"/></span>
+                    <span class="logo-lg"> <img src="{{ asset('/images/main_logo.png') }}" alt="health"  style=" height: 55px;"/></span>
                 </a>
                 <!-- Header Navbar: style can be found in header.less -->
                 <nav class="navbar navbar-static-top">
                     <!-- Sidebar toggle button-->
+                     <span class="logo-lg"> </span>
                     <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </a>
-
+                    
                     <div class="navbar-custom-menu">
-                         
+                         <img src="{{ asset('/images/jarkhand_logo.jpg') }}" alt="health" style=" height: 51px;" />
                         <a href="{{action('UserController@logout')}}" class="btn" 
                            style=" padding: 15px 20px;" data-toggle="tooltip" title="SignOut"> 
                             <i class="fa fa-power-off" aria-hidden="true" style="color:#eeeeee; font-size:18px;"></i>

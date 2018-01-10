@@ -135,30 +135,35 @@
         </div>
         <div class="col-md-4">
             <div class="pull-right">
-                image
+              
+
 
 
 
 
             </div>
-            <p class="bold-text">total house holds registered</p>
+            <p class="bold-text">Total house holds registered</p>
             <p class="box-strip bold-text"> {{array_sum($details['phcdata'])}}</p>
-            <p class="bold-text">total individual records (IR) Created</p>
+            <p class="bold-text">Total individual records (IR) created</p>
             <p class="box-strip bold-text">{{array_sum($details['ashaphcdata'])}}</p>
-            <p class="bold-text">total IR created with DIABETS</p>
+            <p class="bold-text">Total IR with Diabetes</p>
             <p class="box-strip bold-text">{{$details['piechart'][0]->diag}}</p>
-            <p class="bold-text">total IR created with HIGH BP</p>
+            <p class="bold-text">Total IR with High BP</p>
             <p class="box-strip bold-text">{{$details['piechart'][0]->hbp}}</p>
-            <p class="bold-text">total IR created with Cancer</p>
+            <p class="bold-text">Total IR with Cancer</p>
             <p class="box-strip bold-text">{{$details['piechart'][0]->cancer}}</p>
-            <p class="bold-text">total IR created with COPD</p>
+            <p class="bold-text">Total IR with COPD</p>
             <p class="box-strip bold-text">{{$details['piechart'][0]->COPD}}</p>
-            <p class="bold-text">total IR created with CVD</p>
+            <p class="bold-text">Total IR with CVD</p>
             <p class="box-strip bold-text">{{$details['piechart'][0]->cvd}}</p>
-            
-            <p class="bold-text">total IR with any one of the above diseases</p>
-            <p class="box-strip bold-text">{{$details['cvdgroup']["count_details"][0]->diseases_count}}</p>
-            
+             
+            <p class="bold-text">Total IR with any of the above diseases</p>
+            <p class="box-strip bold-text">
+<!--               {$details['cvdgroup']["count_details"][0]->diseases_count-->
+    10
+            </p>
+            <p class="bold-text">Refer to Doctor</p>
+            <p class="box-strip bold-text">10</p>
             <p class="bold-text">ANM Follow Ups count</p>
             <p class="box-strip bold-text">{{$details['cvdgroup']["count_details"][0]->followup_count}}</p>
             <p class="bold-text">Doctor Follow ups count</p>
@@ -177,7 +182,7 @@
     }
     .bold-text{
         font-weight: 600;
-        text-transform: capitalize;
+         
     }
 </style>
 <script type="text/javascript" src="{{ asset('/js/pluginjs/float/jquery.flot.js') }}"></script>

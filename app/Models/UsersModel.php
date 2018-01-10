@@ -42,6 +42,11 @@ class UsersModel extends CommonModel
     public function dashboardDetails()
     {
         $dashboard = array();
+        
+//           $select = "select phc_name, count(_id) as ashacount 
+//                   from household 
+//                   
+//                   group by phc_name";
         $select = "select phc_name, count(_id) as ashacount 
                    from cvd_riskasses 
                    where enc_type='SH_CVD_ASHA_SCREENING_1'
