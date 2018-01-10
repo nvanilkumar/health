@@ -43,17 +43,17 @@ class UsersModel extends CommonModel
     {
         $dashboard = array();
         
-//           $select = "select phc_name, count(_id) as ashacount 
-//                   from household 
-//                   
-//                   group by phc_name";
-        $select = "select phc_name, count(_id) as ashacount 
-                   from cvd_riskasses 
-                   where enc_type='SH_CVD_ASHA_SCREENING_1'
+           $select = "select phc_name, count(_id) as ashacount 
+                   from household 
+                   
                    group by phc_name";
+//        $select = "select phc_name, count(_id) as ashacount 
+//                   from cvd_riskasses 
+//                   where enc_type='SH_CVD_ASHA_SCREENING_1'
+//                   group by phc_name";
         $barchartdetails = DB::select(DB::raw($select), $this->where);
 
-        $dashboard["barchart1"] = $barchartdetails;
+        $dashboard["barchart2"] = $barchartdetails;
 
         //Asha Screening
         $select = "select phc_name, count(hh_id) as ashacount 
@@ -61,7 +61,7 @@ class UsersModel extends CommonModel
                    group by phc_name";
         $barchartdetails = DB::select(DB::raw($select), $this->where);
 
-        $dashboard["barchart2"] = $barchartdetails;
+        $dashboard["barchart1"] = $barchartdetails;
 
         $select2 = "select count(_id) gender_count,gender,phc_name
                     from cvd_riskasses 
