@@ -29,6 +29,7 @@ Route::post('ajax/householdVillage', 'UserController@householdVillage');
 Route::group(['middleware' => 'apiauth'], function () {
     Route::post('household/create', 'UserController@createHousehold');
     Route::get('household/list', 'UserController@getHousehold');
+    Route::get('household/count', 'UserController@getHouseholdCount');
 });
 
 

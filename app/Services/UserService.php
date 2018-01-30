@@ -1045,6 +1045,22 @@ class UserService
 
         echo $this->request->header('userid');
         echo $this->request->header("tabimei");
+        $userid = $this->request->input("userid");
+        $tabimei = $this->request->input("tabimei");
+
+//         \DB::enableQueryLog();
+        $where = [];
+
+        $where[] = ["uid", "=", $userid];
+        $where[] = ["tabimei", "=", $tabimei];
+
+        $this->usersModel->setWhere($where);
+        $users = $this->usersModel->loginCheck();
+        if (count($users) > 0) {
+            return true;
+        }
+
+        return false;
     }
 
 }

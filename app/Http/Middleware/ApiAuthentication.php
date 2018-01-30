@@ -14,7 +14,7 @@ class ApiAuthentication
 
     public function __construct(UserService $userService)
     {
-       
+
         $this->userService = $userService;
     }
 
@@ -27,15 +27,10 @@ class ApiAuthentication
      */
     public function handle($request, Closure $next)
     {
-        echo 111;
-        $this->userService->apicheck();
-       
-        exit;
-        $user_id = "";
-
-        if (!$user_id) {
-            return response('Unauthorized.', 401);
-        }
+//        $status = $this->userService->apicheck();
+//        if ($status) {
+//            return response('Unauthorized.', 401);
+//        }
 
         return $next($request);
     }

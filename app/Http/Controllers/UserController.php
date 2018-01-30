@@ -137,6 +137,13 @@ class UserController extends Controller
         $data = $this->userService->getHousehold();
         return response()->json(['patients ' => $data], 200);
     }
+    public function getHouseholdCount()
+    {
+ 
+        $data = $this->userService->getHousehold();
+        $listcout=count($data);
+        return response()->json(['patientsCount ' => $listcout], 200);
+    }
 
     public function downloadExcel()
     {
