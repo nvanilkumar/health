@@ -26,9 +26,10 @@ Route::get('downloadExcel', 'UserController@downloadExcel');
 
 Route::post('ajax/householdVillage', 'UserController@householdVillage');
 //api's
-Route::post('household/create', 'UserController@createHousehold');
-Route::get('household/list', 'UserController@getHousehold');
-
+Route::group(['middleware' => 'apiauth'], function () {
+    Route::post('household/create', 'UserController@createHousehold');
+    Route::get('household/list', 'UserController@getHousehold');
+});
 
 
 Route::post('ajax/analyticsVillage', 'UserController@analyticsVillage');

@@ -57,5 +57,6 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'customauth' => \App\Http\Middleware\CustomAuthentication::class,
+        'apiauth' => \App\Http\Middleware\ApiAuthentication::class,
     ];
 }

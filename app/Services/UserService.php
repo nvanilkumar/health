@@ -24,7 +24,7 @@ class UserService
     {
         $this->request = $request;
         $this->usersModel = new UsersModel();
-        $this->maxDisease =0;
+        $this->maxDisease = 0;
     }
 
     /**
@@ -359,7 +359,6 @@ class UserService
         foreach ($analytics as $k => $v) {
             if ($v->value > $this->maxDisease) {
                 $this->maxDisease = $v->value;
-
             }
         }
     }
@@ -386,7 +385,7 @@ class UserService
         $allList["cvd"] = $this->getAnalytics("cvd");
 
         $allList = $this->analyticGraphDataProcess($allList);
-        $allList["maxValue"]=$this->maxDisease;
+        $allList["maxValue"] = $this->maxDisease;
         return $allList;
     }
 
@@ -894,7 +893,7 @@ class UserService
         $this->usersModel->setInsertUpdateData($insertArray);
         $userId = $this->usersModel->insertData();
 
-       return $userId;
+        return $userId;
     }
 
     public function prepareFilter()
@@ -1039,6 +1038,13 @@ class UserService
             $mainArray['label'] = $label;
         }
         return $mainArray;
+    }
+
+    public function apicheck()
+    {
+
+        echo $this->request->header('userid');
+        echo $this->request->header("tabimei");
     }
 
 }
