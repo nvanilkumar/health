@@ -127,14 +127,15 @@ class UserController extends Controller
 
     public function createHousehold()
     {
-        $this->userService->createHousehold();
+        $data=$this->userService->createHousehold();
+        return response()->json(['household_id' => $data], 200);
     }
 
     public function getHousehold()
     {
  
         $data = $this->userService->getHousehold();
-        return response()->json(['data' => $data], 200);
+        return response()->json(['patients ' => $data], 200);
     }
 
     public function downloadExcel()

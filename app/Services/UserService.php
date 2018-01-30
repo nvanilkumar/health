@@ -867,6 +867,7 @@ class UserService
         $type_of_fuel_cook_food = ($this->request->input("type_of_fuel_cook_food") != "") ? $this->request->input("type_of_fuel_cook_food") : "";
         $contact_info = ($this->request->input("contact_info") != "") ? $this->request->input("contact_info") : "";
         $patient_id_counter = ($this->request->input("patient_id_counter") != "") ? $this->request->input("patient_id_counter") : 0;
+        $asha_assigned = ($this->request->input("asha_assigned") != "") ? $this->request->input("asha_assigned") : 0;
 
         $insertArray = [
             "hh_id" => $hh_id,
@@ -887,13 +888,13 @@ class UserService
             "type_of_fuel_cook_food" => $type_of_fuel_cook_food,
             "contact_info" => $contact_info,
             "patient_id_counter" => $patient_id_counter,
+            "asha_assigned" => $asha_assigned
         ];
 
         $this->usersModel->setInsertUpdateData($insertArray);
         $userId = $this->usersModel->insertData();
 
-        var_dump($userId);
-        exit;
+       return $userId;
     }
 
     public function prepareFilter()
