@@ -159,11 +159,11 @@
              
             <p class="bold-text">Total Screened with any of the above diseases</p>
             <p class="box-strip bold-text">
-<!--               {$details['cvdgroup']["count_details"][0]->diseases_count-->
-    10
+               {{$details['cvdgroup']["count_details"][0]->diseases_count}}
+     
             </p>
             <p class="bold-text">Refer to Doctor</p>
-            <p class="box-strip bold-text">10</p>
+            <p class="box-strip bold-text"> ref doc keep</p>
             <p class="bold-text">ANM Follow Ups count</p>
             <p class="box-strip bold-text">{{$details['cvdgroup']["count_details"][0]->followup_count}}</p>
             <p class="bold-text">Doctor Follow ups count</p>

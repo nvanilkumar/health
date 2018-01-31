@@ -119,6 +119,11 @@ class UsersModel extends CommonModel
         $phc_namedetails = DB::select(DB::raw($phc_name), $this->where);
         $dashboard["phc_names"] = $phc_namedetails;
         
+        //Ref doctor
+         $refdoc = "select count(_id) as refdoc from cvd_riskasses where  ref_doc = 1 and enc_type='SH_CVD_ASHA_SCREENING_1'";
+        $refdocdetails = DB::select(DB::raw($refdoc), $this->where);
+        $dashboard["refdoc"] = $refdocdetails;
+        
         //To bring the doctor follow ups , asha follow ups , any disese patient count
         $query='select * from
                 (select count(_id) as diseases_count

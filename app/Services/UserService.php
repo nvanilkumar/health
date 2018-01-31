@@ -796,7 +796,8 @@ class UserService
     {
         $details = $this->usersModel->dashboardDetails();
         $details["cvdgroup"] = $this->usersModel->dashboardCVD();
-
+//        echo "<pre>";
+//print_r($details["cvdgroup"]);exit;
         $label = array();
         $data = array();
 
