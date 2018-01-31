@@ -57,7 +57,8 @@ class UsersModel extends CommonModel
 
         //Asha Screening
         $select = "select phc_name, count(hh_id) as ashacount 
-                   from cvd_riskasses 
+                   from cvd_riskasses
+                   where enc_type='SH_CVD_ASHA_SCREENING_1'
                    group by phc_name";
         $barchartdetails = DB::select(DB::raw($select), $this->where);
 

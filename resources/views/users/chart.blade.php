@@ -295,11 +295,11 @@ $(function () {
         labels: [<?php echo '"' . implode('","', $details['genderphc']) . '"' ?>],
         datasets: [{
                 label: 'MALE',
-                backgroundColor: window.chartColors.red,
+                backgroundColor: window.chartColors.blue,
                 data: [<?php echo '"' . implode('","', $details['malecount']) . '"' ?>]
             }, {
                 label: 'FEMALE',
-                backgroundColor: window.chartColors.blue,
+                backgroundColor: window.chartColors.red,
                 data: [<?php echo '"' . implode('","', $details['femalecount']) . '"' ?>]
             }, ]
 
