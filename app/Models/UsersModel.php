@@ -73,11 +73,11 @@ class UsersModel extends CommonModel
 
         $select3 = "select *
                     from
-                    (select count(_id) as hbp from cvd_riskasses where hbp =1 ) as hbp,
-                    (select count(_id) as diag from cvd_riskasses where diag =1 ) as diag,
-                    (select count(_id) as cancer from cvd_riskasses where mth_cn =1 or brts_cn=1 or cvr_cn = 1) as cancer,
-                    (select count(_id) as COPD from cvd_riskasses where  copd_dis = 1) as COPD,
-                    (select count(_id) as cvd from cvd_riskasses where  high_risk_calc = 2) as cvd";
+                    (select count(_id) as hbp from cvd_riskasses where hbp =1 and enc_type='SH_CVD_ASHA_SCREENING_1') as hbp,
+                    (select count(_id) as diag from cvd_riskasses where diag =1 and enc_type='SH_CVD_ASHA_SCREENING_1') as diag,
+                    (select count(_id) as cancer from cvd_riskasses where (mth_cn =1 or brts_cn=1 or cvr_cn = 1) and enc_type='SH_CVD_ASHA_SCREENING_1') as cancer,
+                    (select count(_id) as COPD from cvd_riskasses where  copd_dis = 1 and enc_type='SH_CVD_ASHA_SCREENING_1') as COPD,
+                    (select count(_id) as cvd from cvd_riskasses where  high_risk_calc = 2 and enc_type='SH_CVD_ASHA_SCREENING_1') as cvd";
         $piedetails = DB::select(DB::raw($select3), $this->where);
         $dashboard["piechart"] = $piedetails;
 
