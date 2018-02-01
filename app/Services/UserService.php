@@ -99,7 +99,7 @@ class UserService
 //         \DB::enableQueryLog();
         $where = [];
 
-        $where[] = ["email", "=", $username];
+        $where[] = ["username", "=", $username];
         $where[] = ["password", "=", md5($password)];
 
         $this->usersModel->setWhere($where);
@@ -108,12 +108,12 @@ class UserService
 // $query = end($query);
 // var_dump($query);
         if (count($users) > 0) {
-            Session::put('user_id', $users[0]->id);
-            Session::put('user_name', $users[0]->first_name . " " . $users[0]->last_name);
+            Session::put('user_id', $users[0]->user_id);
+            Session::put('user_name', $users[0]->username );
             Session::put('user_role', $users[0]->role_name);
             $responseMessage["response"]['status'] = true;
             $responseMessage["response"]['message'] = "Successfully login";
-            $responseMessage["response"]["user_id"] = $users[0]->id;
+            $responseMessage["response"]["user_id"] = $users[0]->user_id;
             return $responseMessage;
         }
 
@@ -333,13 +333,13 @@ class UserService
 
     public function getAnalytics($type)
     {
-
+ 
         $filters = array();
         $filters = $this->prepareFilter();
         $analytics = $this->usersModel->analyticQuery($type, $filters);
 //        echo "<pre>";
 //        print_r($analytics);
-//        echo max(array_column($analytics, 'value'));
+////        echo max(array_column($analytics, 'value'));
 //        exit;
         $this->getDiseaseMaxValue($analytics);
         $analytics = json_decode(json_encode($analytics), true);
@@ -980,6 +980,7 @@ class UserService
         $resultArray["cancer"] = $this->keyValueCheck($resultArray["cancer"], $resultArray["phc_name"]);
         $resultArray["copd"] = $this->keyValueCheck($resultArray["copd"], $resultArray["phc_name"]);
         $resultArray["count_details"] = $cvdDetails["count_details"];
+        $resultArray["refdoc"] = $cvdDetails["refdoc"];
 
         return $resultArray;
     }
@@ -1062,6 +1063,12 @@ class UserService
         }
 
         return false;
+    }
+    
+    public function ashaDetails()
+    {
+       $ashData = $this->usersModel->getAshaDetails();
+       return $ashData;
     }
 
 }

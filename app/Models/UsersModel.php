@@ -42,8 +42,8 @@ class UsersModel extends CommonModel
     public function dashboardDetails()
     {
         $dashboard = array();
-        
-           $select = "select phc_name, count(_id) as ashacount 
+
+        $select = "select phc_name, count(_id) as ashacount 
                    from household 
                    
                    group by phc_name";
@@ -92,40 +92,40 @@ class UsersModel extends CommonModel
     public function dashboardCVD()
     {
         $dashboard = array();
-        
+
         $hbp = "select count(_id) as hbp, phc_name from cvd_riskasses where hbp =1 and enc_type='SH_CVD_ASHA_SCREENING_1' group by phc_name";
         $hbpdetails = DB::select(DB::raw($hbp), $this->where);
         $dashboard["hbp"] = $hbpdetails;
-        
+
         $diag = "select count(_id) as diag, phc_name from cvd_riskasses where diag =1 and enc_type='SH_CVD_ASHA_SCREENING_1' group by phc_name";
         $diagdetails = DB::select(DB::raw($diag), $this->where);
         $dashboard["diag"] = $diagdetails;
-        
+
         $cancer = "select count(_id) as cancer, phc_name from cvd_riskasses where (mth_cn =1 or brts_cn=1 or cvr_cn = 1) and enc_type='SH_CVD_ASHA_SCREENING_1' group by phc_name";
         $cancerdetails = DB::select(DB::raw($cancer), $this->where);
         $dashboard["cancer"] = $cancerdetails;
-        
+
         $copd = "select count(_id) as COPD, phc_name from cvd_riskasses where  copd_dis = 1 and enc_type='SH_CVD_ASHA_SCREENING_1' group by phc_name";
         $copddetails = DB::select(DB::raw($copd), $this->where);
         $dashboard["copd"] = $copddetails;
-        
+
         $cvd = "select count(_id) as cvd, phc_name from cvd_riskasses where  high_risk_calc = 2 and enc_type='SH_CVD_ASHA_SCREENING_1' group by phc_name";
         $cvdddetails = DB::select(DB::raw($cvd), $this->where);
         $dashboard["cvd"] = $cvdddetails;
-        
-        $phc_name="select  distinct phc_name 
+
+        $phc_name = "select  distinct phc_name 
                     from cvd_riskasses
                     where (hbp =1 or diag =1 or  mth_cn =1 or brts_cn=1 or cvr_cn = 1 or  copd_dis = 1 or high_risk_calc = 2) and enc_type='SH_CVD_ASHA_SCREENING_1'";
         $phc_namedetails = DB::select(DB::raw($phc_name), $this->where);
         $dashboard["phc_names"] = $phc_namedetails;
-        
+
         //Ref doctor
-         $refdoc = "select count(_id) as refdoc from cvd_riskasses where  ref_doc = 1 and enc_type='SH_CVD_ASHA_SCREENING_1'";
+        $refdoc = "select count(_id) as refdoc from cvd_riskasses where  ref_doc = 1 and enc_type='SH_CVD_ASHA_SCREENING_1'";
         $refdocdetails = DB::select(DB::raw($refdoc), $this->where);
         $dashboard["refdoc"] = $refdocdetails;
-        
+
         //To bring the doctor follow ups , asha follow ups , any disese patient count
-        $query='select * from
+        $query = 'select * from
                 (select count(_id) as diseases_count
                 from cvd_riskasses
                 where (hbp =1 or diag =1 or  mth_cn =1 or brts_cn=1 or cvr_cn = 1 or  copd_dis = 1 or high_risk_calc = 2) and enc_type="SH_CVD_ASHA_SCREENING_1") diseases_count,
@@ -137,7 +137,7 @@ class UsersModel extends CommonModel
                 where enc_type like "SH_CVD_ASHA_FOLLOWUP_%") followup_count';
         $count_details = DB::select(DB::raw($query), $this->where);
         $dashboard["count_details"] = $count_details;
-        
+
         if (count($dashboard) == 0) {
             return NULL;
         }
@@ -186,27 +186,28 @@ class UsersModel extends CommonModel
 
     public function analyticQuery($type, $filters)
     {
+
         $where = "";
         if ($type == "default") {
             $where = "where 1 and enc_type='SH_CVD_ASHA_SCREENING_1'";
         }
         if ($type == "doctor") {
-            $where = "where 1 and (enc_type like 'sh_cvd_asha_followup_%' or enc_type like 'SH_CVD_DOCTOR%')";
+            $where = "where 1 and (enc_type like 'SH_CVD_ASHA_FOLLOWUP_%' or enc_type like 'SH_CVD_DOCTOR_%')";
         }
         if ($type == "hbp") {
-            $where = "where hbp =1 ";
+            $where = "where hbp =1 and enc_type='SH_CVD_ASHA_SCREENING_1'";
         }
         if ($type == "diag") {
-            $where = "where diag =1 ";
+            $where = "where diag =1 and enc_type='SH_CVD_ASHA_SCREENING_1'";
         }
         if ($type == "cancer") {
-            $where = "where (mth_cn =1 or brts_cn=1 or cvr_cn = 1) ";
+            $where = "where (mth_cn =1 or brts_cn=1 or cvr_cn = 1) and enc_type='SH_CVD_ASHA_SCREENING_1' ";
         }
         if ($type == "copd") {
-            $where = "where copd_dis = 1 ";
+            $where = "where copd_dis = 1 and enc_type='SH_CVD_ASHA_SCREENING_1'";
         }
         if ($type == "cvd") {
-            $where = "where high_risk_calc = 2 ";
+            $where = "where high_risk_calc = 2 and enc_type='SH_CVD_ASHA_SCREENING_1' ";
         }
 
         //Applying the filters
@@ -222,7 +223,7 @@ class UsersModel extends CommonModel
                 }
             }
         }
- 
+
         $select = "select  DATE_FORMAT(created_date, '%Y-%m-%d') as date,count(_id) as value
                     from cvd_riskasses " . $where . " 
                     group by created_date
@@ -325,12 +326,12 @@ class UsersModel extends CommonModel
         }
 
         $select = "select phc_name, count(_id) as ashacount ,asha_assigned,
-                    count(case when high_risk_calc = 2 then high_risk_calc end) as high_risk_count,
-                    count(case when hbp = 1 then hbp end) as hbp,
-                    count(case when diag = 1 then diag end) as diag,
-                    count(case when mth_cn =1 or brts_cn=1 or cvr_cn = 1 then mth_cn end) as cancer,
-                    count(case when copd_dis = 1 then copd_dis end) as COPD,
-                    count(case when high_risk_calc = 2 then high_risk_calc end) as high_risk_calc
+                    count(case when high_risk_calc = 2 and enc_type='SH_CVD_ASHA_SCREENING_1' then high_risk_calc end) as high_risk_count,
+                    count(case when hbp = 1 and enc_type='SH_CVD_ASHA_SCREENING_1' then hbp end) as hbp,
+                    count(case when diag = 1 and enc_type='SH_CVD_ASHA_SCREENING_1' then diag end) as diag,
+                    count(case when (mth_cn =1 or brts_cn=1 or cvr_cn = 1) and enc_type='SH_CVD_ASHA_SCREENING_1' then mth_cn end) as cancer,
+                    count(case when copd_dis = 1 and enc_type='SH_CVD_ASHA_SCREENING_1' then copd_dis end) as COPD,
+                    count(case when high_risk_calc = 2 and enc_type='SH_CVD_ASHA_SCREENING_1' then high_risk_calc end) as high_risk_calc
                     from cvd_riskasses " . $where . " 
                     group by phc_name ,asha_assigned
                     order by asha_assigned ASC";
@@ -341,7 +342,7 @@ class UsersModel extends CommonModel
         }
         return $analyticData;
     }
-    
+
     /**
      * To Bring the patient min screening type and max screening type
      * @return type
@@ -376,6 +377,24 @@ class UsersModel extends CommonModel
             return NULL;
         }
         return $paitentData;
-    }        
+    }
+
+    public function getAshaDetails()
+    {
+        $select = "Select u.user_id,u.username,pn.given_name,encounter_datetime,
+					TIMESTAMPDIFF(DAY,ifnull(encounter_datetime,now()),now()) days,
+					TIMESTAMPDIFF(HOUR,ifnull(encounter_datetime,now()),now()) mod 24 hours,
+					TIMESTAMPDIFF(MINUTE,ifnull(encounter_datetime,now()),now()) mod 60 minutes
+					from users u
+					join person_name pn on u.person_id = pn.person_id
+					left join (Select max(encounter_datetime) encounter_datetime,creator from encounter
+					group by creator order by creator) a on u.user_id = a.creator order by encounter_datetime desc";
+        $ashData = DB::select(DB::raw($select), $this->where);
+
+        if (count($ashData) == 0) {
+            return NULL;
+        }
+        return $ashData;
+    }
 
 }

@@ -163,7 +163,8 @@
      
             </p>
             <p class="bold-text">Refer to Doctor</p>
-            <p class="box-strip bold-text"> ref doc keep</p>
+ 
+            <p class="box-strip bold-text"> {{$details['cvdgroup']["refdoc"][0]->refdoc}}</p>
             <p class="bold-text">ANM Follow Ups count</p>
             <p class="box-strip bold-text">{{$details['cvdgroup']["count_details"][0]->followup_count}}</p>
             <p class="bold-text">Doctor Follow ups count</p>

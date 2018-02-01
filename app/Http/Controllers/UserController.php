@@ -18,12 +18,10 @@ class UserController extends Controller
         $this->userService = $userService;
     }
 
-
     public function show()
     {
         return view('login.login', []);
     }
-
 
     public function dashboard()
     {
@@ -61,14 +59,14 @@ class UserController extends Controller
 
     public function getPatientsView()
     {
- 
+
         $details = $this->userService->getPatients();
         $houseHoldPhc = $this->userService->getAnalyticsPHC();
         $encType = $this->userService->getCsdbEncType();
         return view('users.patients', ["title" => "Patients ",
             "details" => $details,
             "householdphc" => $houseHoldPhc,
-            "encType"=>$encType,
+            "encType" => $encType,
             'postData' => Input::all()
         ]);
     }
@@ -80,7 +78,7 @@ class UserController extends Controller
 //        echo "<pre>";
 //        print_r($details);exit;
         $analyticsphc = $this->userService->getAnalyticsPHC();
-        $csdbasha= $this->userService->getCsdbAsha();
+        $csdbasha = $this->userService->getCsdbAsha();
 
         return view('users.analytics', ["title" => "Analytics",
             "details" => $details,
@@ -89,15 +87,15 @@ class UserController extends Controller
             'postData' => Input::all()
         ]);
     }
-    
+
     public function diseaseView()
     {
-       
+
         $details = $this->userService->getDisease();
 //        echo "<pre>";
 //        print_r($details);exit;
         $analyticsphc = $this->userService->getAnalyticsPHC();
-        $csdbasha= $this->userService->getCsdbAsha();
+        $csdbasha = $this->userService->getCsdbAsha();
 
         return view('users.disease', ["title" => "Analytics",
             "details" => $details,
@@ -105,14 +103,14 @@ class UserController extends Controller
             "csdbasha" => $csdbasha,
             'postData' => Input::all()
         ]);
-        
-    }        
+    }
 
     public function analyticsVillage()
     {
         $status = $this->userService->getAnalyticsPHCVillage();
         return response()->json($status, 200);
     }
+
     public function patientPHC()
     {
         $status = $this->userService->getAnalyticsPHC();
@@ -127,21 +125,22 @@ class UserController extends Controller
 
     public function createHousehold()
     {
-        $data=$this->userService->createHousehold();
+        $data = $this->userService->createHousehold();
         return response()->json(['household_id' => $data], 200);
     }
 
     public function getHousehold()
     {
- 
+
         $data = $this->userService->getHousehold();
         return response()->json(['patients ' => $data], 200);
     }
+
     public function getHouseholdCount()
     {
- 
+
         $data = $this->userService->getHousehold();
-        $listcout=count($data);
+        $listcout = count($data);
         return response()->json(['patientsCount ' => $listcout], 200);
     }
 
@@ -269,7 +268,8 @@ class UserController extends Controller
      */
     public function getUserList($type = NULL)
     {
-        echo 8888;exit;
+        echo 8888;
+        exit;
         $title = "";
         if ($type == "student") {
             $this->request->request->add(['role_name' => "student"]);
@@ -286,10 +286,14 @@ class UserController extends Controller
             "usersList" => $users, "type" => $type]);
     }
 
-
-
-
-
-
+    public function ashaView()
+    {
+        $details = $this->userService->ashaDetails();
+//                print_r($details);exit;
+      
+        return view('users.ashas', ["title" => "Asha",
+            "details" => $details,
+        ]);
+    }
 
 }

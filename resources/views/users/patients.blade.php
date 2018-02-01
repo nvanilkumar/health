@@ -97,7 +97,7 @@
                                         <div class="input-group date">
                                              
                                             <input type="text" class="form-control input-sm" 
-                                                value="<?php echo @$postData["patient_id"] ?>"   id="patient_id" name="patient_id" placeholder="pateint_id">
+                                                value="<?php echo @$postData["patient_id"] ?>"   id="patient_id" name="patient_id" placeholder="PateintId">
                                              
                                         </div>
                                         <!-- /.input group -->
@@ -112,7 +112,7 @@
                                              
                                             <input type="text" class="form-control input-sm" 
                                                 value="<?php echo @$postData["hh_id"] ?>"   
-                                                id="hh_id" name="hh_id" placeholder="Household_id">
+                                                id="hh_id" name="hh_id" placeholder="HouseholdId">
                                              
                                         </div>
                                         <!-- /.input group -->
