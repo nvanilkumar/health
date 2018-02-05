@@ -109,7 +109,7 @@ class UserService
 // var_dump($query);
         if (count($users) > 0) {
             Session::put('user_id', $users[0]->user_id);
-            Session::put('user_name', $users[0]->username );
+            Session::put('user_name', $users[0]->username);
             Session::put('user_role', $users[0]->role_name);
             $responseMessage["response"]['status'] = true;
             $responseMessage["response"]['message'] = "Successfully login";
@@ -163,12 +163,34 @@ class UserService
             $enddate = date("Y-m-d H:i:s", strtotime($enddate));
             $where[] = ["date", "<=", $enddate];
         }
+//        echo 888; 
+//        var_dump( $this->request->all()) ;exit;
+        //pagination
+        $startingIndex = 0;
+        $pageNo = 1;
+        if ($this->request->input("page")) {
+            $pageNo = $this->request->input("page");
+        }
+
+        $perPage = 1000; //default value
+        if ($this->request->input("page_size")) {
+            $perPage = $this->request->input("page_size");
+        }
+
+        if ($pageNo > 1) {
+            $startingIndex = ($pageNo - 1) * $perPage;
+        }
+        $this->usersModel->setStartingIndex($startingIndex);
+        $this->usersModel->setRecords($perPage);
+       
+        //
 
         $this->usersModel->setTableName("household");
 
         if ($setWhere) {
             $this->usersModel->setWhere($where);
         }
+        
 //  \DB::enableQueryLog();
         $households = $this->usersModel->getOrderByData("_id");
 
@@ -333,7 +355,7 @@ class UserService
 
     public function getAnalytics($type)
     {
- 
+
         $filters = array();
         $filters = $this->prepareFilter();
         $analytics = $this->usersModel->analyticQuery($type, $filters);
@@ -1064,11 +1086,11 @@ class UserService
 
         return false;
     }
-    
+
     public function ashaDetails()
     {
-       $ashData = $this->usersModel->getAshaDetails();
-       return $ashData;
+        $ashData = $this->usersModel->getAshaDetails();
+        return $ashData;
     }
 
 }
