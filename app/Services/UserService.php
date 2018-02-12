@@ -472,6 +472,7 @@ class UserService
             $details = $this->getPatients();
         } else if ($type == "reports") {
             $details = $this->getreportsList();
+//            var_dump($details);exit;
         } else if ($type == "household") {
             $details = $this->getHousehold();
         } else if ($type == "patientScreening") {
@@ -923,7 +924,7 @@ class UserService
     {
         $filters = array();
         $phcselect = $this->request->input("phcselect");
-        if ($phcselect && ($phcselect != "Choose PHC")) {
+        if ($phcselect && ($phcselect != "Choose PHC") && ($phcselect != "select option")) {
             $filters["phc_name"] = $phcselect;
         }
         $asha_assigned = $this->request->input("ashaselect");
@@ -932,7 +933,7 @@ class UserService
         }
 
         $villageselect = $this->request->input("villageselect");
-        if ($villageselect && ($villageselect != "Choose Village")) {
+        if ($villageselect && ($villageselect != "Choose Village") && ($villageselect != "select option")) {
             $filters["vill_name"] = $villageselect;
         }
 
