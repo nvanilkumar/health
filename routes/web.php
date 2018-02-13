@@ -50,6 +50,7 @@ Route::group(['middleware' => 'customauth'], function () {
     Route::post('analytics/{type}', 'UserController@analyticsView');
     Route::get('disease', 'UserController@diseaseView');
     Route::post('disease', 'UserController@diseaseView');
+    Route::get('asha', 'UserController@ashaView');
 });
 
 

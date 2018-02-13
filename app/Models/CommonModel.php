@@ -73,9 +73,13 @@ class CommonModel extends Model
     public function setInsertUpdateData($insertUpdateArray)
     {
         $this->insertUpdateArray = $insertUpdateArray;
-        
     }
-   
+
+    public function setStartingIndex($startingIndex)
+    {
+        $this->startingIndex = $startingIndex;
+    }
+
     /**
      * To add updated & created date and time values
      * @param type $insertUpdateArray
@@ -83,10 +87,10 @@ class CommonModel extends Model
     public function setInsertDataWithDates($insertUpdateArray)
     {
         $this->insertUpdateArray = $insertUpdateArray;
-        $this->insertUpdateArray["created_at"]=DateHelper::todayDateTime();
-        $this->insertUpdateArray["updated_at"]=DateHelper::todayDateTime();
-        
+        $this->insertUpdateArray["created_at"] = DateHelper::todayDateTime();
+        $this->insertUpdateArray["updated_at"] = DateHelper::todayDateTime();
     }
+
     /**
      * To add updated & created date and time values
      * @param type $insertUpdateArray
@@ -94,7 +98,7 @@ class CommonModel extends Model
     public function setUpdateDataWithDates($insertUpdateArray)
     {
         $this->insertUpdateArray = $insertUpdateArray;
-        $this->insertUpdateArray["updated_at"]=DateHelper::todayDateTime();
+        $this->insertUpdateArray["updated_at"] = DateHelper::todayDateTime();
     }
 
     //To set the order by values
@@ -134,6 +138,13 @@ class CommonModel extends Model
         if ($columnName != NULL) {
             $records = $records->orderBy($columnName, 'DESC');
         }
+
+        //pagination
+        if ($this->startingIndex > 0) {
+            $records->offset($this->startingIndex);
+            $records = $records->limit($this->recordsPerPage);
+        }
+        //end of pagionation
         $records = $records->get();
         if (count($records) == 0) {
             return null;
@@ -181,7 +192,6 @@ class CommonModel extends Model
         }
     }
 
-
     //To update only multiple records
     //@returns the count of effected rows.
     public function updateMultiple_data()
@@ -218,9 +228,10 @@ class CommonModel extends Model
                 ->delete();
     }
 
-    /**To Enable the transaction
+    /*     * To Enable the transaction
      * 
      */
+
     public function dbTransactionBegin()
     {
         DB::beginTransaction();

@@ -97,6 +97,7 @@
                         </li>
                         <li><a href="{{ action('UserController@getPatientsView') }}"><i class="fa fa-user-o"></i> <span>Patients</span></a></li>
                         <li><a href="{{ action('UserController@reportsView') }}"><i class="fa fa-book"></i> <span>Reports</span></a></li>
+                        <li><a href="{{ action('UserController@ashaView') }}"><i class="fa fa-book"></i> <span>ASHA</span></a></li>
                     </ul>
                 </section>
                 <!-- /.sidebar -->

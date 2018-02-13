@@ -99,7 +99,7 @@ class UserService
 //         \DB::enableQueryLog();
         $where = [];
 
-        $where[] = ["email", "=", $username];
+        $where[] = ["username", "=", $username];
         $where[] = ["password", "=", md5($password)];
 
         $this->usersModel->setWhere($where);
@@ -108,12 +108,12 @@ class UserService
 // $query = end($query);
 // var_dump($query);
         if (count($users) > 0) {
-            Session::put('user_id', $users[0]->id);
-            Session::put('user_name', $users[0]->first_name . " " . $users[0]->last_name);
+            Session::put('user_id', $users[0]->user_id);
+            Session::put('user_name', $users[0]->username);
             Session::put('user_role', $users[0]->role_name);
             $responseMessage["response"]['status'] = true;
             $responseMessage["response"]['message'] = "Successfully login";
-            $responseMessage["response"]["user_id"] = $users[0]->id;
+            $responseMessage["response"]["user_id"] = $users[0]->user_id;
             return $responseMessage;
         }
 
@@ -163,12 +163,34 @@ class UserService
             $enddate = date("Y-m-d H:i:s", strtotime($enddate));
             $where[] = ["date", "<=", $enddate];
         }
+//        echo 888; 
+//        var_dump( $this->request->all()) ;exit;
+        //pagination
+        $startingIndex = 0;
+        $pageNo = 1;
+        if ($this->request->input("page")) {
+            $pageNo = $this->request->input("page");
+        }
+
+        $perPage = 1000; //default value
+        if ($this->request->input("page_size")) {
+            $perPage = $this->request->input("page_size");
+        }
+
+        if ($pageNo > 1) {
+            $startingIndex = ($pageNo - 1) * $perPage;
+        }
+        $this->usersModel->setStartingIndex($startingIndex);
+        $this->usersModel->setRecords($perPage);
+       
+        //
 
         $this->usersModel->setTableName("household");
 
         if ($setWhere) {
             $this->usersModel->setWhere($where);
         }
+        
 //  \DB::enableQueryLog();
         $households = $this->usersModel->getOrderByData("_id");
 
@@ -339,7 +361,7 @@ class UserService
         $analytics = $this->usersModel->analyticQuery($type, $filters);
 //        echo "<pre>";
 //        print_r($analytics);
-//        echo max(array_column($analytics, 'value'));
+////        echo max(array_column($analytics, 'value'));
 //        exit;
         $this->getDiseaseMaxValue($analytics);
         $analytics = json_decode(json_encode($analytics), true);
@@ -450,6 +472,7 @@ class UserService
             $details = $this->getPatients();
         } else if ($type == "reports") {
             $details = $this->getreportsList();
+//            var_dump($details);exit;
         } else if ($type == "household") {
             $details = $this->getHousehold();
         } else if ($type == "patientScreening") {
@@ -901,7 +924,7 @@ class UserService
     {
         $filters = array();
         $phcselect = $this->request->input("phcselect");
-        if ($phcselect && ($phcselect != "Choose PHC")) {
+        if ($phcselect && ($phcselect != "Choose PHC") && ($phcselect != "select option")) {
             $filters["phc_name"] = $phcselect;
         }
         $asha_assigned = $this->request->input("ashaselect");
@@ -910,7 +933,7 @@ class UserService
         }
 
         $villageselect = $this->request->input("villageselect");
-        if ($villageselect && ($villageselect != "Choose Village")) {
+        if ($villageselect && ($villageselect != "Choose Village") && ($villageselect != "select option")) {
             $filters["vill_name"] = $villageselect;
         }
 
@@ -980,6 +1003,7 @@ class UserService
         $resultArray["cancer"] = $this->keyValueCheck($resultArray["cancer"], $resultArray["phc_name"]);
         $resultArray["copd"] = $this->keyValueCheck($resultArray["copd"], $resultArray["phc_name"]);
         $resultArray["count_details"] = $cvdDetails["count_details"];
+        $resultArray["refdoc"] = $cvdDetails["refdoc"];
 
         return $resultArray;
     }
@@ -1062,6 +1086,12 @@ class UserService
         }
 
         return false;
+    }
+
+    public function ashaDetails()
+    {
+        $ashData = $this->usersModel->getAshaDetails();
+        return $ashData;
     }
 
 }
