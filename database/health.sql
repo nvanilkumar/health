@@ -13,7 +13,7 @@
 
 
 -- Dumping database structure for laravel
-CREATE DATABASE IF NOT EXISTS `laravel` /*!40100 DEFAULT CHARACTER SET utf8 */;
+CREATE DATABASE IF NOT EXISTS `laravel2` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `laravel`;
 
 -- Dumping structure for table laravel.activations

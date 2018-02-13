@@ -42,7 +42,7 @@ class UserService
 
         //insert the record
         $password = Hash::make($this->request->input("password"));
-        $this->usersModel->setTableName("users");
+        $this->usersModel->setTableName("cvd_users");
         $insertArray = [
             "first_name" => $this->request->input("first_name"),
             "last_name" => $this->request->input("last_name"),
@@ -492,7 +492,7 @@ class UserService
             $whereArray = [
                 ["user_id", '=', $userId]
             ];
-            $this->usersModel->setTableName("users");
+            $this->usersModel->setTableName("cvd_users");
             $this->usersModel->setInsertUpdateData($updateArray);
             $this->usersModel->setWhere($whereArray);
             $this->usersModel->updateData();
@@ -530,7 +530,7 @@ class UserService
         $whereArray = [
             ["user_id", '=', $this->request->input("user_id")]
         ];
-        $this->usersModel->setTableName("users");
+        $this->usersModel->setTableName("cvd_users");
         $this->usersModel->setInsertUpdateData($updateArray);
         $this->usersModel->setWhere($whereArray);
         $this->usersModel->updateData();
@@ -558,7 +558,7 @@ class UserService
     public function getUserDetails()
     {
         $where = [];
-        $this->usersModel->setTableName("users");
+        $this->usersModel->setTableName("cvd_users");
         $username = $this->request->input("username");
         if ($username) {
             $where[] = ["username", "=", $username];
@@ -615,7 +615,7 @@ class UserService
         $whereArray = [
             ["user_id", '=', $this->request->input("user_id")]
         ];
-        $this->usersModel->setTableName("users");
+        $this->usersModel->setTableName("cvd_users");
         $this->usersModel->setInsertUpdateData($updateArray);
         $this->usersModel->setWhere($whereArray);
         $this->usersModel->updateData();
@@ -643,7 +643,7 @@ class UserService
     public function getUserList()
     {
         $where = [];
-        $this->usersModel->setTableName("users");
+        $this->usersModel->setTableName("cvd_users");
 
         $role_name = $this->request->input("role_name");
         if ($role_name) {
@@ -689,7 +689,7 @@ class UserService
         $this->usersModel->dbTransactionBegin();
 
 
-        $this->usersModel->setTableName("users");
+        $this->usersModel->setTableName("cvd_users");
         $this->usersModel->setWhere($whereArray);
         $this->usersModel->deleteData();
 

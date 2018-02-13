@@ -9,7 +9,7 @@ class UsersModel extends CommonModel
 
     public function loginCheck()
     {
-        $users = DB::table('users')
+        $users = DB::table('cvd_users')
                 ->select('*')
                 ->where($this->where);
         $users = $users->get();
@@ -22,8 +22,8 @@ class UsersModel extends CommonModel
 
     public function getUsers($columnName = NULL)
     {
-        $users = DB::table('users')
-                ->select('users.*', 'roles.role_name')
+        $users = DB::table('cvd_users')
+                ->select('cvd_users.*', 'roles.role_name')
                 ->join('role_users', 'users.user_id', '=', 'role_users.user_id')
                 ->join('roles', 'roles.role_id', '=', 'role_users.role_id')
                 ->where($this->where);
