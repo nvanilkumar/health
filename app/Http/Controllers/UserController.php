@@ -133,7 +133,7 @@ class UserController extends Controller
     {
 
         $data = $this->userService->getHousehold();
-        return response()->json(['patients ' => $data], 200);
+        return response()->json(['patients' => $data], 200);
     }
 
     public function getHouseholdCount()

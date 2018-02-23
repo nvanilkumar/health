@@ -378,6 +378,7 @@ class UserService
      */
     public function getDiseaseMaxValue($analytics)
     {
+        if(count($analytics) > 0)
         foreach ($analytics as $k => $v) {
             if ($v->value > $this->maxDisease) {
                 $this->maxDisease = $v->value;
