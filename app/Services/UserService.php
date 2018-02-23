@@ -12,16 +12,14 @@ use App\Helpers\DateHelper;
 use Validator;
 use App\Helpers\CustomHelper;
 
-class UserService
-{
+class UserService {
 
     protected $request;
     protected $usersModel;
     protected $auth;
     protected $maxDisease;
 
-    public function __construct(Request $request)
-    {
+    public function __construct(Request $request) {
         $this->request = $request;
         $this->usersModel = new UsersModel();
         $this->maxDisease = 0;
@@ -30,8 +28,7 @@ class UserService
     /**
      * To create the user record
      */
-    public function createUser()
-    {
+    public function createUser() {
         if ($this->createUserValidator()->fails()) {
             return redirect()->back()
                             ->withErrors($this->createUserValidator())
@@ -89,8 +86,7 @@ class UserService
      * send the response message
      * @return type
      */
-    public function loginCheck()
-    {
+    public function loginCheck() {
 
         $responseMessage = [];
         $username = $this->request->input("username");
@@ -129,8 +125,7 @@ class UserService
      * To get the user details depends upon the where condition
      * @return type
      */
-    public function getHousehold()
-    {
+    public function getHousehold() {
         $setWhere = FALSE;
         $ashaselect = $this->request->input("ashaselect");
         if ($ashaselect && ($ashaselect != "Choose ANM")) {
@@ -182,7 +177,7 @@ class UserService
         }
         $this->usersModel->setStartingIndex($startingIndex);
         $this->usersModel->setRecords($perPage);
-       
+
         //
 
         $this->usersModel->setTableName("household");
@@ -190,7 +185,7 @@ class UserService
         if ($setWhere) {
             $this->usersModel->setWhere($where);
         }
-        
+
 //  \DB::enableQueryLog();
         $households = $this->usersModel->getOrderByData("_id");
 
@@ -204,23 +199,20 @@ class UserService
         return $households;
     }
 
-    public function getHouseholdPHC()
-    {
+    public function getHouseholdPHC() {
         $this->usersModel->resetVariable();
         $householdphc = $this->usersModel->getHouseholdPHC();
 
         return $householdphc;
     }
 
-    public function getHouseholdAsha()
-    {
+    public function getHouseholdAsha() {
         $this->usersModel->resetVariable();
         $householdAsha = $this->usersModel->getHouseholdAsha();
         return $householdAsha;
     }
 
-    public function getHouseholdPHCVillage()
-    {
+    public function getHouseholdPHCVillage() {
         $phcname = $this->request->input("phcname");
         if (strlen($phcname) == 0) {
             echo "invalid data";
@@ -234,8 +226,7 @@ class UserService
         return $householdphc;
     }
 
-    public function getPatients()
-    {
+    public function getPatients() {
         $setWhere = FALSE;
         $encselect = $this->request->input("encselect");
         if ($encselect && ($encselect != "Choose ENC Type")) {
@@ -302,8 +293,7 @@ class UserService
      * To Bring enc type screening first and last screening of the paitent
      * @return type
      */
-    public function getPatientScreening()
-    {
+    public function getPatientScreening() {
 
         $where = [];
         $encselect = $this->request->input("encselect");
@@ -353,8 +343,7 @@ class UserService
         return $paitents;
     }
 
-    public function getAnalytics($type)
-    {
+    public function getAnalytics($type) {
 
         $filters = array();
         $filters = $this->prepareFilter();
@@ -376,18 +365,16 @@ class UserService
      * To calculate the max value
      * @param type $analytics
      */
-    public function getDiseaseMaxValue($analytics)
-    {
-        if(count($analytics) > 0)
-        foreach ($analytics as $k => $v) {
-            if ($v->value > $this->maxDisease) {
-                $this->maxDisease = $v->value;
+    public function getDiseaseMaxValue($analytics) {
+        if (count($analytics) > 0)
+            foreach ($analytics as $k => $v) {
+                if ($v->value > $this->maxDisease) {
+                    $this->maxDisease = $v->value;
+                }
             }
-        }
     }
 
-    public function getStakeUserAnalytics($analytics)
-    {
+    public function getStakeUserAnalytics($analytics) {
         $fillterValue = 0;
         if (count($analytics) > 0)
             foreach ($analytics as $key => $value) {
@@ -398,8 +385,7 @@ class UserService
         return $analytics;
     }
 
-    public function getDisease()
-    {
+    public function getDisease() {
         $allList = array();
         $allList["hbp"] = $this->getAnalytics("hbp");
         $allList["diag"] = $this->getAnalytics("diag");
@@ -412,8 +398,7 @@ class UserService
         return $allList;
     }
 
-    public function getAnalyticsPHC()
-    {
+    public function getAnalyticsPHC() {
         $this->usersModel->resetVariable();
         $where = [];
         $encselect = $this->request->input("encselect");
@@ -427,21 +412,18 @@ class UserService
         return $householdphc;
     }
 
-    public function getCsdbAsha()
-    {
+    public function getCsdbAsha() {
         $this->usersModel->resetVariable();
         $householdphc = $this->usersModel->getCsdbAsha();
         return $householdphc;
     }
 
-    public function getCsdbEncType()
-    {
+    public function getCsdbEncType() {
         $this->usersModel->resetVariable();
         return $this->usersModel->getCsdbEncType();
     }
 
-    public function getAnalyticsPHCVillage()
-    {
+    public function getAnalyticsPHCVillage() {
         $phcname = $this->request->input("phcname");
         if (strlen($phcname) == 0) {
             echo "invalid data";
@@ -455,8 +437,7 @@ class UserService
         return $analyticsPHCVillage;
     }
 
-    public function getreportsList()
-    {
+    public function getreportsList() {
         $filters = array();
         $filters = $this->prepareFilter();
 //        print_r($filters);exit;
@@ -465,8 +446,7 @@ class UserService
         return $reportsList;
     }
 
-    public function downloadData()
-    {
+    public function downloadData() {
         $details = array();
         $type = $this->request->input("type");
         if ($type == "patients") {
@@ -487,8 +467,7 @@ class UserService
      * To change the user password
      * @return type
      */
-    public function changePassword()
-    {
+    public function changePassword() {
         if ($this->passwordChangeValidator()->fails()) {
             $errors["status"] = false;
             $errors["message"] = $this->passwordChangeValidator()->errors()->all();
@@ -514,7 +493,7 @@ class UserService
                 "password" => $password
             ];
             $whereArray = [
-                ["user_id", '=', $userId]
+                    ["user_id", '=', $userId]
             ];
             $this->usersModel->setTableName("cvd_users");
             $this->usersModel->setInsertUpdateData($updateArray);
@@ -532,8 +511,7 @@ class UserService
      * Password update related validation Rules
      * @return type
      */
-    public function passwordChangeValidator()
-    {
+    public function passwordChangeValidator() {
         //echo "%%%%"; exit;
         return Validator::make($this->request->all(), [
                     'old_password' => 'required||string',
@@ -545,14 +523,13 @@ class UserService
     /**
      * To update the user password to new value
      */
-    public function userPasswordUpdate()
-    {
+    public function userPasswordUpdate() {
         $password = Hash::make($this->request->input("new_password"));
         $updateArray = [
             "password" => $password
         ];
         $whereArray = [
-            ["user_id", '=', $this->request->input("user_id")]
+                ["user_id", '=', $this->request->input("user_id")]
         ];
         $this->usersModel->setTableName("cvd_users");
         $this->usersModel->setInsertUpdateData($updateArray);
@@ -564,8 +541,7 @@ class UserService
      * Create user related validation Rules
      * @return type
      */
-    public function createUserValidator()
-    {
+    public function createUserValidator() {
         return Validator::make($this->request->all(), [
                     'first_name' => 'required||string',
                     'last_name' => 'required||string',
@@ -579,8 +555,7 @@ class UserService
      * To get the user details depends upon the where condition
      * @return type
      */
-    public function getUserDetails()
-    {
+    public function getUserDetails() {
         $where = [];
         $this->usersModel->setTableName("cvd_users");
         $username = $this->request->input("username");
@@ -608,8 +583,7 @@ class UserService
     /**
      * To Update the user related details
      */
-    public function updateUser()
-    {
+    public function updateUser() {
         //validations
         if ($this->updateUserValidator()->fails()) {
             return redirect()->back()
@@ -637,7 +611,7 @@ class UserService
 
 
         $whereArray = [
-            ["user_id", '=', $this->request->input("user_id")]
+                ["user_id", '=', $this->request->input("user_id")]
         ];
         $this->usersModel->setTableName("cvd_users");
         $this->usersModel->setInsertUpdateData($updateArray);
@@ -649,8 +623,7 @@ class UserService
      * Create user related validation Rules
      * @return type
      */
-    public function updateUserValidator()
-    {
+    public function updateUserValidator() {
         return Validator::make($this->request->all(), [
                     'first_name' => 'required||string',
                     'last_name' => 'required||string',
@@ -664,8 +637,7 @@ class UserService
      * the where condition based on there role
      * @return type
      */
-    public function getUserList()
-    {
+    public function getUserList() {
         $where = [];
         $this->usersModel->setTableName("cvd_users");
 
@@ -688,8 +660,7 @@ class UserService
     /**
      * To delete the User record  id
      */
-    public function deleteUser()
-    {
+    public function deleteUser() {
         //validations
         if ($this->deleteUserValidator()->fails()) {
             return redirect()->back()
@@ -751,15 +722,13 @@ class UserService
      * delete user related validations
      * @return type
      */
-    public function deleteUserValidator()
-    {
+    public function deleteUserValidator() {
         return Validator::make($this->request->all(), [
                     'user_id' => 'required|integer'
         ]);
     }
 
-    public function assignGroupUsers()
-    {
+    public function assignGroupUsers() {
         //validations
         if ($this->assignGroupUsersValidator()->fails()) {
 
@@ -806,8 +775,7 @@ class UserService
      * delete assignGroupUsers related validations
      * @return type
      */
-    public function assignGroupUsersValidator()
-    {
+    public function assignGroupUsersValidator() {
         return Validator::make($this->request->all(), [
                     'group_id' => 'required|integer'
         ]);
@@ -816,8 +784,7 @@ class UserService
     /**
      * To Bring the dashboard details
      */
-    public function dashboardDetails()
-    {
+    public function dashboardDetails() {
         $details = $this->usersModel->dashboardDetails();
         $details["cvdgroup"] = $this->usersModel->dashboardCVD();
 //        echo "<pre>";
@@ -870,8 +837,7 @@ class UserService
         return $details;
     }
 
-    public function createHousehold()
-    {
+    public function createHousehold() {
         $this->usersModel->setTableName("household");
         $hh_id = ($this->request->input("hh_id") != "") ? $this->request->input("hh_id") : "";
         $door_no = ($this->request->input("door_no") != "") ? $this->request->input("door_no") : "";
@@ -921,8 +887,7 @@ class UserService
         return $userId;
     }
 
-    public function prepareFilter()
-    {
+    public function prepareFilter() {
         $filters = array();
         $phcselect = $this->request->input("phcselect");
         if ($phcselect && ($phcselect != "Choose PHC") && ($phcselect != "select option")) {
@@ -952,8 +917,7 @@ class UserService
         return $filters;
     }
 
-    public function keyValueCheck($searchArray, $indexArray)
-    {
+    public function keyValueCheck($searchArray, $indexArray) {
         $mainArray = array();
         foreach ($indexArray as $basevalue) {
             if (array_key_exists($basevalue, $searchArray)) {
@@ -965,8 +929,7 @@ class UserService
         return $mainArray;
     }
 
-    public function processCVD($cvdDetails)
-    {
+    public function processCVD($cvdDetails) {
         $resultArray = array();
 
 
@@ -1009,8 +972,7 @@ class UserService
         return $resultArray;
     }
 
-    public function analyticGraphDataProcess($cvdDetails)
-    {
+    public function analyticGraphDataProcess($cvdDetails) {
         $resultArray = array();
 
         if (count($cvdDetails["cvd"]) > 0)
@@ -1052,8 +1014,7 @@ class UserService
         return $returnArray;
     }
 
-    public function keyValueCheckAddField($searchArray, $indexArray, $label)
-    {
+    public function keyValueCheckAddField($searchArray, $indexArray, $label) {
         $mainArray = array();
         foreach ($indexArray as $basevalue) {
             if (array_key_exists($basevalue, $searchArray)) {
@@ -1066,31 +1027,32 @@ class UserService
         return $mainArray;
     }
 
-    public function apicheck()
-    {
+    public function apicheck() {
 
-        echo $this->request->header('userid');
-        echo $this->request->header("tabimei");
+        // echo $this->request->header('userid');
+        //echo $this->request->header("tabimei");
         $userid = $this->request->input("userid");
         $tabimei = $this->request->input("tabimei");
 
 //         \DB::enableQueryLog();
-        $where = [];
+        if (strlen($userid) >0 && strlen($tabimei) > 0) {
+            $where = [];
 
-        $where[] = ["uid", "=", $userid];
-        $where[] = ["tabimei", "=", $tabimei];
-
-        $this->usersModel->setWhere($where);
-        $users = $this->usersModel->loginCheck();
-        if (count($users) > 0) {
-            return true;
+            $where[] = ["user_id", "=", $userid];
+            $where[] = ["username", "=", $tabimei];
+            $this->usersModel->setTableName("users");
+            $this->usersModel->setWhere($where);
+            $users = $this->usersModel->getData();
+            if (count($users) > 0) {
+                return true;
+            }
         }
+
 
         return false;
     }
 
-    public function ashaDetails()
-    {
+    public function ashaDetails() {
         $ashData = $this->usersModel->getAshaDetails();
         return $ashData;
     }

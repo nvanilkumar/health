@@ -27,10 +27,10 @@ class ApiAuthentication
      */
     public function handle($request, Closure $next)
     {
-//        $status = $this->userService->apicheck();
-//        if ($status) {
-//            return response('Unauthorized.', 401);
-//        }
+        $status = $this->userService->apicheck();
+        if (!$status) {
+            return response()->json(['Result' => "fail"], 401);
+        }
 
         return $next($request);
     }
