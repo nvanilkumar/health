@@ -1031,14 +1031,14 @@ class UserService {
 
         // echo $this->request->header('userid');
         //echo $this->request->header("tabimei");
-        $userid = $this->request->input("userid");
+        //$userid = $this->request->input("userid");
         $tabimei = $this->request->input("tabimei");
 
 //         \DB::enableQueryLog();
-        if (strlen($userid) >0 && strlen($tabimei) > 0) {
+        if (strlen($tabimei) > 0) {
             $where = [];
 
-            $where[] = ["user_id", "=", $userid];
+            //$where[] = ["user_id", "=", $userid];
             $where[] = ["username", "=", $tabimei];
             $this->usersModel->setTableName("users");
             $this->usersModel->setWhere($where);
